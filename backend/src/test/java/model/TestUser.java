@@ -1,10 +1,8 @@
 package model;
 
-import model.User;
 import org.junit.Before;
 import org.junit.Test;
 
-import static junit.framework.TestCase.assertTrue;
 import static junit.framework.TestCase.fail;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -35,7 +33,7 @@ public class TestUser {
         try {
             newUser.setName("nan");
             fail("");
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             assertThat(e).hasMessage("Name is too short!");
         }
     }
@@ -45,7 +43,7 @@ public class TestUser {
         try {
             newUser.setName("The name and lastname are too long for registration");
             fail("");
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             assertThat(e).hasMessage("Name is too long!");
         }
     }
@@ -55,7 +53,7 @@ public class TestUser {
         try {
             newUser.setEmail("wrongemailadress");
             fail("");
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             assertThat(e).hasMessage("Email address is invalid!");
         }
     }
