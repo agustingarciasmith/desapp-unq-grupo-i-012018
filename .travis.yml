@@ -1,3 +1,5 @@
 language: java
-mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
-mvn test -B
+preInstall:
+  - cd backend
+  - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+install: mvn test -B
