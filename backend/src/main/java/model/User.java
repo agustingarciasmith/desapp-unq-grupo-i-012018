@@ -1,47 +1,36 @@
 package model;
 
 public class User {
-    String cuil;
-    String name;
-    String address;
-    String email;
-    EmailFormatValidator emailFormatValidator = new EmailFormatValidator();
+  private String cuil;
+  private String name;
+  private String address;
+  private String email;
 
-    public User() {
-    }
+  public User(String name, String address, String email, String cuil) {
 
-    public String getCuil() {
-        return cuil;
-    }
+    if (name.length() < 4) throw new RuntimeException("Name is too short!");
+    if (name.length() > 50) throw new RuntimeException("Name is too long!");
+    EmailFormatValidator.runValidation(email);
 
-    public String getName() {
-        return name;
-    }
+    this.name = name;
+    this.address = address;
+    this.email = email;
+    this.cuil = cuil;
+  }
 
-    public String getAddress() {
-        return address;
-    }
+  public String getCuil() {
+    return cuil;
+  }
 
-    public String getEmail() {
-        return email;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public void setCuil(String cuil) {
-        this.cuil = cuil;
-    }
+  public String getAddress() {
+    return address;
+  }
 
-    public void setName(String name) {
-        if (name.length() < 4) throw new RuntimeException("Name is too short!");
-        if (name.length() > 50) throw new RuntimeException("Name is too long!");
-        this.name = name;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public void setEmail(String email) {
-        if (!emailFormatValidator.validate(email)) throw new RuntimeException("Email address is invalid!");
-        this.email = email;
-    }
+  public String getEmail() {
+    return email;
+  }
 }
