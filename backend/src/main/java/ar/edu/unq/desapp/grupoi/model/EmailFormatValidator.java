@@ -1,4 +1,4 @@
-package model;
+package ar.edu.unq.desapp.grupoi.model;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

@@ -1,4 +1,4 @@
-package model;
+package ar.edu.unq.desapp.grupoi.model;
 
 public class User {
   private String cuil;
