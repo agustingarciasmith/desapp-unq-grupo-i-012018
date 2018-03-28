@@ -1,28 +1,25 @@
-package model;
+package ar.edu.unq.desapp.grupoi.model;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
-import static org.junit.Assert.*;
-
-import java.util.Arrays;
-import java.util.Collection;
-
-import ar.edu.unq.desapp.grupoi.model.EmailFormatValidator;
-import org.assertj.core.api.Assertions;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
+import java.util.Arrays;
+import java.util.Collection;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
+
 @RunWith(Parameterized.class)
-public class TestEmailFormatValidator {
+public class EmailFormatValidatorTests {
 
   private String email;
   private static EmailFormatValidator emailFormatValidator;
   private Boolean expectedValidation;
 
-  public TestEmailFormatValidator(String email, Boolean expectedValidation) {
+  public EmailFormatValidatorTests(String email, Boolean expectedValidation) {
     this.email = email;
     this.expectedValidation = expectedValidation;
   }

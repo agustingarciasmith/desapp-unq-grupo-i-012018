@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 
 public class EmailFormatValidator {
 
+  public static final String EMAIL_ADDRESS_IS_INVALID = "Email address is invalid!";
   private Pattern pattern;
   private Matcher matcher;
 
@@ -22,7 +23,7 @@ public class EmailFormatValidator {
   public void validate(final String email) {
     matcher = pattern.matcher(email);
     if (!matcher.matches()) {
-      throw new RuntimeException("Email address is invalid!");
+      throw new RuntimeException(EMAIL_ADDRESS_IS_INVALID);
     }
   }
 }
