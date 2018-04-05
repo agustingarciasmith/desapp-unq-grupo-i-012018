@@ -3,6 +3,8 @@ package ar.edu.unq.desapp.grupoi.model;
 import ar.com.dgarcia.javaspec.api.JavaSpec;
 import ar.com.dgarcia.javaspec.api.JavaSpecRunner;
 import ar.com.dgarcia.javaspec.api.TestContext;
+import ar.edu.unq.desapp.grupoi.model.errors.EmailIsInvalid;
+import ar.edu.unq.desapp.grupoi.model.errors.NameLengthOutOfBounds;
 import org.junit.runner.RunWith;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -17,23 +19,23 @@ public class UserTests extends JavaSpec<TestContext> {
 
       it("cant create with name shorter than 4 characters", () -> {
         try {
-          String toShortName = "nan";
-          new User(toShortName, "address", "mail@mail.com", "cuil");
+          String tooShortName = "nan";
+          new User(tooShortName, "address", "mail@mail.com", "cuil");
 
-          failBecauseExceptionWasNotThrown(RuntimeException.class);
-        } catch (RuntimeException e) {
-          assertThat(e).hasMessage(User.NAME_IS_TOO_SHORT);
+          failBecauseExceptionWasNotThrown(NameLengthOutOfBounds.class);
+        } catch (NameLengthOutOfBounds e) {
+          assertThat(e).hasMessage(NameLengthOutOfBounds.MESSAGE);
         }
       });
 
       it("cant create with namte long than 50m characters", () -> {
         try {
-          String toLongName = "The name and lastname are too long for registration";
-          new User(toLongName, "address", "mail@mail.com", "cuil");
+          String tooLongName = "The name and lastname are too long for registration";
+          new User(tooLongName, "address", "mail@mail.com", "cuil");
 
-          failBecauseExceptionWasNotThrown(RuntimeException.class);
-        } catch (RuntimeException e) {
-          assertThat(e).hasMessage(User.NAME_IS_TOO_LONG);
+          failBecauseExceptionWasNotThrown(NameLengthOutOfBounds.class);
+        } catch (NameLengthOutOfBounds e) {
+          assertThat(e).hasMessage(NameLengthOutOfBounds.MESSAGE);
         }
       });
 
@@ -42,9 +44,9 @@ public class UserTests extends JavaSpec<TestContext> {
           String notAMail = "wrongemailadress";
           new User("name", "address", notAMail, "cuil");
 
-          failBecauseExceptionWasNotThrown(RuntimeException.class);
-        } catch (RuntimeException e) {
-          assertThat(e).hasMessage(EmailFormatValidator.EMAIL_ADDRESS_IS_INVALID);
+          failBecauseExceptionWasNotThrown(EmailIsInvalid.class);
+        } catch (EmailIsInvalid e) {
+          assertThat(e).hasMessage("Email wrongemailadress is invalid");
         }
       });
     });

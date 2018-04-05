@@ -1,5 +1,7 @@
 package ar.edu.unq.desapp.grupoi.model;
 
+import ar.edu.unq.desapp.grupoi.model.errors.EmailIsInvalid;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,7 +25,7 @@ public class EmailFormatValidator {
   public void validate(final String email) {
     matcher = pattern.matcher(email);
     if (!matcher.matches()) {
-      throw new RuntimeException(EMAIL_ADDRESS_IS_INVALID);
+      throw new EmailIsInvalid(email);
     }
   }
 }
