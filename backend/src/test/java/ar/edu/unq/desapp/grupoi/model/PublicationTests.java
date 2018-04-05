@@ -21,24 +21,24 @@ public class PublicationTests extends JavaSpec<TestContext>{
             String pickUpAdress = "Adress 1";
             String returnAdress = "Adress 2";
             String contactPhone = "123456789";
-            String hoursDays = "mondays";
+            AvailabilitySchedule schedule = new AvailabilitySchedule();
             Integer cost = 123;
 
             it("publication gets created with appropriate arguments", () -> {
-                Publication newPublication = new Publication(vehicle, city, pickUpAdress, returnAdress, contactPhone, hoursDays, cost);
+                Publication newPublication = new Publication(vehicle, city, pickUpAdress, returnAdress, contactPhone, schedule, cost);
 
                 assertThat(newPublication.getVehicle()).isEqualTo(vehicle);
                 assertThat(newPublication.getCity()).isEqualTo(city);
                 assertThat(newPublication.getPickUpAdress()).isEqualTo(pickUpAdress);
                 assertThat(newPublication.getReturnAdress()).isEqualTo(returnAdress);
                 assertThat(newPublication.getContactPhone()).isEqualTo(contactPhone);
-                assertThat(newPublication.getHoursDays()).isEqualTo(hoursDays);
+                assertThat(newPublication.getSchedule()).isEqualTo(schedule);
                 assertThat(newPublication.getCost()).isEqualTo(cost);
             });
 
             it("cant create publication without cost", () -> {
                 try {
-                    new Publication(vehicle, city, pickUpAdress, returnAdress, contactPhone, hoursDays, null);
+                    new Publication(vehicle, city, pickUpAdress, returnAdress, contactPhone, schedule, null);
                     Assertions.failBecauseExceptionWasNotThrown(FieldMissing.class);
                 } catch (FieldMissing e) {
                     assertThat(e).hasMessage("Cost field is obligatory");
