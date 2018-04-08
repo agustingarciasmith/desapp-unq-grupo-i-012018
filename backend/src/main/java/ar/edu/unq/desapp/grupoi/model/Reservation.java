@@ -32,4 +32,12 @@ public class Reservation {
     public void confirm() {
         this.state = ReservationState.CONFIRMED;
     }
+
+    public void acceptanceInformed() {
+        this.state = ReservationState.ACCEPTANCE_PENDING;
+    }
+
+    public void confirmedRent() {
+        this.state = ReservationState.RENT_STARTED;
+    }
 }

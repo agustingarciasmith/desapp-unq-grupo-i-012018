@@ -49,6 +49,14 @@ public class User {
     reservation.confirm();
   }
 
+  public void informsAcceptance(Reservation reservation) {
+    reservation.acceptanceInformed();
+  }
+
+  public void confirmAcceptance(Reservation reservation) {
+    reservation.confirmedRent();
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;

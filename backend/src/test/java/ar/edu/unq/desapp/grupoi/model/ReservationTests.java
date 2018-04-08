@@ -17,12 +17,14 @@ public class ReservationTests extends JavaSpec<TestContext> {
 
         Variable<Reservation> reservation = Variable.create();
         Variable<User> owner = Variable.create();
+        Variable<User> client =Variable.create();
 
         describe("reservation creation", () -> {
 
             beforeEach(()-> {
                 reservation.set(new ReservationBuilder().build());
                 owner.set(reservation.get().getPublication().getOwner());
+                client.set(reservation.get().getClient());
             });
 
             it("when a reservation is created its on pending state", () -> {
@@ -33,7 +35,22 @@ public class ReservationTests extends JavaSpec<TestContext> {
                 owner.get().confirmReservation(reservation.get());
                 assertThat(reservation.get().getState()).isEqualTo(ReservationState.CONFIRMED);
             });
+
+            it("the client informs that accepts the vehicle", () -> {
+                owner.get().confirmReservation(reservation.get());
+                client.get().informsAcceptance(reservation.get());
+                assertThat(reservation.get().getState()).isEqualTo(ReservationState.ACCEPTANCE_PENDING);
+            });
+
+            it("the owner then confirms acceptance", () -> {
+                owner.get().confirmReservation(reservation.get());
+                client.get().informsAcceptance(reservation.get());
+                owner.get().confirmAcceptance(reservation.get());
+                assertThat(reservation.get().getState()).isEqualTo(ReservationState.RENT_STARTED);
+            });
         });
+
+
 
 
     }
