@@ -13,6 +13,7 @@ public class Publication {
     private String returnAdress;
     private String contactPhone;
     private Integer cost;
+    private User owner;
 
     public Publication(Vehicle vehicle, String city, String pickUpAdress, String returnAdress, String contactPhone, AvailabilitySchedule schedule, Integer cost)
     {
@@ -33,4 +34,7 @@ public class Publication {
     public String getContactPhone() { return contactPhone; }
     public Integer getCost() { return cost; }
     public AvailabilitySchedule getSchedule() { return schedule; }
+    public User getOwner() { return owner; }
+
+    public void setOwner(User owner) { this.owner = owner; }
 }

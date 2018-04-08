@@ -10,7 +10,6 @@ public class User {
   private String email;
 
   public User(String name, String address, String email, String cuil) {
-
     if (name.length() < 4 || name.length() > 50) throw new NameLengthOutOfBounds();
     EmailFormatValidator.runValidation(email);
 
@@ -19,6 +18,8 @@ public class User {
     this.email = email;
     this.cuil = cuil;
   }
+
+
 
   public String getCuil() {
     return cuil;
@@ -34,5 +35,29 @@ public class User {
 
   public String getEmail() {
     return email;
+  }
+
+  public Publication createPublication(Publication publication) {
+    publication.setOwner(this);
+    return publication;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    User user = (User) o;
+
+    return cuil != null ? cuil.equals(user.cuil) : user.cuil == null;
+  }
+
+  @Override
+  public int hashCode() {
+    return cuil != null ? cuil.hashCode() : 0;
+  }
+
+  public Transaction makeReservation(Publication publication) {
+   return new Transaction(publication, this);
   }
 }

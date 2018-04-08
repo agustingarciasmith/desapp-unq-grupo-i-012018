@@ -3,8 +3,12 @@ package ar.edu.unq.desapp.grupoi.model;
 import ar.com.dgarcia.javaspec.api.JavaSpec;
 import ar.com.dgarcia.javaspec.api.JavaSpecRunner;
 import ar.com.dgarcia.javaspec.api.TestContext;
+import ar.com.dgarcia.javaspec.api.Variable;
 import ar.edu.unq.desapp.grupoi.model.errors.EmailIsInvalid;
+import ar.edu.unq.desapp.grupoi.model.errors.InvalidTransaction;
 import ar.edu.unq.desapp.grupoi.model.errors.NameLengthOutOfBounds;
+import ar.edu.unq.desapp.grupoi.model.support.PublicationBuilder;
+import ar.edu.unq.desapp.grupoi.model.support.UserBuilder;
 import org.junit.runner.RunWith;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -15,12 +19,18 @@ public class UserTests extends JavaSpec<TestContext> {
 
   @Override
   public void define() {
+
+    Variable<UserBuilder> userBuilder = Variable.create();
+
+    beforeEach(()-> {
+      userBuilder.set(new UserBuilder());
+    });
+
     describe("user creation", () -> {
 
-      it("cant create with name shorter than 4 characters", () -> {
+      it("cant create user with name shorter than 4 characters", () -> {
         try {
-          String tooShortName = "nan";
-          new User(tooShortName, "address", "mail@mail.com", "cuil");
+          userBuilder.get().withName("nan").build();
 
           failBecauseExceptionWasNotThrown(NameLengthOutOfBounds.class);
         } catch (NameLengthOutOfBounds e) {
@@ -28,10 +38,9 @@ public class UserTests extends JavaSpec<TestContext> {
         }
       });
 
-      it("cant create with namte long than 50m characters", () -> {
+      it("cant create user with name longer than 50 characters", () -> {
         try {
-          String tooLongName = "The name and lastname are too long for registration";
-          new User(tooLongName, "address", "mail@mail.com", "cuil");
+          userBuilder.get().withName("Its an unusually long name to register on this app now").build();
 
           failBecauseExceptionWasNotThrown(NameLengthOutOfBounds.class);
         } catch (NameLengthOutOfBounds e) {
@@ -39,24 +48,56 @@ public class UserTests extends JavaSpec<TestContext> {
         }
       });
 
-      it("cant create with invalid mail", () -> {
+      it("cant create user with invalid mail", () -> {
         try {
-          String notAMail = "wrongemailadress";
-          new User("name", "address", notAMail, "cuil");
+          userBuilder.get().withEmail("notAnEmail").build();
 
           failBecauseExceptionWasNotThrown(EmailIsInvalid.class);
         } catch (EmailIsInvalid e) {
-          assertThat(e).hasMessage("Email wrongemailadress is invalid");
+          assertThat(e).hasMessage("Email notAnEmail is invalid");
         }
+      });
+
+      it("a user is considered equal to another if they have the same cuil", () -> {
+        User anotherUser = new UserBuilder().build();
+        User differentUser = new UserBuilder().withCuil("2222222222").build();
+        assertThat(userBuilder.get().build()).isEqualTo(anotherUser);
+        assertThat(userBuilder.get().build()).isNotEqualTo(differentUser);
       });
     });
 
-//    describe("vehicle publication", () -> {
-//      it("add a publication", () -> {
-//        User user = new User("pepe", "calle de pepe", "mail@pepe.com", "2134567");
-//        user.createPublication(defaultVehicle());
-//        assertThat(user.getPublications()).hasSize(1);
-//      });
-//    });
+    describe("publication", () -> {
+      Variable<User> publicationOwner = Variable.create();
+      Variable<User> anotherUser = Variable.create();
+      Variable<Publication> publication = Variable.create();
+
+      beforeEach(()-> {
+        publicationOwner.set(userBuilder.get().build());
+        anotherUser.set(new UserBuilder().withCuil("2222222222").build());
+        publication.set(new PublicationBuilder().build());
+        publicationOwner.get().createPublication(publication.get());
+      });
+
+      it("a user who creates a publication becomes its owner", () -> {
+        assertThat(publication.get().getOwner()).isEqualTo(publicationOwner.get());
+        assertThat(publication.get().getOwner()).isNotEqualTo(anotherUser.get());
+      });
+
+      it("a user can make a reservation on another user publication", () -> {
+        Transaction newTransaction = anotherUser.get().makeReservation(publication.get());
+
+        assertThat(newTransaction.getClient()). isEqualTo(anotherUser.get());
+      });
+
+      it("a user cant make a reservation on a publication of her own", () -> {
+        try {
+          publicationOwner.get().makeReservation(publication.get());
+
+          failBecauseExceptionWasNotThrown(InvalidTransaction.class);
+        } catch (InvalidTransaction e) {
+          assertThat(e).hasMessage("Cant apply for your own publication");
+        }
+      });
+    });
   }
 }
