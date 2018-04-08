@@ -5,7 +5,7 @@ import ar.com.dgarcia.javaspec.api.JavaSpecRunner;
 import ar.com.dgarcia.javaspec.api.TestContext;
 import ar.com.dgarcia.javaspec.api.Variable;
 import ar.edu.unq.desapp.grupoi.model.errors.EmailIsInvalid;
-import ar.edu.unq.desapp.grupoi.model.errors.InvalidTransaction;
+import ar.edu.unq.desapp.grupoi.model.errors.InvalidReservation;
 import ar.edu.unq.desapp.grupoi.model.errors.NameLengthOutOfBounds;
 import ar.edu.unq.desapp.grupoi.model.support.PublicationBuilder;
 import ar.edu.unq.desapp.grupoi.model.support.UserBuilder;
@@ -28,7 +28,7 @@ public class UserTests extends JavaSpec<TestContext> {
 
     describe("user creation", () -> {
 
-      it("cant create user with name shorter than 4 characters", () -> {
+      it("cant build user with name shorter than 4 characters", () -> {
         try {
           userBuilder.get().withName("nan").build();
 
@@ -38,7 +38,7 @@ public class UserTests extends JavaSpec<TestContext> {
         }
       });
 
-      it("cant create user with name longer than 50 characters", () -> {
+      it("cant build user with name longer than 50 characters", () -> {
         try {
           userBuilder.get().withName("Its an unusually long name to register on this app now").build();
 
@@ -48,7 +48,7 @@ public class UserTests extends JavaSpec<TestContext> {
         }
       });
 
-      it("cant create user with invalid mail", () -> {
+      it("cant build user with invalid mail", () -> {
         try {
           userBuilder.get().withEmail("notAnEmail").build();
 
@@ -84,17 +84,17 @@ public class UserTests extends JavaSpec<TestContext> {
       });
 
       it("a user can make a reservation on another user publication", () -> {
-        Transaction newTransaction = anotherUser.get().makeReservation(publication.get());
+        Reservation newReservation = anotherUser.get().makeReservation(publication.get());
 
-        assertThat(newTransaction.getClient()). isEqualTo(anotherUser.get());
+        assertThat(newReservation.getClient()). isEqualTo(anotherUser.get());
       });
 
       it("a user cant make a reservation on a publication of her own", () -> {
         try {
           publicationOwner.get().makeReservation(publication.get());
 
-          failBecauseExceptionWasNotThrown(InvalidTransaction.class);
-        } catch (InvalidTransaction e) {
+          failBecauseExceptionWasNotThrown(InvalidReservation.class);
+        } catch (InvalidReservation e) {
           assertThat(e).hasMessage("Cant apply for your own publication");
         }
       });

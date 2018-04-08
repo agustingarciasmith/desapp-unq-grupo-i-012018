@@ -1,9 +1,9 @@
 package ar.edu.unq.desapp.grupoi.model.errors;
 
-public class InvalidTransaction extends RuntimeException {
+public class InvalidReservation extends RuntimeException {
     public static final String MESSAGE = "Cant apply for your own publication";
 
-    public InvalidTransaction() {
+    public InvalidReservation() {
         super(
                 String.format(MESSAGE)
         );

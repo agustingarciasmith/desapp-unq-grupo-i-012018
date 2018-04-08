@@ -35,7 +35,7 @@ public class PublicationTests extends JavaSpec<TestContext>{
                 assertThat(publication.getCost()).isEqualTo(400);
             });
 
-            it("cant create publication without cost", () -> {
+            it("cant build publication without cost", () -> {
                 try {
                     publicationBuilder.get().withCost(null).build();
 

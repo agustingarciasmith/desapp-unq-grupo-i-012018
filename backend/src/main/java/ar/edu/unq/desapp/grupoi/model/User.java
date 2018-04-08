@@ -38,8 +38,15 @@ public class User {
   }
 
   public Publication createPublication(Publication publication) {
-    publication.setOwner(this);
     return publication;
+  }
+
+  public Reservation makeReservation(Publication publication) {
+    return new Reservation(publication, this);
+  }
+
+  public void confirmReservation(Reservation reservation) {
+    reservation.confirm();
   }
 
   @Override
@@ -55,9 +62,5 @@ public class User {
   @Override
   public int hashCode() {
     return cuil != null ? cuil.hashCode() : 0;
-  }
-
-  public Transaction makeReservation(Publication publication) {
-   return new Transaction(publication, this);
   }
 }

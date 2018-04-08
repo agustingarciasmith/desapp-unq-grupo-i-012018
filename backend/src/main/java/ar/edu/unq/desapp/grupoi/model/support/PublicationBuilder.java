@@ -2,11 +2,12 @@ package ar.edu.unq.desapp.grupoi.model.support;
 
 import ar.edu.unq.desapp.grupoi.model.AvailabilitySchedule;
 import ar.edu.unq.desapp.grupoi.model.Publication;
+import ar.edu.unq.desapp.grupoi.model.User;
 import ar.edu.unq.desapp.grupoi.model.Vehicle;
 
 public class PublicationBuilder {
-    private VehicleBuilder vehicleBuilder = new VehicleBuilder();
-    private Vehicle vehicle = vehicleBuilder.buildVehicle();
+    private User owner = new UserBuilder().build();
+    private Vehicle vehicle = new VehicleBuilder().buildVehicle();
     private String city = "Buenos Aires";
     private String pickUpAdress = "pick up address";
     private String returnAdress = "return address";
@@ -49,7 +50,12 @@ public class PublicationBuilder {
         return this;
     }
 
+    public PublicationBuilder withOwner(User owner) {
+        this.owner = owner;
+        return this;
+    }
+
     public Publication build() {
-        return new Publication(vehicle,city, pickUpAdress, returnAdress, contactPhone, schedule, cost);
+        return new Publication(owner, vehicle,city, pickUpAdress, returnAdress, contactPhone, schedule, cost);
     }
 }

@@ -31,7 +31,7 @@ public class VehicleTests extends JavaSpec<TestContext> {
         assertThat(vehicle.getDescription()).isEqualTo("This is an appropriate description");
       });
 
-      it("cant create vehicle without type", () -> {
+      it("cant build vehicle without type", () -> {
         try {
           vehicleBuilder.get().withType(null).buildVehicle();
 
@@ -41,7 +41,7 @@ public class VehicleTests extends JavaSpec<TestContext> {
         }
       });
 
-      it("cant create vehicle without number of passengers", () -> {
+      it("cant build vehicle without number of passengers", () -> {
         try {
           vehicleBuilder.get().withPassengers(null).buildVehicle();
 
@@ -51,7 +51,7 @@ public class VehicleTests extends JavaSpec<TestContext> {
         }
       });
 
-      it("cant create vehicle without description", () -> {
+      it("cant build vehicle without description", () -> {
         try {
           vehicleBuilder.get().withDescription(null).buildVehicle();
 
@@ -61,7 +61,7 @@ public class VehicleTests extends JavaSpec<TestContext> {
         }
       });
 
-      it("cant create vehicle without license", () -> {
+      it("cant build vehicle without license", () -> {
         try {
           vehicleBuilder.get().withLicense(null).buildVehicle();
 

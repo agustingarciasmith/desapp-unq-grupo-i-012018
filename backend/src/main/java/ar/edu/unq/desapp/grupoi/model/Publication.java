@@ -15,9 +15,10 @@ public class Publication {
     private Integer cost;
     private User owner;
 
-    public Publication(Vehicle vehicle, String city, String pickUpAdress, String returnAdress, String contactPhone, AvailabilitySchedule schedule, Integer cost)
+    public Publication(User owner, Vehicle vehicle, String city, String pickUpAdress, String returnAdress, String contactPhone, AvailabilitySchedule schedule, Integer cost)
     {
         if(cost == null) throw new FieldMissing(COST);
+        this.owner = owner;
         this.vehicle = vehicle;
         this.city = city;
         this.pickUpAdress = pickUpAdress;
@@ -35,6 +36,4 @@ public class Publication {
     public Integer getCost() { return cost; }
     public AvailabilitySchedule getSchedule() { return schedule; }
     public User getOwner() { return owner; }
-
-    public void setOwner(User owner) { this.owner = owner; }
 }
