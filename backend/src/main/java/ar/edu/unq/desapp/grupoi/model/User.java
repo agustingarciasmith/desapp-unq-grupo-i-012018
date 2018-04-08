@@ -41,21 +41,21 @@ public class User {
     return publication;
   }
 
-  public Reservation makeReservation(Publication publication) {
+  public Reservation makeReservationAsClient(Publication publication) {
     return new Reservation(publication, this);
   }
 
-  public void confirmReservation(Reservation reservation) {
+  public void confirmReservationAsOwner(Reservation reservation) {
     reservation.confirm();
   }
 
-  public void informsAcceptance(Reservation reservation) {
-    reservation.acceptanceInformed();
-  }
+  public void informReceptionAsClient(Reservation reservation) { reservation.vehicleReceivedByClient(); }
 
-  public void confirmAcceptance(Reservation reservation) {
-    reservation.confirmedRent();
-  }
+  public void informDeliverAsOwner(Reservation reservation) { reservation.vehicleDeliveredByOwner(); }
+
+  public void informDeliverAsClient(Reservation reservation) { reservation.vehicleDeliveredByClient(); }
+
+  public void informReceptionAsOwner(Reservation reservation) { reservation.vehicleReceivedByOwner(); }
 
   @Override
   public boolean equals(Object o) {

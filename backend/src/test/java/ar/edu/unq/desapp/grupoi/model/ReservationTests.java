@@ -4,10 +4,15 @@ import ar.com.dgarcia.javaspec.api.JavaSpec;
 import ar.com.dgarcia.javaspec.api.JavaSpecRunner;
 import ar.com.dgarcia.javaspec.api.TestContext;
 import ar.com.dgarcia.javaspec.api.Variable;
+import ar.edu.unq.desapp.grupoi.model.errors.ActionNotAllowed;
+import ar.edu.unq.desapp.grupoi.model.errors.FieldMissing;
+import ar.edu.unq.desapp.grupoi.model.reservationStates.*;
 import ar.edu.unq.desapp.grupoi.model.support.ReservationBuilder;
+import org.assertj.core.api.Assertions;
 import org.junit.runner.RunWith;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(JavaSpecRunner.class)
 public class ReservationTests extends JavaSpec<TestContext> {
@@ -28,31 +33,69 @@ public class ReservationTests extends JavaSpec<TestContext> {
             });
 
             it("when a reservation is created its on pending state", () -> {
-                assertThat(reservation.get().getState()).isEqualTo(ReservationState.PENDING);
+                assertTrue(reservation.get().getState() instanceof PendingState);
             });
 
             it("the owner can confirm a reservation pending", () -> {
-                owner.get().confirmReservation(reservation.get());
-                assertThat(reservation.get().getState()).isEqualTo(ReservationState.CONFIRMED);
+                owner.get().confirmReservationAsOwner(reservation.get());
+                assertTrue(reservation.get().getState() instanceof ConfirmedState);
             });
 
-            it("the client informs that accepts the vehicle", () -> {
-                owner.get().confirmReservation(reservation.get());
-                client.get().informsAcceptance(reservation.get());
-                assertThat(reservation.get().getState()).isEqualTo(ReservationState.ACCEPTANCE_PENDING);
+            it("an action on an incorrect stage cant be made", () -> {
+                try {
+                    owner.get().informReceptionAsOwner(reservation.get());
+
+                    Assertions.failBecauseExceptionWasNotThrown(ActionNotAllowed.class);
+                } catch (ActionNotAllowed e) {
+                    assertThat(e).hasMessage(ActionNotAllowed.MESSAGE);
+                }
+
             });
 
-            it("the owner then confirms acceptance", () -> {
-                owner.get().confirmReservation(reservation.get());
-                client.get().informsAcceptance(reservation.get());
-                owner.get().confirmAcceptance(reservation.get());
-                assertThat(reservation.get().getState()).isEqualTo(ReservationState.RENT_STARTED);
+            it("the client informs that receives the vehicle", () -> {
+                owner.get().confirmReservationAsOwner(reservation.get());
+                client.get().informReceptionAsClient(reservation.get());
+                assertTrue(reservation.get().getState() instanceof ClientReceivedState);
+            });
+
+            it("the owner informs that delivered the vehicle", () -> {
+                owner.get().confirmReservationAsOwner(reservation.get());
+                owner.get().informDeliverAsOwner(reservation.get());
+                assertTrue(reservation.get().getState() instanceof OwnerDeliveredState);
+            });
+
+            it("when both confirm rent starts", () -> {
+                owner.get().confirmReservationAsOwner(reservation.get());
+                client.get().informReceptionAsClient(reservation.get());
+                owner.get().informDeliverAsOwner(reservation.get());
+                assertTrue(reservation.get().getState() instanceof RentStartedState);
+            });
+
+            it("the client informs returning the vehicle", () -> {
+                owner.get().confirmReservationAsOwner(reservation.get());
+                client.get().informReceptionAsClient(reservation.get());
+                owner.get().informDeliverAsOwner(reservation.get());
+                client.get().informDeliverAsClient(reservation.get());
+                assertTrue(reservation.get().getState() instanceof ClientDeliveredState);
+            });
+
+            it("the owner informs vehicle has been returned", () -> {
+                owner.get().confirmReservationAsOwner(reservation.get());
+                client.get().informReceptionAsClient(reservation.get());
+                owner.get().informDeliverAsOwner(reservation.get());
+                owner.get().informReceptionAsOwner(reservation.get());
+                assertTrue(reservation.get().getState() instanceof OwnerReceivedState);
+            });
+
+            it("when both confirm rent finishes", () -> {
+                owner.get().confirmReservationAsOwner(reservation.get());
+                client.get().informReceptionAsClient(reservation.get());
+                owner.get().informDeliverAsOwner(reservation.get());
+                owner.get().informReceptionAsOwner(reservation.get());
+                client.get().informDeliverAsClient(reservation.get());
+                assertTrue(reservation.get().getState() instanceof RentFinishedState);
             });
         });
-
-
-
-
     }
 }
 

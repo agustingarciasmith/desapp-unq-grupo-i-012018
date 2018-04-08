@@ -84,14 +84,14 @@ public class UserTests extends JavaSpec<TestContext> {
       });
 
       it("a user can make a reservation on another user publication", () -> {
-        Reservation newReservation = anotherUser.get().makeReservation(publication.get());
+        Reservation newReservation = anotherUser.get().makeReservationAsClient(publication.get());
 
         assertThat(newReservation.getClient()). isEqualTo(anotherUser.get());
       });
 
       it("a user cant make a reservation on a publication of her own", () -> {
         try {
-          publicationOwner.get().makeReservation(publication.get());
+          publicationOwner.get().makeReservationAsClient(publication.get());
 
           failBecauseExceptionWasNotThrown(InvalidReservation.class);
         } catch (InvalidReservation e) {
