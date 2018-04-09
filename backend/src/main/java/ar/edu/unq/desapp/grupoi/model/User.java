@@ -2,12 +2,15 @@ package ar.edu.unq.desapp.grupoi.model;
 
 import ar.edu.unq.desapp.grupoi.model.errors.NameLengthOutOfBounds;
 
+import java.util.ArrayList;
+
 public class User {
 
   private String cuil;
   private String name;
   private String address;
   private String email;
+  private ArrayList<Integer> score = new ArrayList<>();
 
   public User(String name, String address, String email, String cuil) {
     if (name.length() < 4 || name.length() > 50) throw new NameLengthOutOfBounds();
@@ -19,7 +22,38 @@ public class User {
     this.cuil = cuil;
   }
 
+  public Publication createPublication(Publication publication) {
+    return publication;
+  }
 
+  public Reservation makeReservationAsClient(Publication publication) {
+    return new Reservation(publication, this);
+  }
+
+  public Reservation confirmReservationAsOwner(Reservation reservation){
+    reservation.confirm();
+    return reservation;
+  }
+
+  public Reservation informReceptionAsClient(Reservation reservation){
+    reservation.vehicleReceivedByClient();
+    return reservation;
+  }
+
+  public Reservation informDeliverAsOwner(Reservation reservation){
+    reservation.vehicleDeliveredByOwner();
+    return reservation;
+  }
+
+  public Reservation informDeliverAsClient(Reservation reservation){
+    reservation.vehicleDeliveredByClient();
+    return reservation;
+  }
+
+  public Reservation informReceptionAsOwner(Reservation reservation){
+    reservation.vehicleReceivedByOwner();
+    return reservation;
+  }
 
   public String getCuil() {
     return cuil;
@@ -37,25 +71,13 @@ public class User {
     return email;
   }
 
-  public Publication createPublication(Publication publication) {
-    return publication;
+  public Double getScore(){
+    Double score = null;
+    if (this.score.size() > 0) {
+      score = (double) this.score.stream().mapToInt(Integer::intValue).sum() / this.score.size();
+    }
+    return score;
   }
-
-  public Reservation makeReservationAsClient(Publication publication) {
-    return new Reservation(publication, this);
-  }
-
-  public void confirmReservationAsOwner(Reservation reservation) {
-    reservation.confirm();
-  }
-
-  public void informReceptionAsClient(Reservation reservation) { reservation.vehicleReceivedByClient(); }
-
-  public void informDeliverAsOwner(Reservation reservation) { reservation.vehicleDeliveredByOwner(); }
-
-  public void informDeliverAsClient(Reservation reservation) { reservation.vehicleDeliveredByClient(); }
-
-  public void informReceptionAsOwner(Reservation reservation) { reservation.vehicleReceivedByOwner(); }
 
   @Override
   public boolean equals(Object o) {
