@@ -29,23 +29,23 @@ public class ReservationBuilder {
         return reservation;
     }
 
-    public Reservation bothConfirmsRentStartedReservation() {
+    public Reservation bothConfirmRentStartedReservation() {
         Reservation reservation = client.informReceptionAsClient(ownerInformsDeliverReservation());
         return reservation;
     }
 
     public Reservation clientInformsReturningVehicleReservation() {
-        Reservation reservation = client.informDeliverAsClient(bothConfirmsRentStartedReservation());
+        Reservation reservation = client.informDeliverAsClientAndScore(bothConfirmRentStartedReservation(), 5);
         return reservation;
     }
 
     public Reservation ownerInformsReceptionReservation() {
-        Reservation reservation = owner.informReceptionAsOwner(bothConfirmsRentStartedReservation());
+        Reservation reservation = owner.informReceptionAsOwnerAndScore(bothConfirmRentStartedReservation(), 5);
         return reservation;
     }
 
     public Reservation bothConfirmRetuningVehicleReservation() {
-        Reservation reservation = client.informDeliverAsClient(ownerInformsReceptionReservation());
+        Reservation reservation = client.informDeliverAsClientAndScore(ownerInformsReceptionReservation(), 5);
         return reservation;
     }
 

@@ -7,7 +7,9 @@ import ar.com.dgarcia.javaspec.api.Variable;
 import ar.edu.unq.desapp.grupoi.model.errors.EmailIsInvalid;
 import ar.edu.unq.desapp.grupoi.model.errors.InvalidReservation;
 import ar.edu.unq.desapp.grupoi.model.errors.NameLengthOutOfBounds;
+import ar.edu.unq.desapp.grupoi.model.errors.ScoreOutOfBounds;
 import ar.edu.unq.desapp.grupoi.model.support.PublicationBuilder;
+import ar.edu.unq.desapp.grupoi.model.support.ReservationBuilder;
 import ar.edu.unq.desapp.grupoi.model.support.UserBuilder;
 import org.junit.runner.RunWith;
 
@@ -98,6 +100,47 @@ public class UserTests extends JavaSpec<TestContext> {
           assertThat(e).hasMessage("Cant apply for your own publication");
         }
       });
+    });
+
+    describe("user scoring", () -> {
+      Variable<Reservation> reservation = Variable.create();
+      Variable<User> owner = Variable.create();
+      Variable<User> client = Variable.create();
+
+      beforeEach(()-> {
+        reservation.set(new ReservationBuilder().bothConfirmRentStartedReservation());
+        owner.set(reservation.get().getOwner());
+        client.set(reservation.get().getClient());
+      });
+
+      it("the owner has to score the client when informing receiveing the vehicle", () -> {
+        owner.get().informReceptionAsOwnerAndScore(reservation.get(), 5);
+        assertThat(client.get().getScore()).isEqualTo(5);
+      });
+
+      it("the client has to score the owner when informing delivering the vehicle", () -> {
+        client.get().informDeliverAsClientAndScore(reservation.get(), 5);
+        assertThat(owner.get().getScore()).isEqualTo(5);
+      });
+
+      it("the score should be over 0", () -> {
+        try {
+          client.get().informDeliverAsClientAndScore(reservation.get(), 0);
+          failBecauseExceptionWasNotThrown(ScoreOutOfBounds.class);
+        } catch (ScoreOutOfBounds e) {
+          assertThat(e).hasMessage(ScoreOutOfBounds.MESSAGE);
+        }
+      });
+
+      it("the score should be less than 6", () -> {
+        try {
+          client.get().informDeliverAsClientAndScore(reservation.get(), 6);
+          failBecauseExceptionWasNotThrown(ScoreOutOfBounds.class);
+        } catch (ScoreOutOfBounds e) {
+          assertThat(e).hasMessage(ScoreOutOfBounds.MESSAGE);
+        }
+      });
+
     });
   }
 }

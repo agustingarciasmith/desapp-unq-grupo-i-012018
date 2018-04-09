@@ -3,6 +3,9 @@ package ar.edu.unq.desapp.grupoi.model;
 import ar.edu.unq.desapp.grupoi.model.errors.InvalidReservation;
 import ar.edu.unq.desapp.grupoi.model.reservationStates.*;
 
+import java.time.Clock;
+import java.time.LocalDateTime;
+
 public class Reservation {
     private final Publication publication;
     private User client;

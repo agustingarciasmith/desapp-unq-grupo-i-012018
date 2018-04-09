@@ -1,6 +1,7 @@
 package ar.edu.unq.desapp.grupoi.model;
 
 import ar.edu.unq.desapp.grupoi.model.errors.NameLengthOutOfBounds;
+import ar.edu.unq.desapp.grupoi.model.errors.ScoreOutOfBounds;
 
 import java.util.ArrayList;
 
@@ -45,14 +46,29 @@ public class User {
     return reservation;
   }
 
-  public Reservation informDeliverAsClient(Reservation reservation){
+  public Reservation informDeliverAsClientAndScore(Reservation reservation, Integer score){
     reservation.vehicleDeliveredByClient();
+    reservation.getOwner().addScore(score);
     return reservation;
   }
 
-  public Reservation informReceptionAsOwner(Reservation reservation){
+  public Reservation informReceptionAsOwnerAndScore(Reservation reservation, Integer score){
     reservation.vehicleReceivedByOwner();
+    reservation.getClient().addScore(score);
     return reservation;
+  }
+
+  public void addScore(Integer score) {
+    if (1 > score || 5 < score) throw new ScoreOutOfBounds();
+    this.score.add(score);
+  }
+
+  public Double getScore(){
+    Double score = null;
+    if (this.score.size() > 0) {
+      score = (double) this.score.stream().mapToInt(Integer::intValue).sum() / this.score.size();
+    }
+    return score;
   }
 
   public String getCuil() {
@@ -69,14 +85,6 @@ public class User {
 
   public String getEmail() {
     return email;
-  }
-
-  public Double getScore(){
-    Double score = null;
-    if (this.score.size() > 0) {
-      score = (double) this.score.stream().mapToInt(Integer::intValue).sum() / this.score.size();
-    }
-    return score;
   }
 
   @Override

@@ -39,7 +39,7 @@ public class ReservationTests extends JavaSpec<TestContext> {
             it("an action on an incorrect stage cant be made", () -> {
                 reservation.set(builder.get().newReservation());
                 try {
-                    reservation.get().getOwner().informReceptionAsOwner(reservation.get());
+                    reservation.get().getOwner().informReceptionAsOwnerAndScore(reservation.get(), 5);
 
                     Assertions.failBecauseExceptionWasNotThrown(ActionNotAllowed.class);
                 } catch (ActionNotAllowed e) {
@@ -57,7 +57,7 @@ public class ReservationTests extends JavaSpec<TestContext> {
             });
 
             it("both confirm rent starts", () -> {
-                assertTrue(builder.get().bothConfirmsRentStartedReservation().getState() instanceof RentStartedState);
+                assertTrue(builder.get().bothConfirmRentStartedReservation().getState() instanceof RentStartedState);
             });
 
             it("the client informs returning the vehicle", () -> {
@@ -70,6 +70,19 @@ public class ReservationTests extends JavaSpec<TestContext> {
 
             it("when both confirm rent finishes", () -> {
                 assertTrue(builder.get().bothConfirmRetuningVehicleReservation().getState() instanceof RentFinishedState);
+            });
+        });
+
+        describe("reservation changes depending time passed", () -> {
+
+            beforeEach(()-> {
+                builder.set(new ReservationBuilder());
+            });
+
+            it("if 30 minutes pass after client confirms receiving vehicle reservation is rejected", () -> {
+
+                reservation.set(builder.get().clientInformsReceptionReservation());
+
             });
         });
     }
