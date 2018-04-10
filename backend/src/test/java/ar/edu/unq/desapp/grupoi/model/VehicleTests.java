@@ -18,7 +18,6 @@ public class VehicleTests extends JavaSpec<TestContext> {
   public void define() {
     describe("vehicle creation", () -> {
       Variable<VehicleBuilder> vehicleBuilder = Variable.create();
-      String longDescription = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec qua";
 
       beforeEach(()-> {
         vehicleBuilder.set(new VehicleBuilder());
@@ -82,6 +81,7 @@ public class VehicleTests extends JavaSpec<TestContext> {
 
       it("description cant be longer than 200 characters", ()  -> {
         try {
+          String longDescription = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec qua";
           vehicleBuilder.get().withDescription(longDescription).buildVehicle();
 
           Assertions.failBecauseExceptionWasNotThrown(DescriptionLengthOutOfBounds.class);
