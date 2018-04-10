@@ -23,5 +23,14 @@ hs_err_pid*
 
 .idea
 
-backend/desapp-grupoi-backend.iml
-backend/target
+desapp-grupoi-backend/desapp-grupoi-backend.iml
+desapp-grupoi-backend/target
+
+desapp-grupoi-frontend/node_modules
+desapp-grupoi-frontend/node
+desapp-grupoi-frontend/etc
+desapp-grupoi-frontend/dist
+desapp-grupoi-frontend/desapp-grupoi-frontend.iml
+desapp-grupoi-frontend/target/
+
+desapp-grupoi.iml
