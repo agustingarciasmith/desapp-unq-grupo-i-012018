@@ -3,8 +3,10 @@ package ar.edu.unq.desapp.grupoi.model;
 import ar.com.dgarcia.javaspec.api.JavaSpec;
 import ar.com.dgarcia.javaspec.api.JavaSpecRunner;
 import ar.com.dgarcia.javaspec.api.TestContext;
+import ar.com.dgarcia.javaspec.api.Variable;
 import ar.edu.unq.desapp.grupoi.model.errors.DescriptionLengthOutOfBounds;
 import ar.edu.unq.desapp.grupoi.model.errors.FieldMissing;
+import ar.edu.unq.desapp.grupoi.model.support.VehicleBuilder;
 import org.assertj.core.api.Assertions;
 import org.junit.runner.RunWith;
 
@@ -15,47 +17,63 @@ public class VehicleTests extends JavaSpec<TestContext> {
   @Override
   public void define() {
     describe("vehicle creation", () -> {
-      String shortDescription = "Short description";
-      String appropriateDescription = "This is an appropriate description";
+      Variable<VehicleBuilder> vehicleBuilder = Variable.create();
       String longDescription = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec qua";
 
-      it("vehicle gets created with appropriate arguments", () -> {
-        Vehicle vehicle = new Vehicle(VehicleType.AUTO, 4, appropriateDescription);
-        assertThat(vehicle.getType()).isEqualTo(VehicleType.AUTO);
-        assertThat(vehicle.getNumberOfPassengers()).isEqualTo(4);
-        assertThat(vehicle.getDescription()).isEqualTo(appropriateDescription);
+      beforeEach(()-> {
+        vehicleBuilder.set(new VehicleBuilder());
       });
 
-      it("cant create vehicle without type", () -> {
+      it("vehicle gets created with appropriate arguments", () -> {
+        Vehicle vehicle = vehicleBuilder.get().buildVehicle();
+        assertThat(vehicle.getType()).isEqualTo(VehicleType.AUTO);
+        assertThat(vehicle.getNumberOfPassengers()).isEqualTo(4);
+        assertThat(vehicle.getDescription()).isEqualTo("This is an appropriate description");
+      });
+
+      it("cant build vehicle without type", () -> {
         try {
-          new Vehicle(null, 4, appropriateDescription);
+          vehicleBuilder.get().withType(null).buildVehicle();
+
           Assertions.failBecauseExceptionWasNotThrown(FieldMissing.class);
         } catch (FieldMissing e) {
           assertThat(e).hasMessage("Type field is obligatory");
         }
       });
 
-      it("cant create vehicle without number of passengers", () -> {
+      it("cant build vehicle without number of passengers", () -> {
         try {
-          new Vehicle(VehicleType.MOTOCICLETA, null, appropriateDescription);
+          vehicleBuilder.get().withPassengers(null).buildVehicle();
+
           Assertions.failBecauseExceptionWasNotThrown(FieldMissing.class);
         } catch (FieldMissing e) {
           assertThat(e).hasMessage("Number of passengers field is obligatory");
         }
       });
 
-      it("cant create vehicle without description", () -> {
+      it("cant build vehicle without description", () -> {
         try {
-          new Vehicle(VehicleType.MOTOCICLETA, 4, null);
+          vehicleBuilder.get().withDescription(null).buildVehicle();
+
           Assertions.failBecauseExceptionWasNotThrown(FieldMissing.class);
         } catch (FieldMissing e) {
           assertThat(e).hasMessage("Description field is obligatory");
         }
       });
 
+      it("cant build vehicle without license", () -> {
+        try {
+          vehicleBuilder.get().withLicense(null).buildVehicle();
+
+          Assertions.failBecauseExceptionWasNotThrown(FieldMissing.class);
+        } catch (FieldMissing e) {
+          assertThat(e).hasMessage("License field is obligatory");
+        }
+      });
+
       it("description cant be shorter than 30 characters", ()  -> {
         try {
-          new Vehicle(VehicleType.MOTOCICLETA, 4, shortDescription);
+          vehicleBuilder.get().withDescription("Short description").buildVehicle();
           Assertions.failBecauseExceptionWasNotThrown(DescriptionLengthOutOfBounds.class);
         } catch (DescriptionLengthOutOfBounds e) {
           assertThat(e).hasMessage(DescriptionLengthOutOfBounds.MESSAGE);
@@ -64,11 +82,18 @@ public class VehicleTests extends JavaSpec<TestContext> {
 
       it("description cant be longer than 200 characters", ()  -> {
         try {
-          new Vehicle(VehicleType.MOTOCICLETA, 4, longDescription);
+          vehicleBuilder.get().withDescription(longDescription).buildVehicle();
+
           Assertions.failBecauseExceptionWasNotThrown(DescriptionLengthOutOfBounds.class);
         } catch (DescriptionLengthOutOfBounds e) {
           assertThat(e).hasMessage(DescriptionLengthOutOfBounds.MESSAGE);
         }
+      });
+
+      it("a vehicle is considered equal to anohter if they have the same license", () -> {
+        Vehicle anotherVehicule = new VehicleBuilder().buildVehicle();
+        Vehicle differentVehicle = new VehicleBuilder().withLicense("BBB222").buildVehicle();
+        assertThat(vehicleBuilder.get().buildVehicle()).isEqualTo(anotherVehicule);
       });
     });
 
