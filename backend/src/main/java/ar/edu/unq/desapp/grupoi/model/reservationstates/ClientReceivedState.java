@@ -1,4 +1,4 @@
-package ar.edu.unq.desapp.grupoi.model.reservationStates;
+package ar.edu.unq.desapp.grupoi.model.reservationstates;
 
 import ar.edu.unq.desapp.grupoi.model.Reservation;
 import ar.edu.unq.desapp.grupoi.model.ReservationState;

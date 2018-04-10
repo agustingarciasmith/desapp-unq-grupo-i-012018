@@ -1,9 +1,6 @@
 package ar.edu.unq.desapp.grupoi.model;
 
 import ar.edu.unq.desapp.grupoi.model.errors.ActionNotAllowed;
-import ar.edu.unq.desapp.grupoi.model.reservationStates.*;
-
-import java.util.ArrayList;
 
 public abstract class ReservationState {
 

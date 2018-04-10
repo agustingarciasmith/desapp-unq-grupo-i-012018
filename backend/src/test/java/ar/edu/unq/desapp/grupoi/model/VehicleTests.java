@@ -90,11 +90,24 @@ public class VehicleTests extends JavaSpec<TestContext> {
         }
       });
 
-      it("a vehicle is considered equal to anohter if they have the same license", () -> {
-        Vehicle anotherVehicule = new VehicleBuilder().buildVehicle();
-        Vehicle differentVehicle = new VehicleBuilder().withLicense("BBB222").buildVehicle();
-        assertThat(vehicleBuilder.get().buildVehicle()).isEqualTo(anotherVehicule);
+      describe("vehicle equality", () -> {
+
+        Variable<Vehicle> anotherVehicule = Variable.create();
+        Variable<Vehicle> differentVehicle = Variable.create();
+
+        beforeEach(()-> {
+          anotherVehicule.set(vehicleBuilder.get().buildVehicle());
+        });
+
+        it("a vehicle is considered equal to another if they have the same license", () -> {
+          assertThat(vehicleBuilder.get().buildVehicle()).isEqualTo(anotherVehicule.get());
+        });
+
+        it("a vehicle is considered different to another if they have different license", () -> {
+          assertThat(vehicleBuilder.get().buildVehicle()).isNotEqualTo(differentVehicle.get());
+        });
       });
+
     });
 
   }
