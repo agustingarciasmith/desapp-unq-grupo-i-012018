@@ -1,6 +1,9 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 
+
+import {AuthServiceService} from './auth-service.service';
+
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {AgmCoreModule} from '@agm/core';
@@ -34,8 +37,8 @@ import {ToasterModule} from 'angular5-toaster/dist';
     BrowserAnimationsModule,
     ToasterModule
   ],
-  providers: [],
-  bootstrap: [AppComponent],
+  providers: [AuthServiceService],
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 }

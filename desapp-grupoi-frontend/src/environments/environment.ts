@@ -4,5 +4,11 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  authClientID: 'p8686zzvDeoUO4jEHL35MqbPRgdav8N8',
+  authDomain: 'unq-desa-grupoi.auth0.com',
+  authResponseType: 'token id_token',
+  authAudience: 'https://unq-desa-grupoi.auth0.com/userinfo',
+  authRedirectUri: 'http://localhost:4200/callback',
+  authScope: 'openid'
 };

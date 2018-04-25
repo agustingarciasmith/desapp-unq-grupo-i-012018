@@ -24,6 +24,7 @@
     "@angular/router": "^5.2.0",
     "angular5-toaster": "^1.0.2",
     "bootstrap": "^4.1.0",
+    "auth0-js": "^9.4.2",
     "core-js": "^2.4.1",
     "font-awesome": "^4.7.0",
     "jquery": "^3.3.1",
