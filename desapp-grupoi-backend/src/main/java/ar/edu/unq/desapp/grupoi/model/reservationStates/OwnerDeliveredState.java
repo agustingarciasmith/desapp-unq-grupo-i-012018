@@ -7,5 +7,10 @@ public class OwnerDeliveredState extends ReservationState {
 
     public void vehicleReceivedByClient(Reservation reservation) {
         reservation.setState(new RentStartedState());
+        reservation.setStartTime();
+    }
+
+    public void checkStartConfirmation(Reservation reservation) {
+        if (reservation.waitingTimeOver()) reservation.setState(new RentStartedState());
     }
 }

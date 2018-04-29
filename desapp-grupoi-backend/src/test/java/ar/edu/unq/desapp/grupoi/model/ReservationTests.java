@@ -57,7 +57,8 @@ public class ReservationTests extends JavaSpec<TestContext> {
             });
 
             it("both confirm rent starts", () -> {
-                assertTrue(builder.get().bothConfirmRentStartedReservation().getState() instanceof RentStartedState);
+                Reservation rentStartedReservation = builder.get().bothConfirmRentStartedReservation();
+                assertTrue(rentStartedReservation.getState() instanceof RentStartedState);
             });
 
             it("the client informs returning the vehicle", () -> {

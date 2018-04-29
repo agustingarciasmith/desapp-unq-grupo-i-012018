@@ -23,4 +23,6 @@ public abstract class ReservationState {
     public void vehicleReceivedByOwner(Reservation reservation) {
         throw new ActionNotAllowed();
     }
+
+    public void checkStartConfirmation(Reservation reservation) { throw new ActionNotAllowed(); }
 }

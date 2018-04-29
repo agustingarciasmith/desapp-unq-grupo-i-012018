@@ -7,5 +7,6 @@ public class OwnerReceivedState extends ReservationState {
 
     public void vehicleDeliveredByClient(Reservation reservation) {
         reservation.setState(new RentFinishedState());
+        reservation.calculateCost();
     }
 }
