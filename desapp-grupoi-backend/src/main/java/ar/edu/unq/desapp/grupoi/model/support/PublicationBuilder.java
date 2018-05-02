@@ -14,6 +14,12 @@ public class PublicationBuilder {
     private String contactPhone = "123456789";
     private AvailabilitySchedule schedule = new AvailabilitySchedule();
     private Integer cost = 400;
+    private int id = 1;
+
+    public PublicationBuilder withId(int id) {
+        this.id = id;
+        return this;
+    }
 
     public PublicationBuilder withVehicule(Vehicle vehicle) {
         this.vehicle = vehicle;
@@ -56,6 +62,6 @@ public class PublicationBuilder {
     }
 
     public Publication build() {
-        return new Publication(owner, vehicle,city, pickUpAdress, returnAdress, contactPhone, schedule, cost);
+        return new Publication(id, owner, vehicle, city, pickUpAdress, returnAdress, contactPhone, schedule, cost);
     }
 }

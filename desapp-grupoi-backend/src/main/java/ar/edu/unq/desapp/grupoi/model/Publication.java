@@ -9,31 +9,39 @@ public class Publication {
     private AvailabilitySchedule schedule;
     private Vehicle vehicle;
     private String city;
-    private String pickUpAdress;
-    private String returnAdress;
+    private String pickUpAddress;
+    private String returnAddress;
     private String contactPhone;
     private Integer cost;
     private User owner;
+    private int id;
 
-    public Publication(User owner, Vehicle vehicle, String city, String pickUpAdress, String returnAdress, String contactPhone, AvailabilitySchedule schedule, Integer cost)
+    public Publication(int id, User owner, Vehicle vehicle, String city, String pickUpAddress, String returnAddress, String contactPhone, AvailabilitySchedule schedule, Integer cost)
     {
         if(cost == null) throw new FieldMissing(COST);
         this.owner = owner;
         this.vehicle = vehicle;
         this.city = city;
-        this.pickUpAdress = pickUpAdress;
-        this.returnAdress = returnAdress;
+        this.pickUpAddress = pickUpAddress;
+        this.returnAddress = returnAddress;
         this.contactPhone = contactPhone;
         this.schedule = schedule;
         this.cost = cost;
+        this.id = id;
     }
 
     public Vehicle getVehicle() { return vehicle; }
     public String getCity() { return city; }
-    public String getPickUpAdress() { return pickUpAdress; }
-    public String getReturnAdress() { return returnAdress; }
+    public String getPickUpAddress() { return pickUpAddress; }
+    public String getReturnAddress() { return returnAddress; }
     public String getContactPhone() { return contactPhone; }
     public Integer getCost() { return cost; }
     public AvailabilitySchedule getSchedule() { return schedule; }
     public User getOwner() { return owner; }
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
 }

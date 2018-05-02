@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <section>
+        <header class="header">
+          <div class="row">
+            <div class="col-md-4">
+              <h1>Publications</h1>
+            </div>
+            <div class="col-md-6">
+ 
+            </div>
+            <div class="col-md-2">
+              <button type="button" class="btn btn-primary" (click)="redirectNewPublicationPage()">New Publication</button>
+            </div>
+          </div>
+ 
+        </header>
+      </section>
+ 
+      <section class="main">
+ 
+        <table class="table table-hover">
+          <thead>
+          <tr>
+            <th>#</th>
+            <th>Owner</th>
+            <th>Description</th>
+            <th>Pickup address</th>
+            <th>City</th>
+            <th>Cost x hour</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let publication of publications">
+            <th scope="row">{{publication.id}}</th>
+            <td>{{publication.owner.name}}</td>
+            <td>{{publication.vehicle.description}}</td>
+            <td>{{publication.pickUpAddress}}</td>
+            <td>{{publication.city}}</td>
+            <td>{{publication.cost}}</td>
+            <td>
+              <button type="button" class="btn btn-danger" (click)="viewPublicationPage(publication)">View</button>
+            </td>
+            <td></td>
+          </tr> 
+          </tbody>
+        </table>
+      </section>
+    </div>
+  </div>
+</div>

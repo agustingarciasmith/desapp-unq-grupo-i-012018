@@ -24,10 +24,6 @@ public class AvailabilityScheduleTests extends JavaSpec<TestContext> {
             AvailabilitySchedule aSchedule = new AvailabilitySchedule();
             aSchedule.setAsRentingDate(aRentingDate);
 
-            it("a date can be set as available on an availability schedule", () -> {
-                assertThat(aSchedule.getFirstDateAvailable()).isEqualTo(aRentingDate);
-            });
-
             it("a date cannot be set as available on an availability schedule twice", () -> {
                 try {
                     aSchedule.setAsRentingDate(aRentingDate);

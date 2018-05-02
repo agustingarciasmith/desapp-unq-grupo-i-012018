@@ -15,10 +15,6 @@ public class AvailabilitySchedule {
         rentingDates.add(aRentingDate);
     }
 
-    public LocalDate getFirstDateAvailable() {
-        return rentingDates.get(0);
-    }
-
     public boolean isAvailableForRentOn(LocalDate aRentingDate) {
         return rentingDates.contains(aRentingDate);
     }
@@ -26,5 +22,9 @@ public class AvailabilitySchedule {
     public void removeFromAvailability(LocalDate aRentingDate) {
         if (!isAvailableForRentOn(aRentingDate)) throw new InvalidDate();
         rentingDates.remove(aRentingDate);
+    }
+
+    public List<LocalDate> getRentingDates() {
+        return rentingDates;
     }
 }
