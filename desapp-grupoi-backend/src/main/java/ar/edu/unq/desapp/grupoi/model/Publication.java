@@ -1,7 +1,9 @@
 package ar.edu.unq.desapp.grupoi.model;
 
 import ar.edu.unq.desapp.grupoi.model.errors.FieldMissing;
+import org.springframework.stereotype.Component;
 
+@Component
 public class Publication {
 
     private static final String COST = "Cost";
@@ -14,9 +16,9 @@ public class Publication {
     private String contactPhone;
     private Integer cost;
     private User owner;
-    private int id;
+    private Integer id;
 
-    public Publication(int id, User owner, Vehicle vehicle, String city, String pickUpAddress, String returnAddress, String contactPhone, AvailabilitySchedule schedule, Integer cost)
+    public Publication(Integer id, User owner, Vehicle vehicle, String city, String pickUpAddress, String returnAddress, String contactPhone, AvailabilitySchedule schedule, Integer cost)
     {
         if(cost == null) throw new FieldMissing(COST);
         this.owner = owner;

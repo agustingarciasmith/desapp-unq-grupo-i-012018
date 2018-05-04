@@ -2,18 +2,24 @@ package ar.edu.unq.desapp.grupoi.model;
 
 import ar.edu.unq.desapp.grupoi.model.errors.InvalidReservation;
 import ar.edu.unq.desapp.grupoi.model.reservationStates.PendingState;
+import ar.edu.unq.desapp.grupoi.rest.services.MailClient;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.time.Clock;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
+@Component
 public class Reservation {
+
+    @Autowired
+    public MailClient mailClient;
     private Clock clock = Clock.systemUTC();
     private final Publication publication;
     private User client;
     private ReservationState state;
     private Instant startTime;
-
     private int rentDurationInHours;
     private double finalCost;
     private Instant startWaitingTime;
@@ -23,6 +29,9 @@ public class Reservation {
         this.client = client;
         this.publication = publication;
         this.state = new PendingState();
+        mailClient.prepareAndSend(getOwner().getEmail(), state.createEmailMessage(this));
+        mailClient.prepareAndSend(client.getEmail(), state.createEmailMessage(this));
+
     }
 
     public User getClient() {
@@ -41,25 +50,35 @@ public class Reservation {
         this.state = state;
     }
 
-    public User getOwner(){
+    public User getOwner() {
         return publication.getOwner();
     }
 
-    public void confirm() { this.state.confirm(this); }
+    public void confirm() {
+        this.state.confirm(this);
+    }
 
-    public void vehicleReceivedByClient() { this.state.vehicleReceivedByClient(this); }
+    public void vehicleReceivedByClient() {
+        this.state.vehicleReceivedByClient(this);
+    }
 
-    public void vehicleDeliveredByOwner() { this.state.vehicleDeliveredByOwner(this); }
+    public void vehicleDeliveredByOwner() {
+        this.state.vehicleDeliveredByOwner(this);
+    }
 
-    public void vehicleDeliveredByClient() { this.state.vehicleDeliveredByClient(this); }
+    public void vehicleDeliveredByClient() {
+        this.state.vehicleDeliveredByClient(this);
+    }
 
-    public void vehicleReceivedByOwner() { this.state.vehicleReceivedByOwner(this); }
+    public void vehicleReceivedByOwner() {
+        this.state.vehicleReceivedByOwner(this);
+    }
 
     public Instant getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(){
+    public void setStartTime() {
         this.startTime = clock.instant();
     }
 
@@ -92,7 +111,7 @@ public class Reservation {
         return (ChronoUnit.MINUTES.between(startWaitingTime, clock.instant()) + 1) > 30;
     }
 
-    public void setStartWaitingTime(Instant time){
+    public void setStartWaitingTime(Instant time) {
         startWaitingTime = time;
     }
 }
