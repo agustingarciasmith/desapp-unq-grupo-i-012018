@@ -1,0 +1,28 @@
+.body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: Roboto;
+}
+
+.titulo {
+  font-weight: bold;
+  font-size: 40px;
+  text-align: center;
+  margin: 20px;
+}
+
+.ingresa {
+  font-size: 20px;
+  color: black;
+  border-color: black;
+  text-align: center;
+  background-color: transparent;
+  border-width: medium;
+  padding: 5px;
+}
+
+.ingresa:hover {
+  font-weight: bold;
+  cursor: pointer;
+}

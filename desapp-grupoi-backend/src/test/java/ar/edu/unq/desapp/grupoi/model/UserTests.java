@@ -4,7 +4,7 @@ import ar.com.dgarcia.javaspec.api.JavaSpec;
 import ar.com.dgarcia.javaspec.api.JavaSpecRunner;
 import ar.com.dgarcia.javaspec.api.TestContext;
 import ar.com.dgarcia.javaspec.api.Variable;
-import ar.edu.unq.desapp.grupoi.model.errors.EmailIsInvalid;
+import ar.edu.unq.desapp.grupoi.model.errors.InvalidMail;
 import ar.edu.unq.desapp.grupoi.model.errors.InvalidReservation;
 import ar.edu.unq.desapp.grupoi.model.errors.NameLengthOutOfBounds;
 import ar.edu.unq.desapp.grupoi.model.errors.ScoreOutOfBounds;
@@ -54,8 +54,8 @@ public class UserTests extends JavaSpec<TestContext> {
         try {
           userBuilder.get().withEmail("notAnEmail").build();
 
-          failBecauseExceptionWasNotThrown(EmailIsInvalid.class);
-        } catch (EmailIsInvalid e) {
+          failBecauseExceptionWasNotThrown(InvalidMail.class);
+        } catch (InvalidMail e) {
           assertThat(e).hasMessage("Email notAnEmail is invalid");
         }
       });

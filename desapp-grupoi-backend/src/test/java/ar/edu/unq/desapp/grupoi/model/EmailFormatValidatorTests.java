@@ -1,6 +1,6 @@
 package ar.edu.unq.desapp.grupoi.model;
 
-import ar.edu.unq.desapp.grupoi.model.errors.EmailIsInvalid;
+import ar.edu.unq.desapp.grupoi.model.errors.InvalidMail;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -54,9 +54,9 @@ public class EmailFormatValidatorTests {
       emailFormatValidator.validate(this.email);
 
       if (!this.expectedValidation) {
-        failBecauseExceptionWasNotThrown(EmailIsInvalid.class);
+        failBecauseExceptionWasNotThrown(InvalidMail.class);
       }
-    } catch (EmailIsInvalid e){
+    } catch (InvalidMail e){
       assertThat(e).hasMessage("Email %s is invalid", this.email);
     }
   }

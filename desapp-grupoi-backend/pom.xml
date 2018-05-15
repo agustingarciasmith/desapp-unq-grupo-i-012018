@@ -35,7 +35,6 @@
 
     <dependencies>
 
-        <!--Compile dependencies-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -52,8 +51,6 @@
             <scope>test</scope>
         </dependency>
 
-
-        <!--Runtime dependencies-->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
