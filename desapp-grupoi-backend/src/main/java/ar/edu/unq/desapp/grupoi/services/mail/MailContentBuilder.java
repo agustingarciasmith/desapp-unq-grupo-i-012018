@@ -1,4 +1,4 @@
-package ar.edu.unq.desapp.grupoi.rest.services;
+package ar.edu.unq.desapp.grupoi.services.mail;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ public class MailContentBuilder {
     public String build(String message) {
         Context context = new Context();
         context.setVariable("message", message);
-        return templateEngine.process("mailTemplate", context);
+        return templateEngine.process("mailtemplate", context);
     }
 
 }

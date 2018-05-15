@@ -2,7 +2,7 @@ package ar.edu.unq.desapp.grupoi.model;
 
 import ar.edu.unq.desapp.grupoi.model.errors.InvalidReservation;
 import ar.edu.unq.desapp.grupoi.model.reservationStates.PendingState;
-import ar.edu.unq.desapp.grupoi.rest.services.MailClient;
+import ar.edu.unq.desapp.grupoi.services.mail.MailClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -10,11 +10,8 @@ import java.time.Clock;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
-@Component
 public class Reservation {
 
-    @Autowired
-    public MailClient mailClient;
     private Clock clock = Clock.systemUTC();
     private final Publication publication;
     private User client;
@@ -29,9 +26,6 @@ public class Reservation {
         this.client = client;
         this.publication = publication;
         this.state = new PendingState();
-        mailClient.prepareAndSend(getOwner().getEmail(), state.createEmailMessage(this));
-        mailClient.prepareAndSend(client.getEmail(), state.createEmailMessage(this));
-
     }
 
     public User getClient() {

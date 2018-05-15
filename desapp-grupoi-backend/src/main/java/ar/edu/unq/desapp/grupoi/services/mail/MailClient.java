@@ -1,4 +1,4 @@
-package ar.edu.unq.desapp.grupoi.rest.services;
+package ar.edu.unq.desapp.grupoi.services.mail;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;

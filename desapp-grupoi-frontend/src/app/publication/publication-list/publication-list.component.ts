@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class PublicationListComponent implements OnInit {
 
-  private publications: any[];
+  public publications: any[];
 
   constructor(private router: Router,
     private publicationService: PublicationService) { }

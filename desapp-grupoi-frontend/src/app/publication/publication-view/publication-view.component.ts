@@ -12,7 +12,7 @@ export class PublicationViewComponent implements OnInit {
 
   lat = 51.678418;
   lng = 7.809007;
-  private publication: any;
+  public publication: any;
   formattedAddress: string;
 
   ngOnInit(): void {
