@@ -1,0 +1,53 @@
+<div class="container">
+  <div class="row">
+    <header class="header">
+      <div class="row">
+        <h1>Publication</h1>
+      </div>
+      <hr />
+    </header>
+  </div>
+
+  <div class="row">
+    <br>
+    <div class="col-md-3">
+      <h3>Owner</h3>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Score</th>
+          </tr>
+          <tbody>
+            <tr>
+              <td>{{publication.owner.name}}</td>
+              <td>{{publication.owner.score}}</td>
+            </tr>
+          </tbody>
+      </table>
+    </div>
+    <div class="col-md-7">
+      <h3>Vehicle</h3>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Type</th>
+            <th scope="col"># passengers</th>
+          </tr>
+          <tbody>
+            <tr>
+              <td>{{publication.vehicle.description}}</td>
+              <td>{{publication.vehicle.numberOfPassengers}}</td>
+            </tr>
+          </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="container">
+    <agm-map [latitude]="lat" [longitude]="lng" [zoom]="15">
+      <agm-marker [latitude]="lat" [longitude]="lng">
+        <agm-info-window>{{publication.pickUpAddress}}</agm-info-window>
+      </agm-marker>
+    </agm-map>
+  </div>
+</div>
