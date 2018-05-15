@@ -4,7 +4,7 @@ import ar.com.dgarcia.javaspec.api.JavaSpec;
 import ar.com.dgarcia.javaspec.api.JavaSpecRunner;
 import ar.com.dgarcia.javaspec.api.TestContext;
 import ar.com.dgarcia.javaspec.api.Variable;
-import ar.edu.unq.desapp.grupoi.model.errors.EmailIsInvalid;
+import ar.edu.unq.desapp.grupoi.model.errors.InvalidMail;
 import ar.edu.unq.desapp.grupoi.model.errors.InvalidReservation;
 import ar.edu.unq.desapp.grupoi.model.errors.NameLengthOutOfBounds;
 import ar.edu.unq.desapp.grupoi.model.errors.ScoreOutOfBounds;
@@ -54,17 +54,10 @@ public class UserTests extends JavaSpec<TestContext> {
         try {
           userBuilder.get().withEmail("notAnEmail").build();
 
-          failBecauseExceptionWasNotThrown(EmailIsInvalid.class);
-        } catch (EmailIsInvalid e) {
+          failBecauseExceptionWasNotThrown(InvalidMail.class);
+        } catch (InvalidMail e) {
           assertThat(e).hasMessage("Email notAnEmail is invalid");
         }
-      });
-
-      it("a user is considered equal to another if they have the same cuil", () -> {
-        User anotherUser = new UserBuilder().build();
-        User differentUser = new UserBuilder().withCuil("2222222222").build();
-        assertThat(userBuilder.get().build()).isEqualTo(anotherUser);
-        assertThat(userBuilder.get().build()).isNotEqualTo(differentUser);
       });
     });
 
@@ -81,14 +74,14 @@ public class UserTests extends JavaSpec<TestContext> {
       });
 
       it("a user who creates a publication becomes its owner", () -> {
-        assertThat(publication.get().getOwner()).isEqualTo(publicationOwner.get());
-        assertThat(publication.get().getOwner()).isNotEqualTo(anotherUser.get());
+        assertThat(publication.get().getOwner().getCuil()).isEqualTo(publicationOwner.get().getCuil());
+        assertThat(publication.get().getOwner().getCuil()).isNotEqualTo(anotherUser.get().getCuil());
       });
 
       it("a user can make a reservation on another user publication", () -> {
         Reservation newReservation = anotherUser.get().makeReservationAsClient(publication.get());
 
-        assertThat(newReservation.getClient()). isEqualTo(anotherUser.get());
+        assertThat(newReservation.getClient().getCuil()). isEqualTo(anotherUser.get().getCuil());
       });
 
       it("a user cant make a reservation on a publication of her own", () -> {

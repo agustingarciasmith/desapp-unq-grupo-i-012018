@@ -3,102 +3,107 @@ package ar.edu.unq.desapp.grupoi.model;
 import ar.edu.unq.desapp.grupoi.model.errors.NameLengthOutOfBounds;
 import ar.edu.unq.desapp.grupoi.model.errors.ScoreOutOfBounds;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 
+@Entity
+@Table(name = "USERS")
 public class User {
 
-  private String cuil;
-  private String name;
-  private String address;
-  private String email;
-  private ArrayList<Integer> score = new ArrayList<>();
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ID")
+    private Long id;
 
-  public User(String name, String address, String email, String cuil) {
-    if (name.length() < 4 || name.length() > 50) throw new NameLengthOutOfBounds();
-    EmailFormatValidator.runValidation(email);
+    @Column(name = "CUIL", unique = true, nullable = false)
+    private String cuil;
 
-    this.name = name;
-    this.address = address;
-    this.email = email;
-    this.cuil = cuil;
-  }
+    @Column(name = "NAME", nullable = false)
+    private String name;
 
-  public Publication createPublication(Publication publication) {
-    return publication;
-  }
+    @Column(name = "ADRESS", nullable = false)
+    private String address;
 
-  public Reservation makeReservationAsClient(Publication publication) {
-    return new Reservation(publication, this);
-  }
+    @Column(name = "EMAIL", unique = true, nullable = false)
+    private String email;
 
-  public Reservation confirmReservationAsOwner(Reservation reservation){
-    reservation.confirm();
-    return reservation;
-  }
+    private ArrayList<Integer> score = new ArrayList<>();
 
-  public Reservation informReceptionAsClient(Reservation reservation){
-    reservation.vehicleReceivedByClient();
-    return reservation;
-  }
+    public User() {
 
-  public Reservation informDeliverAsOwner(Reservation reservation){
-    reservation.vehicleDeliveredByOwner();
-    return reservation;
-  }
-
-  public Reservation informDeliverAsClientAndScore(Reservation reservation, Integer score){
-    reservation.vehicleDeliveredByClient();
-    reservation.getOwner().addScore(score);
-    return reservation;
-  }
-
-  public Reservation informReceptionAsOwnerAndScore(Reservation reservation, Integer score){
-    reservation.vehicleReceivedByOwner();
-    reservation.getClient().addScore(score);
-    return reservation;
-  }
-
-  public void addScore(Integer score) {
-    if (1 > score || 5 < score) throw new ScoreOutOfBounds();
-    this.score.add(score);
-  }
-
-  public Double getScore(){
-    Double score = null;
-    if (this.score.size() > 0) {
-      score = (double) this.score.stream().mapToInt(Integer::intValue).sum() / this.score.size();
     }
-    return score;
-  }
 
-  public String getCuil() {
-    return cuil;
-  }
+    public User(String name, String address, String email, String cuil) {
+        if (name.length() < 4 || name.length() > 50) throw new NameLengthOutOfBounds();
+        EmailFormatValidator.runValidation(email);
 
-  public String getName() {
-    return name;
-  }
+        this.name = name;
+        this.address = address;
+        this.email = email;
+        this.cuil = cuil;
+    }
 
-  public String getAddress() {
-    return address;
-  }
+    public Publication createPublication(Publication publication) {
+        return publication;
+    }
 
-  public String getEmail() {
-    return email;
-  }
+    public Reservation makeReservationAsClient(Publication publication) {
+        return new Reservation(publication, this);
+    }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
+    public Reservation confirmReservationAsOwner(Reservation reservation) {
+        reservation.confirm();
+        return reservation;
+    }
 
-    User user = (User) o;
+    public Reservation informReceptionAsClient(Reservation reservation) {
+        reservation.vehicleReceivedByClient();
+        return reservation;
+    }
 
-    return cuil != null ? cuil.equals(user.cuil) : user.cuil == null;
-  }
+    public Reservation informDeliverAsOwner(Reservation reservation) {
+        reservation.vehicleDeliveredByOwner();
+        return reservation;
+    }
 
-  @Override
-  public int hashCode() {
-    return cuil != null ? cuil.hashCode() : 0;
-  }
+    public Reservation informDeliverAsClientAndScore(Reservation reservation, Integer score) {
+        reservation.vehicleDeliveredByClient();
+        reservation.getOwner().addScore(score);
+        return reservation;
+    }
+
+    public Reservation informReceptionAsOwnerAndScore(Reservation reservation, Integer score) {
+        reservation.vehicleReceivedByOwner();
+        reservation.getClient().addScore(score);
+        return reservation;
+    }
+
+    public void addScore(Integer score) {
+        if (1 > score || 5 < score) throw new ScoreOutOfBounds();
+        this.score.add(score);
+    }
+
+    public Double getScore() {
+        Double score = null;
+        if (this.score.size() > 0) {
+            score = (double) this.score.stream().mapToInt(Integer::intValue).sum() / this.score.size();
+        }
+        return score;
+    }
+
+    public String getCuil() {
+        return cuil;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getEmail() {
+        return email;
+    }
 }

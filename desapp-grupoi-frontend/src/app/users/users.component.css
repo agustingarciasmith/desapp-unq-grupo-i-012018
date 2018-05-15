@@ -1,0 +1,19 @@
+.nav {
+  display: flex;
+  flex-direction: row;
+  background-color: black;
+  padding: 10px;
+}
+
+a {
+  color: white;
+  width: 50%;
+  text-align: center;
+  border: 1px solid white;
+  font-family: Roboto;
+}
+
+a:hover {
+  font-weight: bold;
+  text-decoration: none;
+}

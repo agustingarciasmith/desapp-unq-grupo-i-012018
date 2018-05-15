@@ -22,7 +22,7 @@ public class Reservation {
     private Instant startWaitingTime;
 
     public Reservation(Publication publication, User client) {
-        if (client.equals(publication.getOwner())) throw new InvalidReservation();
+        if (client.getCuil().equals(publication.getOwner().getCuil())) throw new InvalidReservation();
         this.client = client;
         this.publication = publication;
         this.state = new PendingState();
