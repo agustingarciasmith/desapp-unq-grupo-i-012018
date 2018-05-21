@@ -12,10 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserServiceImpl implements UserService {
     private UserRepository repository;
-
     public UserServiceImpl(UserRepository repository) {
         this.repository = repository;
     }
+
     @Override
     public void create(User user) {
         validate(user);

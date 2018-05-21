@@ -9,6 +9,8 @@ import ar.edu.unq.desapp.grupoi.model.support.PublicationBuilder;
 import org.assertj.core.api.Assertions;
 import org.junit.runner.RunWith;
 
+import java.time.LocalDate;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(JavaSpecRunner.class)
@@ -32,6 +34,7 @@ public class PublicationTests extends JavaSpec<TestContext>{
                 assertThat(publication.getReturnAddress()).isEqualTo("return address");
                 assertThat(publication.getContactPhone()).isEqualTo("123456789");
                 assertThat(publication.getCost()).isEqualTo(400);
+                assertThat(publication.getAvailableDates().contains(LocalDate.parse("2018-05-18")));
             });
 
             it("cant build publication without cost", () -> {

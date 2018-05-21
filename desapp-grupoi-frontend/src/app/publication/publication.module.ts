@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpModule } from '@angular/http';
 
 import { PublicationRoutingModule } from './publication-routing.module';
 import { PublicationListComponent } from './publication-list/publication-list.component';
@@ -14,7 +15,8 @@ import { AgmCoreModule } from '@agm/core';
     PublicationRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    AgmCoreModule
+    AgmCoreModule,
+    HttpModule
   ],
   declarations: [PublicationListComponent, PublicationCreateComponent, PublicationViewComponent]
 })

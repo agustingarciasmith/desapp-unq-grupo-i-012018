@@ -3,7 +3,16 @@ package ar.edu.unq.desapp.grupoi.model;
 import ar.edu.unq.desapp.grupoi.model.errors.DescriptionLengthOutOfBounds;
 import ar.edu.unq.desapp.grupoi.model.errors.FieldMissing;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "VEHICLES")
 public class Vehicle {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  @Column(name = "ID")
+  private Long id;
   public static final String TYPE = "Type";
   public static final String NUMBER_OF_PASSENGERS = "Number of passengers";
   public static final String DESCRIPTION = "Description";
@@ -12,6 +21,8 @@ public class Vehicle {
   private VehicleType type;
   private String description;
   private String license;
+
+  public Vehicle(){}
 
   public Vehicle(VehicleType type, Integer numberOfPassengers, String description, String license) {
     if(type == null) throw new FieldMissing(TYPE);
