@@ -27,17 +27,36 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public void create(User user) {
+  public User create(User user) {
     validate(user);
-    repository.create(user);
+    repository.save(user);
+    return user;
+  }
+
+  @Override
+  public User update(User user) {
+    validateIdIsPresent(user);
+    validate(user);
+
+    repository.update(user);
+    return user;
+  }
+
+  private void validateIdIsPresent(User user) {
+    List<String> errors = new ArrayList<>();
+    if (user.getId() == null || user.getId() <= 0) errors.add(ErrorCode.User.ID_NOT_PRESENT);
   }
 
   private void validate(User user) {
     List<String> errors = new ArrayList<>();
+    completeValidations(user, errors);
+  }
+
+  private void completeValidations(User user, List<String> errors) {
     if (user.getAddress() == null) errors.add(ErrorCode.User.ADDRESS_NOT_PRESENT);
 
     if (user.getCuil() == null) errors.add(ErrorCode.User.CUIL_NOT_PRESENT);
-    if (CuilValidator.runValidation(user.getCuil())) errors.add(ErrorCode.User.CUIL_INVALID_FORMAT) ;
+    if (CuilValidator.runValidation(user.getCuil())) errors.add(ErrorCode.User.CUIL_INVALID_FORMAT);
 
     if (user.getEmail() == null) errors.add(ErrorCode.User.EMAIL_NOT_PRESENT);
     if (EmailFormatValidator.runValidation(user.getEmail())) errors.add(ErrorCode.User.EMAIL_INVALID_FORMAT);

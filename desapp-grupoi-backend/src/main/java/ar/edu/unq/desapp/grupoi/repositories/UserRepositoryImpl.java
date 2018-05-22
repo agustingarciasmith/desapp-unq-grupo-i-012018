@@ -5,8 +5,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class UserRepositoryImpl extends CarpnbRepository<User, Long> implements UserRepository {
-    @Override
-    public void create(User user) {
-        this.save(user);
-    }
 }

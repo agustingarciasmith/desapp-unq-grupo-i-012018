@@ -21,5 +21,7 @@ public enum ErrorCode {
     public static final String CUIL_NOT_PRESENT = BASE + CUIL + NOT_PRESENT;
 
     public static final String ADDRESS_NOT_PRESENT = BASE + "address." + NOT_PRESENT;
+
+    public static final String ID_NOT_PRESENT = BASE + "id." + NOT_PRESENT;
   }
 }
