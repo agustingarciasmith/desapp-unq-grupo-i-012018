@@ -1,7 +1,6 @@
 package ar.edu.unq.desapp.grupoi.model;
 
-import ar.edu.unq.desapp.grupoi.model.errors.FieldMissing;
-import org.springframework.stereotype.Component;
+import ar.edu.unq.desapp.grupoi.model.errors.model.FieldMissing;
 
 public class Publication {
 

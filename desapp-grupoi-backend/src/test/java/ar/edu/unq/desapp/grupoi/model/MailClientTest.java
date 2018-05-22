@@ -39,7 +39,7 @@ public class MailClientTest {
 
     @Test
     public void shouldSendMail() throws Exception {
-        String recipient = "carbnbgrupoi@gmail.com";
+        String recipient = "carpnbgrupoi@gmail.com";
         String message = "Test message content";
         mailClient.prepareAndSend(recipient, message);
         assertReceivedMessageContainsandIsSendFrom(message, recipient, 0);

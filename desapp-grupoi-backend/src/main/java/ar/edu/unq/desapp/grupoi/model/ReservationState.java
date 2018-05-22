@@ -1,6 +1,6 @@
 package ar.edu.unq.desapp.grupoi.model;
 
-import ar.edu.unq.desapp.grupoi.model.errors.ActionNotAllowed;
+import ar.edu.unq.desapp.grupoi.model.errors.model.ActionNotAllowed;
 
 public abstract class ReservationState {
 

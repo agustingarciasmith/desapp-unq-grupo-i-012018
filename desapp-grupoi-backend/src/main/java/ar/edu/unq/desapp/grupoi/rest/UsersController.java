@@ -1,7 +1,7 @@
 package ar.edu.unq.desapp.grupoi.rest;
 
 import ar.edu.unq.desapp.grupoi.model.User;
-import ar.edu.unq.desapp.grupoi.services.UserService;
+import ar.edu.unq.desapp.grupoi.services.user.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

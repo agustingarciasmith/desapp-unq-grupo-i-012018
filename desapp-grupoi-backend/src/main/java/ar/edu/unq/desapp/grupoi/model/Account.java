@@ -1,6 +1,6 @@
 package ar.edu.unq.desapp.grupoi.model;
 
-import ar.edu.unq.desapp.grupoi.model.errors.CanNotExtract;
+import ar.edu.unq.desapp.grupoi.model.errors.model.CanNotExtract;
 
 public class Account {
   private Integer credit;

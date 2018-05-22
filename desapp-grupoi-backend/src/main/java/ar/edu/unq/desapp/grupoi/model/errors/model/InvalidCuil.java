@@ -1,4 +1,4 @@
-package ar.edu.unq.desapp.grupoi.model.errors;
+package ar.edu.unq.desapp.grupoi.model.errors.model;
 
 public class InvalidCuil extends RuntimeException {
     public InvalidCuil(String cuil) {

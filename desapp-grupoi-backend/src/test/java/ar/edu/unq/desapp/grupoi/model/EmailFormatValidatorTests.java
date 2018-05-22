@@ -1,6 +1,6 @@
 package ar.edu.unq.desapp.grupoi.model;
 
-import ar.edu.unq.desapp.grupoi.model.errors.InvalidMail;
+import ar.edu.unq.desapp.grupoi.model.errors.model.InvalidMail;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;

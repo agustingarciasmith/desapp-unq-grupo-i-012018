@@ -1,7 +1,7 @@
 package ar.edu.unq.desapp.grupoi.model;
 
-import ar.edu.unq.desapp.grupoi.model.errors.DescriptionLengthOutOfBounds;
-import ar.edu.unq.desapp.grupoi.model.errors.FieldMissing;
+import ar.edu.unq.desapp.grupoi.model.errors.model.DescriptionLengthOutOfBounds;
+import ar.edu.unq.desapp.grupoi.model.errors.model.FieldMissing;
 
 public class Vehicle {
   public static final String TYPE = "Type";

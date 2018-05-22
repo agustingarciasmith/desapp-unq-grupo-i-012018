@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Transactional(readOnly = true)
-public abstract class CarbnbRepository<B, K extends Serializable> {
+public abstract class CarpnbRepository<B, K extends Serializable> {
 
   private Class<B> beanClass;
   protected EntityManager entityManager;
@@ -20,7 +20,7 @@ public abstract class CarbnbRepository<B, K extends Serializable> {
   /**
    * Constructor por default. Inicializa la clase del bean.
    */
-  public CarbnbRepository() {
+  public CarpnbRepository() {
     beanClass = (Class<B>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
   }
 

@@ -4,7 +4,7 @@ import ar.com.dgarcia.javaspec.api.JavaSpec;
 import ar.com.dgarcia.javaspec.api.JavaSpecRunner;
 import ar.com.dgarcia.javaspec.api.TestContext;
 import ar.com.dgarcia.javaspec.api.Variable;
-import ar.edu.unq.desapp.grupoi.model.errors.ActionNotAllowed;
+import ar.edu.unq.desapp.grupoi.model.errors.model.ActionNotAllowed;
 import ar.edu.unq.desapp.grupoi.model.reservationStates.*;
 import ar.edu.unq.desapp.grupoi.model.support.ReservationBuilder;
 import org.assertj.core.api.Assertions;

@@ -22,9 +22,9 @@ public class MailClient {
     public void prepareAndSend(String recipient, String message) {
         MimeMessagePreparator messagePreparator = mimeMessage -> {
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
-            messageHelper.setFrom("carbnbgrupoi@gmail.com");
+            messageHelper.setFrom("carpnbgrupoi@gmail.com");
             messageHelper.setTo(recipient);
-            messageHelper.setSubject("Action notification from CarBnb");
+            messageHelper.setSubject("Action notification from CarPnb");
             String content = mailContentBuilder.build(message);
             messageHelper.setText(content, true);
         };

@@ -1,4 +1,4 @@
-package ar.edu.unq.desapp.grupoi.model.errors;
+package ar.edu.unq.desapp.grupoi.model.errors.model;
 
 public class FieldMissing extends RuntimeException {
   public FieldMissing(String propertyMissing) {

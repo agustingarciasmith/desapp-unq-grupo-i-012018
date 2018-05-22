@@ -1,10 +1,7 @@
 package ar.edu.unq.desapp.grupoi.model;
 
-import ar.edu.unq.desapp.grupoi.model.errors.InvalidReservation;
+import ar.edu.unq.desapp.grupoi.model.errors.model.InvalidReservation;
 import ar.edu.unq.desapp.grupoi.model.reservationStates.PendingState;
-import ar.edu.unq.desapp.grupoi.services.mail.MailClient;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.time.Clock;
 import java.time.Instant;

@@ -1,4 +1,4 @@
-package ar.edu.unq.desapp.grupoi.services;
+package ar.edu.unq.desapp.grupoi.services.user;
 
 import ar.edu.unq.desapp.grupoi.model.User;
 

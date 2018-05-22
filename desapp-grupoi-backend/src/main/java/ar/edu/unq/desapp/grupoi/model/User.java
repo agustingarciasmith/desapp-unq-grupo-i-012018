@@ -1,7 +1,7 @@
 package ar.edu.unq.desapp.grupoi.model;
 
-import ar.edu.unq.desapp.grupoi.model.errors.NameLengthOutOfBounds;
-import ar.edu.unq.desapp.grupoi.model.errors.ScoreOutOfBounds;
+import ar.edu.unq.desapp.grupoi.model.errors.model.NameLengthOutOfBounds;
+import ar.edu.unq.desapp.grupoi.model.errors.model.ScoreOutOfBounds;
 
 import javax.persistence.*;
 import java.util.ArrayList;

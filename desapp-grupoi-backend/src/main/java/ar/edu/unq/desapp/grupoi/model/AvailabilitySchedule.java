@@ -1,6 +1,6 @@
 package ar.edu.unq.desapp.grupoi.model;
 
-import ar.edu.unq.desapp.grupoi.model.errors.InvalidDate;
+import ar.edu.unq.desapp.grupoi.model.errors.model.InvalidDate;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
