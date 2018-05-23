@@ -35,16 +35,16 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public User update(User user) {
-    validateIdIsPresent(user);
-    validate(user);
+    validateUpdate(user);
 
     repository.update(user);
     return user;
   }
 
-  private void validateIdIsPresent(User user) {
+  private void validateUpdate(User user) {
     List<String> errors = new ArrayList<>();
-    if (user.getId() == null || user.getId() <= 0) errors.add(ErrorCode.User.ID_NOT_PRESENT);
+    if (user.getId() == null) errors.add(ErrorCode.User.ID_NOT_PRESENT);
+    completeValidations(user, errors);
   }
 
   private void validate(User user) {
@@ -53,22 +53,29 @@ public class UserServiceImpl implements UserService {
   }
 
   private void completeValidations(User user, List<String> errors) {
-    if (user.getAddress() == null) errors.add(ErrorCode.User.ADDRESS_NOT_PRESENT);
+    if (isNullOrEmpty(user.getAddress())) errors.add(ErrorCode.User.ADDRESS_NOT_PRESENT);
 
-    if (user.getCuil() == null) errors.add(ErrorCode.User.CUIL_NOT_PRESENT);
-    if (CuilValidator.runValidation(user.getCuil())) errors.add(ErrorCode.User.CUIL_INVALID_FORMAT);
+    if (isNullOrEmpty(user.getCuil())) errors.add(ErrorCode.User.CUIL_NOT_PRESENT);
+    if (user.getCuil() != null &&
+      !CuilValidator.runValidation(user.getCuil())) errors.add(ErrorCode.User.CUIL_INVALID_FORMAT);
 
-    if (user.getEmail() == null) errors.add(ErrorCode.User.EMAIL_NOT_PRESENT);
-    if (EmailFormatValidator.runValidation(user.getEmail())) errors.add(ErrorCode.User.EMAIL_INVALID_FORMAT);
+    if (isNullOrEmpty(user.getEmail())) errors.add(ErrorCode.User.EMAIL_NOT_PRESENT);
+    if (user.getEmail() != null &&
+      !EmailFormatValidator.runValidation(user.getEmail())) errors.add(ErrorCode.User.EMAIL_INVALID_FORMAT);
 
-    if (user.getName() == null) errors.add(ErrorCode.User.NAME_NOT_PRESENT);
-    if (user.getName().length() < parameters.getMinUserNameLenght() ||
-      user.getName().length() > parameters.getMaxUserNameLenght()) {
+    if (isNullOrEmpty(user.getName())) errors.add(ErrorCode.User.NAME_NOT_PRESENT);
+    if (user.getName() != null && (
+      user.getName().length() < parameters.getMinUserNameLenght() ||
+      user.getName().length() > parameters.getMaxUserNameLenght())) {
       errors.add(ErrorCode.User.NAME_OUT_OF_BOUNDS);
     }
 
     if (!errors.isEmpty()) {
       throw new InvalidRequestException("Error validating user data", errors);
     }
+  }
+
+  private Boolean isNullOrEmpty(String field) {
+    return field == null || field.isEmpty();
   }
 }

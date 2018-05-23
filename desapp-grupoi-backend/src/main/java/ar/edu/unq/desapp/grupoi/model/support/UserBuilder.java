@@ -28,5 +28,5 @@ public class UserBuilder {
         return this;
     }
 
-    public User build() { return new User(name, address, email, cuil); }
+    public User build() { return new User(null, name, address, email, cuil); }
 }

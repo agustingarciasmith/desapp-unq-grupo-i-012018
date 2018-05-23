@@ -28,39 +28,6 @@ public class UserTests extends JavaSpec<TestContext> {
       userBuilder.set(new UserBuilder());
     });
 
-    describe("user creation", () -> {
-
-      it("cant build user with name shorter than 4 characters", () -> {
-        try {
-          userBuilder.get().withName("nan").build();
-
-          failBecauseExceptionWasNotThrown(NameLengthOutOfBounds.class);
-        } catch (NameLengthOutOfBounds e) {
-          assertThat(e).hasMessage(NameLengthOutOfBounds.MESSAGE);
-        }
-      });
-
-      it("cant build user with name longer than 50 characters", () -> {
-        try {
-          userBuilder.get().withName("Its an unusually long name to register on this app now").build();
-
-          failBecauseExceptionWasNotThrown(NameLengthOutOfBounds.class);
-        } catch (NameLengthOutOfBounds e) {
-          assertThat(e).hasMessage(NameLengthOutOfBounds.MESSAGE);
-        }
-      });
-
-      it("cant build user with invalid mail", () -> {
-        try {
-          userBuilder.get().withEmail("notAnEmail").build();
-
-          failBecauseExceptionWasNotThrown(InvalidMail.class);
-        } catch (InvalidMail e) {
-          assertThat(e).hasMessage("Email notAnEmail is invalid");
-        }
-      });
-    });
-
     describe("publication", () -> {
       Variable<User> publicationOwner = Variable.create();
       Variable<User> anotherUser = Variable.create();

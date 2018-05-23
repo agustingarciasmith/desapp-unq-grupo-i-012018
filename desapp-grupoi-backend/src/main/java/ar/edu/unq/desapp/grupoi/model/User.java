@@ -33,10 +33,8 @@ public class User {
 
     }
 
-    public User(String name, String address, String email, String cuil) {
-        if (name.length() < 4 || name.length() > 50) throw new NameLengthOutOfBounds();
-        EmailFormatValidator.runValidation(email);
-
+    public User(Long id, String name, String address, String email, String cuil) {
+        this.id = id;
         this.name = name;
         this.address = address;
         this.email = email;
