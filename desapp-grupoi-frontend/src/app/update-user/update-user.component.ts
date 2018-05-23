@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {User} from '../user';
 
 @Component({
   selector: 'app-update-user',
@@ -7,7 +9,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UpdateUserComponent implements OnInit {
 
-  constructor() { }
+  constructor(private http: HttpClient, private user: User) {
+  }
 
   ngOnInit() {
   }

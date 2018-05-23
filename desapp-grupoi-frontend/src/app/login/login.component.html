@@ -1,0 +1,17 @@
+<div>
+  <toaster-container></toaster-container>
+  <span>Ingresá tu email</span>
+  <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+    <div class="form-group">
+      <label for="email">E-mail</label>
+      <input type="text" class="form-control" id="email" required
+             [(ngModel)]="model.email" name="email"
+             #email="ngModel">
+      <div [hidden]="email.valid || email.pristine"
+           class="alert alert-danger">
+        Para ingresar completa tu email
+      </div>
+    </div>
+    <button type="submit" class="btn btn-success" [disabled]="!loginForm.form.valid">Submit</button>
+  </form>
+</div>

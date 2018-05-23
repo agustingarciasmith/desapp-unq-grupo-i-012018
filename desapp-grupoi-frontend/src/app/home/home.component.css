@@ -12,17 +12,27 @@
   margin: 20px;
 }
 
-.ingresa {
+.link {
+  margin: 5px;
+  padding: 5px;
+
   font-size: 20px;
+
   color: black;
   border-color: black;
   text-align: center;
-  background-color: transparent;
-  border-width: medium;
-  padding: 5px;
+  background: rgba(0, 0, 0, 0.2);
+  border-width: thin;
 }
 
-.ingresa:hover {
+.link:hover {
   font-weight: bold;
   cursor: pointer;
+}
+
+.links {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-align: center;
 }

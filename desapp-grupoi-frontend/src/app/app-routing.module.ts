@@ -5,16 +5,13 @@ import {HomeComponent} from './home/home.component';
 import {UsersComponent} from './users/users.component';
 import {CreateUserComponent} from './create-user/create-user.component';
 import {UpdateUserComponent} from './update-user/update-user.component';
+import {LoginComponent} from './login/login.component';
 
 const appRoutes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: '', redirectTo: '/home', pathMatch: 'full'},
-  {
-    path: 'users', component: UsersComponent, children: [
-      {path: 'create', component: CreateUserComponent},
-      {path: 'update', component: UpdateUserComponent}
-    ]
-  }
+  {path: 'login', component: LoginComponent},
+  {path: 'registration', component: CreateUserComponent}
 ];
 
 @NgModule({
