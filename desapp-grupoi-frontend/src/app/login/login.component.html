@@ -1,6 +1,7 @@
-<div>
-  <toaster-container></toaster-container>
-  <span>Ingresá tu email</span>
+<div class="login">
+  <toaster-container class="toast" [toasterconfig]="toasterconfig">
+  </toaster-container>
+  <span class="titulo">Ingresá con tu email</span>
   <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
     <div class="form-group">
       <label for="email">E-mail</label>
@@ -12,6 +13,6 @@
         Para ingresar completa tu email
       </div>
     </div>
-    <button type="submit" class="btn btn-success" [disabled]="!loginForm.form.valid">Submit</button>
+    <button type="submit" class="submit" [disabled]="!loginForm.form.valid">Ingresá</button>
   </form>
 </div>

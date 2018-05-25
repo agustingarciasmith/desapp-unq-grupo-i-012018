@@ -12,3 +12,5 @@
 El enunciado esta en [aca](https://docs.google.com/document/d/1Qas45RRfuO0RWOrcojQHcmqL027Whgvd3JlyoBTkG2s/edit)
 
 Entregas [aca](https://sites.google.com/site/unqdesarrollodeaplicaciones/my-calendar)
+
+El trello esta [aca](https://trello.com/b/PJ1WefDX/desapp-grupo-i-de-ideotas)
