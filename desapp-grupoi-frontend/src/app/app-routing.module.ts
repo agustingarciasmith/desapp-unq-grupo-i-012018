@@ -2,16 +2,18 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RouterModule, Routes} from '@angular/router';
 import {HomeComponent} from './home/home.component';
-import {UsersComponent} from './users/users.component';
 import {CreateUserComponent} from './create-user/create-user.component';
-import {UpdateUserComponent} from './update-user/update-user.component';
 import {LoginComponent} from './login/login.component';
+import {AppComponent} from './app.component';
+import {AuthComponent} from './auth/auth.component';
+import {GuardService} from './auth/guard.service';
 
 const appRoutes: Routes = [
-  {path: 'home', component: HomeComponent},
-  {path: '', redirectTo: '/home', pathMatch: 'full'},
+  {path: '', component: AppComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'registration', component: CreateUserComponent}
+  {path: 'registration', component: CreateUserComponent},
+  {path: 'auth', component: AuthComponent},
+  {path: 'home', component: HomeComponent, canActivate: [GuardService]}
 ];
 
 @NgModule({
@@ -23,4 +25,5 @@ const appRoutes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule {
+
 }

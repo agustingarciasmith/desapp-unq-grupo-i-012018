@@ -9,6 +9,6 @@ export const environment = {
   authDomain: 'unq-desa-grupoi.auth0.com',
   authResponseType: 'token id_token',
   authAudience: 'https://unq-desa-grupoi.auth0.com/userinfo',
-  authRedirectUri: 'http://localhost:4200/callback',
+  authRedirectUri: 'http://localhost:4200/auth',
   authScope: 'openid'
 };

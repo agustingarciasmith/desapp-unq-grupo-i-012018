@@ -1,18 +1,10 @@
-<div class="login">
-  <toaster-container class="toast" [toasterconfig]="toasterconfig">
-  </toaster-container>
-  <span class="titulo">Ingresá con tu email</span>
-  <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
-    <div class="form-group">
-      <label for="email">E-mail</label>
-      <input type="text" class="form-control" id="email" required
-             [(ngModel)]="model.email" name="email"
-             #email="ngModel">
-      <div [hidden]="email.valid || email.pristine"
-           class="alert alert-danger">
-        Para ingresar completa tu email
-      </div>
-    </div>
-    <button type="submit" class="submit" [disabled]="!loginForm.form.valid">Ingresá</button>
-  </form>
+<div class="body">
+  <div class="titulo">Bienvenido a carpnb</div>
+  <div class="links">
+    <button routerLink="/login"
+            class="link"
+            (click)="authService.login()" type="button">
+      Ingresá
+    </button>
+  </div>
 </div>

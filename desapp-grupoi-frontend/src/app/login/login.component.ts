@@ -1,49 +1,16 @@
-import {Component, OnInit} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {ToasterConfig, ToasterService} from 'angular5-toaster/dist';
-import {Router} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import {AuthService} from '../auth/auth.service';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-home',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  private _http: HttpClient;
-  private model: { email: string };
-  private _toasterService: ToasterService;
-  private _router: Router;
 
-  constructor(http: HttpClient, toasterService: ToasterService, router: Router) {
-    this._http = http;
-    this._toasterService = toasterService;
-    this._router = router;
-    this.model = {
-      email: ''
-    };
-  }
+  constructor(public authService: AuthService) { }
 
   ngOnInit() {
-  }
-
-  public toasterconfig: ToasterConfig =
-    new ToasterConfig({
-      showCloseButton: true,
-      tapToDismiss: false,
-      timeout: 0
-    });
-
-  onSubmit() {
-    this._http.post('http://localhost:9090/login', this.model, {})
-      .subscribe((val) => {
-          console.log('success');
-          this._router.navigate(['/userHome']);
-        },
-        response => {
-          console.log('error');
-          console.log(response);
-          this._toasterService.pop('error', 'Login fallido', 'El e-mail ingresado no existe');
-        });
   }
 
 }

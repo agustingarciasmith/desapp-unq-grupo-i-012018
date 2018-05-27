@@ -2,8 +2,6 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 
 
-import {AuthServiceService} from './auth-service.service';
-
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {AgmCoreModule} from '@agm/core';
@@ -13,9 +11,12 @@ import {CreateUserComponent} from './create-user/create-user.component';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 import {UpdateUserComponent} from './update-user/update-user.component';
-import {LoginComponent} from './login/login.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ToasterModule} from 'angular5-toaster/dist';
+import {LoginComponent} from './login/login.component';
+import {AuthService} from './auth/auth.service';
+import { AuthComponent } from './auth/auth.component';
+import {GuardService} from './auth/guard.service';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import {ToasterModule} from 'angular5-toaster/dist';
     UsersComponent,
     CreateUserComponent,
     UpdateUserComponent,
-    LoginComponent
+    LoginComponent,
+    AuthComponent
   ],
   imports: [
     AgmCoreModule.forRoot({
@@ -37,7 +39,7 @@ import {ToasterModule} from 'angular5-toaster/dist';
     BrowserAnimationsModule,
     ToasterModule
   ],
-  providers: [AuthServiceService],
+  providers: [AuthService, GuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
