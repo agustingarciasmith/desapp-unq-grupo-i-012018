@@ -2,7 +2,7 @@ package ar.edu.unq.desapp.grupoi.model;
 
 import ar.com.dgarcia.javaspec.api.JavaSpec;
 import ar.com.dgarcia.javaspec.api.JavaSpecRunner;
-import ar.com.dgarcia.javaspec.api.TestContext;
+import ar.com.dgarcia.javaspec.api.contexts.TestContext;
 import ar.edu.unq.desapp.grupoi.model.errors.model.CanNotExtract;
 import org.junit.runner.RunWith;
 
@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
 
 @RunWith(JavaSpecRunner.class)
-public class AccountTests extends JavaSpec<TestContext>{
+public class AccountTests extends JavaSpec<TestContext> {
   @Override
   public void define() {
     it("new account contains 0 credits", () -> {

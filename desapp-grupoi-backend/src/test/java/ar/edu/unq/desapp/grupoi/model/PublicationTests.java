@@ -2,8 +2,8 @@ package ar.edu.unq.desapp.grupoi.model;
 
 import ar.com.dgarcia.javaspec.api.JavaSpec;
 import ar.com.dgarcia.javaspec.api.JavaSpecRunner;
-import ar.com.dgarcia.javaspec.api.TestContext;
-import ar.com.dgarcia.javaspec.api.Variable;
+import ar.com.dgarcia.javaspec.api.contexts.TestContext;
+import ar.com.dgarcia.javaspec.api.variable.Variable;
 import ar.edu.unq.desapp.grupoi.model.errors.model.FieldMissing;
 import ar.edu.unq.desapp.grupoi.model.support.PublicationBuilder;
 import org.assertj.core.api.Assertions;
@@ -12,7 +12,7 @@ import org.junit.runner.RunWith;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(JavaSpecRunner.class)
-public class PublicationTests extends JavaSpec<TestContext>{
+public class PublicationTests extends JavaSpec<TestContext> {
 
     @Override
     public void define() {

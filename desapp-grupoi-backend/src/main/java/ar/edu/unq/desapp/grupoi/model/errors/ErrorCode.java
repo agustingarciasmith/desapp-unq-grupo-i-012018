@@ -1,7 +1,7 @@
 package ar.edu.unq.desapp.grupoi.model.errors;
 
 public enum ErrorCode {
-  INVALID_REQUEST, UNEXPECTER_ERROR;
+  INVALID_REQUEST, UNEXPECTER_ERROR, UNAUTHORIZED;
 
   public class User {
     private static final String BASE = "user.";

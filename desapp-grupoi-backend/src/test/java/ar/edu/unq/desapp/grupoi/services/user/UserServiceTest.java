@@ -2,7 +2,7 @@ package ar.edu.unq.desapp.grupoi.services.user;
 
 import ar.com.dgarcia.javaspec.api.JavaSpec;
 import ar.com.dgarcia.javaspec.api.JavaSpecRunner;
-import ar.com.dgarcia.javaspec.api.TestContext;
+import ar.com.dgarcia.javaspec.api.contexts.TestContext;
 import ar.edu.unq.desapp.grupoi.config.Parameters;
 import ar.edu.unq.desapp.grupoi.model.User;
 import ar.edu.unq.desapp.grupoi.model.errors.ErrorCode;

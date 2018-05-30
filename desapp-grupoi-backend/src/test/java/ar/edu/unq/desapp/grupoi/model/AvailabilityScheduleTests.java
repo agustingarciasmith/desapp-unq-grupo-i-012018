@@ -2,7 +2,7 @@ package ar.edu.unq.desapp.grupoi.model;
 
 import ar.com.dgarcia.javaspec.api.JavaSpec;
 import ar.com.dgarcia.javaspec.api.JavaSpecRunner;
-import ar.com.dgarcia.javaspec.api.TestContext;
+import ar.com.dgarcia.javaspec.api.contexts.TestContext;
 import ar.edu.unq.desapp.grupoi.model.errors.model.InvalidDate;
 import org.assertj.core.api.Assertions;
 import org.junit.runner.RunWith;

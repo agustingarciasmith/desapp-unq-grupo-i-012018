@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageConversionException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.HttpMediaTypeException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 
+import java.util.Collections;
 import java.util.List;
 
 import static ar.edu.unq.desapp.grupoi.model.errors.ErrorCode.UNEXPECTER_ERROR;
@@ -25,6 +27,12 @@ import static ar.edu.unq.desapp.grupoi.model.errors.ErrorCode.INVALID_REQUEST;
 public class ErrorHandler {
 
   private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+  @ExceptionHandler
+  @ResponseStatus(HttpStatus.UNAUTHORIZED)
+  public ErrorResponse unauthorized(AccessDeniedException e) {
+    return createError(ErrorCode.UNAUTHORIZED, Collections.singletonList(e.getMessage()), e);
+  }
 
   @ExceptionHandler
   @ResponseStatus(HttpStatus.BAD_REQUEST)

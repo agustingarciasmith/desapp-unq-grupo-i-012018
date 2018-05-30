@@ -17,6 +17,7 @@ import {LoginComponent} from './login/login.component';
 import {AuthService} from './auth/auth.service';
 import { AuthComponent } from './auth/auth.component';
 import {GuardService} from './auth/guard.service';
+import {BackendService} from './backend/backend.service';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,10 @@ import {GuardService} from './auth/guard.service';
     BrowserAnimationsModule,
     ToasterModule
   ],
-  providers: [AuthService, GuardService],
+  providers: [
+    AuthService,
+    GuardService,
+    BackendService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

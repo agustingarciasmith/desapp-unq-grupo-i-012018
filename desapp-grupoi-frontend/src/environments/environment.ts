@@ -8,7 +8,7 @@ export const environment = {
   authClientID: 'p8686zzvDeoUO4jEHL35MqbPRgdav8N8',
   authDomain: 'unq-desa-grupoi.auth0.com',
   authResponseType: 'token id_token',
-  authAudience: 'https://unq-desa-grupoi.auth0.com/userinfo',
+  authAudience: 'http://localhost:9090',
   authRedirectUri: 'http://localhost:4200/auth',
-  authScope: 'openid'
+  authScope: 'openid profile all:all'
 };

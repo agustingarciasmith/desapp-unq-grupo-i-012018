@@ -2,11 +2,9 @@ package ar.edu.unq.desapp.grupoi.model;
 
 import ar.com.dgarcia.javaspec.api.JavaSpec;
 import ar.com.dgarcia.javaspec.api.JavaSpecRunner;
-import ar.com.dgarcia.javaspec.api.TestContext;
-import ar.com.dgarcia.javaspec.api.Variable;
-import ar.edu.unq.desapp.grupoi.model.errors.model.InvalidMail;
+import ar.com.dgarcia.javaspec.api.contexts.TestContext;
+import ar.com.dgarcia.javaspec.api.variable.Variable;
 import ar.edu.unq.desapp.grupoi.model.errors.model.InvalidReservation;
-import ar.edu.unq.desapp.grupoi.model.errors.model.NameLengthOutOfBounds;
 import ar.edu.unq.desapp.grupoi.model.errors.model.ScoreOutOfBounds;
 import ar.edu.unq.desapp.grupoi.model.support.PublicationBuilder;
 import ar.edu.unq.desapp.grupoi.model.support.ReservationBuilder;
