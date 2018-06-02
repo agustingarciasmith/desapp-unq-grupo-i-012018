@@ -2,6 +2,7 @@ package ar.edu.unq.desapp.grupoi.services.publications;
 
 import ar.edu.unq.desapp.grupoi.model.Publication;
 import ar.edu.unq.desapp.grupoi.repositories.PublicationRepository;
+import ar.edu.unq.desapp.grupoi.repositories.PublicationRepositoryImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ public class PublicationsServiceImpl implements PublicationService {
     public PublicationRepository repository;
 
     public PublicationsServiceImpl() {
+        this.repository = new PublicationRepositoryImpl();
         this.publications = new ArrayList<>();
     }
 

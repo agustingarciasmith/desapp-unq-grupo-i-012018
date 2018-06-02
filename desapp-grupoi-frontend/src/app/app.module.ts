@@ -11,6 +11,12 @@ import {CreateUserComponent} from './create-user/create-user.component';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 import {UpdateUserComponent} from './update-user/update-user.component';
+import {CalendarModule} from 'primeng/calendar';
+import { CreateVehicleComponent } from './create-vehicle/create-vehicle.component';
+import {DialogModule} from 'primeng/dialog';
+import {FileUploadModule} from 'primeng/fileupload';
+import { StarRatingModule } from 'levon-angular-star-rating';
+
 
 @NgModule({
   declarations: [
@@ -18,17 +24,23 @@ import {UpdateUserComponent} from './update-user/update-user.component';
     HomeComponent,
     UsersComponent,
     CreateUserComponent,
-    UpdateUserComponent
+    UpdateUserComponent,
+    CreateVehicleComponent,
   ],
   imports: [
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyCJzUj8P1ub9CLKNcFiDI_i-ku5sqIyjF8',
+      apiKey: 'AIzaSyD6fIyCESMmOPvPJ99SUgfWtOPrdhbPg1c',
     }),
+    CalendarModule,
     BrowserModule,
     AppRoutingModule,
     PublicationModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    CalendarModule,
+    DialogModule,
+    FileUploadModule,
+    StarRatingModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

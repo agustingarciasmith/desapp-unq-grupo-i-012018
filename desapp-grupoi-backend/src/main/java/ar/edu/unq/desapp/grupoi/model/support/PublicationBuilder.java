@@ -12,7 +12,7 @@ public class PublicationBuilder {
     private User owner = new UserBuilder().build();
     private Vehicle vehicle = new VehicleBuilder().buildVehicle();
     private String city = "Buenos Aires";
-    private String pickUpAdress = "pick up address";
+    private String pickUpAdress = "Quilmes 398";
     private ArrayList<String> returnAddress = this.returnAddress();
 
     private ArrayList<String> returnAddress() {

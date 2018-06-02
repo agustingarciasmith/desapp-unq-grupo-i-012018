@@ -1,0 +1,57 @@
+<p-dialog header="New Vehicle" [(visible)]="dialogVehicle" [width]="450" modal=true appendTo="body">
+  <div class="form-group">
+    <label for="passengersFormControlSelect">N° of passengers</label>
+    <select class="form-control" id="passengersFormControlSelect">
+      <option>1</option>
+      <option>2</option>
+      <option>3</option>
+      <option>4</option>
+      <option>5</option>
+      <option>6</option>
+      <option>7</option>
+      <option>8</option>
+      <option>9</option>
+      <option>10</option>
+      <option>11</option>
+      <option>12</option>
+      <option>13</option>
+      <option>14</option>
+      <option>15</option>
+      <option>16</option>
+    </select>
+  </div>
+  <hr/>
+  <div class="form-group">
+    <label for="inlineRadioOptions">Type of vehicle</label>
+    <br>
+      <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+          <label class="form-check-label" for="inlineRadio1">Moto</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+          <label class="form-check-label" for="inlineRadio2">Car</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
+          <label class="form-check-label" for="inlineRadio3">Pick Up / Van</label>
+        </div>
+  </div>
+  <hr/>
+  <div class="form-group">
+          <label for="vehicleDescription">Description</label>
+          <textarea class="form-control" id="vehicleDescription" rows="3"></textarea>
+  </div>
+  <hr/>
+  <div class="form-group">
+      <label>Upload pictures</label>
+      <p-fileUpload name="myfile[]" url="./upload.php" multiple="multiple"></p-fileUpload>
+  </div>
+  <p-footer>
+      <button type="button" class="ui-button-danger" (click)="toggleAddVehicleDialog()" pButton icon="fa-times" label="Cancel"></button>
+      <button type="button" class="ui-button-info" (click)="toggleAddVehicleDialog()" pButton icon="fa-check" label="Submit"></button>
+  </p-footer>
+  
+</p-dialog>
+
+<button type="text" (click)="toggleAddVehicleDialog()" pButton icon="fa-car" label="Add Vehicle"></button>

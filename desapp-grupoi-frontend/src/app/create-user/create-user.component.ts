@@ -1,21 +1,26 @@
-import {Component, Injectable, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {UsersService} from '../users/users.service';
+import {User} from '../users/user';
 
 @Component({
   selector: 'app-create-user',
   templateUrl: './create-user.component.html',
-  styleUrls: ['./create-user.component.css']
+  styleUrls: ['./create-user.component.css'],
+  providers: [UsersService]
 })
 
 export class CreateUserComponent implements OnInit {
-  public model;
+  public user: User;
+  private postStatus: any;
 
-  constructor(private http:HttpClient) {
-    this.model={
-      name:"",
-      address:"",
-      cuil:"",
-      email:""
+
+  constructor(private http: HttpClient, private userService: UsersService) {
+    this.user = {
+      name: '',
+      address: '',
+      cuil: '',
+      email: '',
     };
   }
 
@@ -23,13 +28,6 @@ export class CreateUserComponent implements OnInit {
   }
 
   onSubmit() {
-      this.http.post("http://localhost:9090/users/create", this.model, {})
-      .subscribe((val) =>  {
-        console.log("success")
-      },
-      response => {
-        console.log("error");
-        console.log(response)
-      })
+    this.userService.postUser(this.user);
   }
 }

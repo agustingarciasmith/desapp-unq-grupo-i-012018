@@ -30,8 +30,8 @@ public class PublicationTests extends JavaSpec<TestContext>{
                 Publication publication = publicationBuilder.get().build();
 
                 assertThat(publication.getCity()).isEqualTo("Buenos Aires");
-                assertThat(publication.getPickUpAddress()).isEqualTo("pick up address");
-                assertThat(publication.getReturnAddress()).isEqualTo("return address");
+                assertThat(publication.getPickUpAddress()).isEqualTo("Quilmes 398");
+                assertThat(publication.getReturnAddress()).containsExactly("Azcuenaga 2344");
                 assertThat(publication.getContactPhone()).isEqualTo("123456789");
                 assertThat(publication.getCost()).isEqualTo(400);
                 assertThat(publication.getAvailableDates().contains(LocalDate.parse("2018-05-18")));
