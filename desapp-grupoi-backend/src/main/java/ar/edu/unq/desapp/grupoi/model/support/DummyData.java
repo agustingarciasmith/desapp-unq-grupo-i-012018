@@ -53,32 +53,4 @@ public class DummyData {
             withAddress("Junin 1288").
             build();
 
-    public static Publication publicationOne = publicationBuilder.
-            withId(0).
-            withCost(300).
-            withOwner(jorgeLopez).
-            withCity("Buenos Aires").
-            withContactPhone("4444444").
-            withPickUpAdress("Azcuenaga 600").
-            withReturnAdress("Av. Alem 1400").
-            withSchedule(new AvailabilitySchedule()).withVehicule(gol2016).
-            build();
-
-    public static Publication publicationTwo = publicationBuilder.
-            withId(1).
-            withCost(500).
-            withOwner(marisaGomez).
-            withCity("Buenos Aires").
-            withContactPhone("4556677").
-            withPickUpAdress("Paraguay 2500").
-            withReturnAdress("Av. Cordoba 1400").
-            withSchedule(new AvailabilitySchedule()).withVehicule(ranger2014).
-            build();
-
-    public static ArrayList<Publication> setOfPublications() {
-        ArrayList<Publication> publications = new ArrayList<>();
-        publications.add(publicationOne);
-        publications.add(publicationTwo);
-        return publications;
-    }
 }

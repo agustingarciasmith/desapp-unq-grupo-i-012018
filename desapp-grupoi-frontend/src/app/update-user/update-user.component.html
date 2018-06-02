@@ -1,3 +1,48 @@
-<p>
-  update-user works!
-</p>
+<h1 class="display-3">My Profile</h1>
+<hr/>
+<div class="row nav-item-margin">
+  <div [ngSwitch]="userSwitch">
+    <div class="card top-buffer" style="width: 18rem;">
+      <div class="card-body">
+        <h2 class="card-title">Darth Vader</h2>
+        <h5 class="card-text top-buffer">My CUIL</h5>
+        <p class="card-text" *ngSwitchCase="false">27-34353688-6</p>
+        <input class="form-control form-control-sm" *ngSwitchCase="true" type="text" placeholder="CUIL">
+        <h5 class="card-text top-buffer">My Email</h5>
+        <p class="card-text" *ngSwitchCase="false">forcerules@uol.com</p>
+        <input class="form-control form-control-sm" *ngSwitchCase="true" type="email" placeholder="email">
+        <h5 class="card-text top-buffer">My Address</h5>
+        <p class="card-text" *ngSwitchCase="false">Death Star 1 - Dagobah System</p>
+        <input class="form-control form-control-sm" *ngSwitchCase="true" type="text" placeholder="address">
+        <h5 class="card-text top-buffer align-items-center">My Rating</h5>
+          <h3 class="strong">{{rating}}</h3>
+        <star-rating-comp [starType]="'icon'" [rating]=rating [size]="'large'"></star-rating-comp>
+        <div class="top-buffer">
+          <button type="button" class="btn btn-primary" (click)="switchUserState()">Modify Profile</button>
+        </div>
+      </div>s
+    </div>
+  </div>
+
+
+  <div class="card top-buffer nav-item-margin" style="width: 18rem;">
+    <img class="card">
+    <div class="card-body">
+      <h2 class="card-title">My vehicles</h2>
+      <app-create-vehicle></app-create-vehicle>
+    </div>
+  </div>
+  <div class="card top-buffer nav-item-margin" style="width: 18rem;">
+    <img class="card">
+    <div class="card-body">
+      <h2 class="card-title">My publications</h2>
+    </div>
+  </div>
+  <div class="card top-buffer nav-item-margin" style="width: 18rem;">
+    <img class="card">
+    <div class="card-body">
+      <h2 class="card-title">My reservations</h2>
+
+    </div>
+  </div>
+</div>

@@ -8,18 +8,26 @@ import ar.edu.unq.desapp.grupoi.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Transactional
 @Service
 public class UserServiceImpl implements UserService {
+    private List<User> users;
     private UserRepository repository;
-
     public UserServiceImpl(UserRepository repository) {
         this.repository = repository;
     }
+
     @Override
     public void create(User user) {
         validate(user);
         repository.create(user);
+    }
+
+    @Override
+    public List<User> getAll() {
+            return this.users;
     }
 
     private void validate(User user) {

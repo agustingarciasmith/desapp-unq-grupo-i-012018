@@ -5,6 +5,7 @@ import {HomeComponent} from './home/home.component';
 import {UsersComponent} from './users/users.component';
 import {CreateUserComponent} from './create-user/create-user.component';
 import {UpdateUserComponent} from './update-user/update-user.component';
+import { PublicationListComponent } from './publication/publication-list/publication-list.component';
 
 const appRoutes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -14,6 +15,9 @@ const appRoutes: Routes = [
       {path: 'create', component: CreateUserComponent},
       {path: 'update', component: UpdateUserComponent}
     ]
+  },
+  {
+    path: 'publication', component: PublicationListComponent
   }
 ];
 

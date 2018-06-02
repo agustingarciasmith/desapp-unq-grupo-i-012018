@@ -9,5 +9,5 @@ public interface PublicationService {
 
     Publication getById(Long id);
 
-    Publication create(Publication publication);
+    void create(Publication publication);
 }

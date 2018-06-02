@@ -7,7 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UpdateUserComponent implements OnInit {
 
+  userSwitch = false;
+  rating = 4.8;
+
   constructor() { }
+
+  switchUserState() {
+    this.userSwitch = !this.userSwitch;
+  }
+
+
 
   ngOnInit() {
   }
