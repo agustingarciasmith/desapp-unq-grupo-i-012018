@@ -24,12 +24,16 @@ public class RequestLoggingFilter extends OncePerRequestFilter {
 
   private static final String REQUEST_PREFIX = "Request: ";
   private static final String RESPONSE_PREFIX = "Response: ";
-  private static final String MDC_KEY = "MIMO_REQUEST";
+  private static final String MDC_KEY = "CAPNB";
 
   private AtomicLong id = new AtomicLong(1);
 
   @Override
-  protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, final FilterChain filterChain) throws ServletException, IOException {
+  protected void doFilterInternal(
+    HttpServletRequest request,
+    HttpServletResponse response,
+    final FilterChain filterChain) throws ServletException, IOException {
+
     long requestId = id.incrementAndGet();
     MDC.put(MDC_KEY, String.format("[#%d]", requestId));
     request = new RequestWrapper(requestId, request);
@@ -47,16 +51,16 @@ public class RequestLoggingFilter extends OncePerRequestFilter {
 
   private void logRequest(final HttpServletRequest request) {
     StringBuilder msg = new StringBuilder();
-    String auth = request.getHeader("Authorization");
-    if (auth != null && !auth.isEmpty()) {
-      msg.append("canal:").append(auth).append(" ");
-    }
+
     msg.append(REQUEST_PREFIX);
     HttpSession session = request.getSession(false);
+
     if (request.getMethod() != null) {
       msg.append(request.getMethod()).append(" ");
     }
+
     msg.append(request.getRequestURI());
+
     if (request.getQueryString() != null && request.getQueryString().trim().length() > 0) {
       msg.append('?').append(request.getQueryString());
     }
@@ -65,10 +69,15 @@ public class RequestLoggingFilter extends OncePerRequestFilter {
     if (session != null) {
       msg.append("session=").append(session.getId()).append(" ");
     }
+
     if (request.getContentType() != null) {
       msg.append("contenttype=").append(request.getContentType()).append(" ");
     }
 
+    String auth = request.getHeader("Authorization");
+    if (auth != null && !auth.isEmpty()) {
+      msg.append("Auth:").append(auth).append(" ");
+    }
     logger.info(msg.toString());
   }
 
@@ -78,7 +87,7 @@ public class RequestLoggingFilter extends OncePerRequestFilter {
     msg.append(response.getStatus()).append(' ');
     logger.info(msg.toString());
 
-    if (logger.isDebugEnabled() && response.hasError()) {
+    if (response.hasError()) {
       StringBuilder body = new StringBuilder();
       try {
         body.append("body=").append(new String(response.toByteArray(), response.getCharacterEncoding()));

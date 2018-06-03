@@ -41,7 +41,7 @@ public class UserServiceTest extends JavaSpec<TestContext> {
       describe("Create a user", () -> {
         describe("successfull user creation", () -> {
           it("creates a user", () -> {
-            User validUser = new User(null, "name", "address", "mail@test.com", "10-12345678-1");
+            User validUser = new User(null, "name", "address", "mail@test.com", "10-12345678-1", "lala");
             service.create(validUser);
             verify(mockRepository, times(1)).save(validUser);
           });
@@ -53,7 +53,7 @@ public class UserServiceTest extends JavaSpec<TestContext> {
       describe("Update user data", () -> {
         describe("successfull user daata update", () -> {
           it("creates a user", () -> {
-            User validUser = new User(Long.valueOf(1), "name", "address", "mail@test.com", "10-12345678-1");
+            User validUser = new User(Long.valueOf(1), "name", "address", "mail@test.com", "10-12345678-1", "lala");
             service.update(validUser);
             verify(mockRepository, times(1)).update(validUser);
           });
@@ -61,7 +61,7 @@ public class UserServiceTest extends JavaSpec<TestContext> {
         describe("can't update user data", () -> {
           it("wihtout id", () -> {
             try {
-              service.update(new User(null, "name", "address", "email", "cuil"));
+              service.update(new User(null, "name", "address", "email", "cuil", "lala"));
               failBecauseExceptionWasNotThrown(InvalidRequestException.class);
             } catch (InvalidRequestException e) {
               assertThat(e.errores()).contains(ErrorCode.User.ID_NOT_PRESENT);
@@ -76,7 +76,7 @@ public class UserServiceTest extends JavaSpec<TestContext> {
   private void validationCases(Consumer<User> consumer) {
     it("without a name", () -> {
       try {
-        consumer.accept(new User(null, null, "address", "email", "cuil"));
+        consumer.accept(new User(null, null, "address", "email", "cuil", "lala"));
         failBecauseExceptionWasNotThrown(InvalidRequestException.class);
       } catch (InvalidRequestException e) {
         assertThat(e.errores()).contains(ErrorCode.User.NAME_NOT_PRESENT);
@@ -85,7 +85,7 @@ public class UserServiceTest extends JavaSpec<TestContext> {
 
     it("with blank name", () -> {
       try {
-        consumer.accept(new User(null, "", "address", "email", "cuil"));
+        consumer.accept(new User(null, "", "address", "email", "cuil", "lala"));
         failBecauseExceptionWasNotThrown(InvalidRequestException.class);
       } catch (InvalidRequestException e) {
         assertThat(e.errores()).contains(ErrorCode.User.NAME_NOT_PRESENT);
@@ -95,7 +95,7 @@ public class UserServiceTest extends JavaSpec<TestContext> {
     it("with name bigger than 20", () -> {
       try {
         parameters.setMaxUserNameLenght(20);
-        consumer.accept(new User(null, "132456789132465798123456789", "address", "email", "cuil"));
+        consumer.accept(new User(null, "132456789132465798123456789", "address", "email", "cuil", "lala"));
         failBecauseExceptionWasNotThrown(InvalidRequestException.class);
       } catch (InvalidRequestException e) {
         assertThat(e.errores()).contains(ErrorCode.User.NAME_OUT_OF_BOUNDS);
@@ -105,7 +105,7 @@ public class UserServiceTest extends JavaSpec<TestContext> {
     it("with name shorter than 4", () -> {
       try {
         parameters.setMinUserNameLenght(4);
-        consumer.accept(new User(null, "123", "address", "email", "cuil"));
+        consumer.accept(new User(null, "123", "address", "email", "cuil", "lala"));
         failBecauseExceptionWasNotThrown(InvalidRequestException.class);
       } catch (InvalidRequestException e) {
         assertThat(e.errores()).contains(ErrorCode.User.NAME_OUT_OF_BOUNDS);
@@ -114,7 +114,7 @@ public class UserServiceTest extends JavaSpec<TestContext> {
 
     it("without mail", () -> {
       try {
-        consumer.accept(new User(null, "", "address", null, "cuil"));
+        consumer.accept(new User(null, "", "address", null, "cuil", "laal"));
         failBecauseExceptionWasNotThrown(InvalidRequestException.class);
       } catch (InvalidRequestException e) {
         assertThat(e.errores()).contains(ErrorCode.User.EMAIL_NOT_PRESENT);
@@ -123,7 +123,7 @@ public class UserServiceTest extends JavaSpec<TestContext> {
 
     it("with blank mail", () -> {
       try {
-        consumer.accept(new User(null, "name", "address", "", "cuil"));
+        consumer.accept(new User(null, "name", "address", "", "cuil", "lala"));
         failBecauseExceptionWasNotThrown(InvalidRequestException.class);
       } catch (InvalidRequestException e) {
         assertThat(e.errores()).contains(ErrorCode.User.EMAIL_NOT_PRESENT);
@@ -132,7 +132,7 @@ public class UserServiceTest extends JavaSpec<TestContext> {
 
     it("with invalid mail", () -> {
       try {
-        consumer.accept(new User(null, "name", "address", "invalid mail", "cuil"));
+        consumer.accept(new User(null, "name", "address", "invalid mail", "cuil", "lala"));
         failBecauseExceptionWasNotThrown(InvalidRequestException.class);
       } catch (InvalidRequestException e) {
         assertThat(e.errores()).contains(ErrorCode.User.EMAIL_INVALID_FORMAT);
@@ -141,7 +141,7 @@ public class UserServiceTest extends JavaSpec<TestContext> {
 
     it("without address", () -> {
       try {
-        consumer.accept(new User(null, "name", null, "email", "cuil"));
+        consumer.accept(new User(null, "name", null, "email", "cuil", "lala"));
         failBecauseExceptionWasNotThrown(InvalidRequestException.class);
       } catch (InvalidRequestException e) {
         assertThat(e.errores()).contains(ErrorCode.User.ADDRESS_NOT_PRESENT);
@@ -150,7 +150,7 @@ public class UserServiceTest extends JavaSpec<TestContext> {
 
     it("with blank address", () -> {
       try {
-        consumer.accept(new User(null, "name", "", "email", "cuil"));
+        consumer.accept(new User(null, "name", "", "email", "cuil", "lala"));
         failBecauseExceptionWasNotThrown(InvalidRequestException.class);
       } catch (InvalidRequestException e) {
         assertThat(e.errores()).contains(ErrorCode.User.ADDRESS_NOT_PRESENT);
@@ -159,7 +159,7 @@ public class UserServiceTest extends JavaSpec<TestContext> {
 
     it("without cuil", () -> {
       try {
-        consumer.accept(new User(null, "name", "address", "email", null));
+        consumer.accept(new User(null, "name", "address", "email", null, "lala"));
         failBecauseExceptionWasNotThrown(InvalidRequestException.class);
       } catch (InvalidRequestException e) {
         assertThat(e.errores()).contains(ErrorCode.User.CUIL_NOT_PRESENT);
@@ -168,7 +168,7 @@ public class UserServiceTest extends JavaSpec<TestContext> {
 
     it("with blank cuil", () -> {
       try {
-        consumer.accept(new User(null, "name", "address", "email", ""));
+        consumer.accept(new User(null, "name", "address", "email", "", "lala" ));
         failBecauseExceptionWasNotThrown(InvalidRequestException.class);
       } catch (InvalidRequestException e) {
         assertThat(e.errores()).contains(ErrorCode.User.CUIL_NOT_PRESENT);
@@ -177,7 +177,7 @@ public class UserServiceTest extends JavaSpec<TestContext> {
 
     it("with blank cuil", () -> {
       try {
-        consumer.accept(new User(null, "name", "address", "email", "invalid cuil"));
+        consumer.accept(new User(null, "name", "address", "email", "invalid cuil", "lala"));
         failBecauseExceptionWasNotThrown(InvalidRequestException.class);
       } catch (InvalidRequestException e) {
         assertThat(e.errores()).contains(ErrorCode.User.CUIL_INVALID_FORMAT);

@@ -1,7 +1,9 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import * as auth0 from 'auth0-js';
 import {Router} from '@angular/router';
 import {environment} from '../../environments/environment';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class AuthService {
@@ -14,8 +16,9 @@ export class AuthService {
     redirectUri: environment.authRedirectUri,
     scope: environment.authScope,
   });
+  public userInfo: Observable<Object>;
 
-  constructor(public router: Router) {
+  constructor(public router: Router, public http: HttpClient) {
   }
 
   public login(): void {
@@ -57,5 +60,22 @@ export class AuthService {
     // access token's expiry time
     const expiresAt = JSON.parse(localStorage.getItem('expires_at') || '{}');
     return new Date().getTime() < expiresAt;
+  }
+
+  public getUserInfo(): Observable<Object> {
+    const accessToken = localStorage.getItem('access_token');
+
+    if (!accessToken) {
+      throw new Error('Access Token must exist to fetch profile');
+    }
+
+    if(this.userInfo) {
+      return this.userInfo;
+    } else {
+      this.userInfo = this.http.get("https://unq-desa-grupoi.auth0.com/userinfo", {
+        headers: new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('access_token')}`)
+      });
+      return this.userInfo;
+    }
   }
 }

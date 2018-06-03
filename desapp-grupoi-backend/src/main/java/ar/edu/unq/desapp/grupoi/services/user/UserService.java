@@ -6,4 +6,6 @@ public interface UserService {
   User create(User userRequest);
 
   User update(User user);
+
+  User createIfNotExists(User user);
 }

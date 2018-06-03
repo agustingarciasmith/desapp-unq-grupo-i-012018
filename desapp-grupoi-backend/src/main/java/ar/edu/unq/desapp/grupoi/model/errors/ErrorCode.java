@@ -3,9 +3,10 @@ package ar.edu.unq.desapp.grupoi.model.errors;
 public enum ErrorCode {
   INVALID_REQUEST, UNEXPECTER_ERROR, UNAUTHORIZED;
 
+  private static final String NOT_PRESENT = "notPresent";
+
   public class User {
     private static final String BASE = "user.";
-    private static final String NOT_PRESENT = "notPresent";
     private static final String INVALID_FORMAT = "invalidFormat";
 
     private static final String NAME = "name.";
@@ -23,5 +24,9 @@ public enum ErrorCode {
     public static final String ADDRESS_NOT_PRESENT = BASE + "address." + NOT_PRESENT;
 
     public static final String ID_NOT_PRESENT = BASE + "id." + NOT_PRESENT;
+  }
+
+  public class Login {
+    public static final String USER_INFO_NOT_PRESENT = "userInfo." + NOT_PRESENT;
   }
 }

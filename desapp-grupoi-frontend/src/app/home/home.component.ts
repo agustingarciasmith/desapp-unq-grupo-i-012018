@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {BackendService} from '../backend/backend.service';
+import {AuthService} from '../auth/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -8,11 +9,12 @@ import {BackendService} from '../backend/backend.service';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private backend: BackendService) {
+  constructor(private backend: BackendService, private auth: AuthService) {
     this.backend = backend;
   }
 
   ngOnInit() {
+    this.backend.login(this.auth.getUserInfo())
   }
 
   holis() {

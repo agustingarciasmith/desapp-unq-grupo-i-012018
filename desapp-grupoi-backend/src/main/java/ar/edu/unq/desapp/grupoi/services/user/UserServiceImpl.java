@@ -41,6 +41,11 @@ public class UserServiceImpl implements UserService {
     return user;
   }
 
+  @Override
+  public User createIfNotExists(User user) {
+    return this.repository.createIfNotExists(user);
+  }
+
   private void validateUpdate(User user) {
     List<String> errors = new ArrayList<>();
     if (user.getId() == null) errors.add(ErrorCode.User.ID_NOT_PRESENT);

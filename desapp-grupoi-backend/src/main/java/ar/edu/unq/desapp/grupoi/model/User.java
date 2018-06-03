@@ -15,17 +15,20 @@ public class User {
     @Column(name = "ID")
     private Long id;
 
-    @Column(name = "CUIL", unique = true, nullable = false)
+    @Column(name = "CUIL", unique = true, nullable = true)
     private String cuil;
 
     @Column(name = "NAME", nullable = false)
     private String name;
 
-    @Column(name = "ADRESS", nullable = false)
+    @Column(name = "ADRESS", nullable = true)
     private String address;
 
     @Column(name = "EMAIL", unique = true, nullable = false)
     private String email;
+
+    @Column(name = "AVATAR", unique = false, nullable = true)
+    private String avatar;
 
     private ArrayList<Integer> score = new ArrayList<>();
 
@@ -33,12 +36,13 @@ public class User {
 
     }
 
-    public User(Long id, String name, String address, String email, String cuil) {
+    public User(Long id, String name, String address, String email, String cuil, String avatar) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.email = email;
         this.cuil = cuil;
+        this.avatar = avatar;
     }
 
     public Publication createPublication(Publication publication) {
@@ -107,5 +111,9 @@ public class User {
 
     public Long getId() {
         return id;
+    }
+
+    public String getAvatar() {
+        return avatar;
     }
 }
