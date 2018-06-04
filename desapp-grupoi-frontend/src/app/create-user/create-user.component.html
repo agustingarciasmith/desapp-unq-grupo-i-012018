@@ -5,7 +5,7 @@
     <div class="form-group">
       <label for="name">Nombre</label>
       <input type="text" class="form-control" id="name" required
-             [(ngModel)]="model.name" name="name"
+             [(ngModel)]="user.name" name="name"
              #name="ngModel">
       <div [hidden]="name.valid || name.pristine"
            class="alert alert-danger">
@@ -16,7 +16,7 @@
     <div class="form-group">
       <label for="email">E-Mail</label>
       <input type="text" class="form-control" id="email" required
-             [(ngModel)]="model.email" name="email"
+             [(ngModel)]="user.email" name="email"
              #email="ngModel">
       <div [hidden]="email.valid || email.pristine"
            class="alert alert-danger">
@@ -27,7 +27,7 @@
     <div class="form-group">
       <label for="address">Direccion</label>
       <input type="text" class="form-control" id="address" required
-             [(ngModel)]="model.address" name="address"
+             [(ngModel)]="user.address" name="address"
              #address="ngModel">
       <div [hidden]="address.valid || address.pristine"
            class="alert alert-danger">
@@ -38,7 +38,7 @@
     <div class="form-group">
       <label for="cuil">Cuil</label>
       <input type="text" class="form-control" id="cuil" required
-             [(ngModel)]="model.cuil" name="cuil"
+             [(ngModel)]="user.cuil" name="cuil"
              #cuil="ngModel">
       <div [hidden]="cuil.valid || cuil.pristine"
            class="alert alert-danger">

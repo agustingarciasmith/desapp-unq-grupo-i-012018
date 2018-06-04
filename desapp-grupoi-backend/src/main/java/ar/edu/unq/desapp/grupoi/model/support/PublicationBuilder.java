@@ -1,18 +1,37 @@
 package ar.edu.unq.desapp.grupoi.model.support;
 
-import ar.edu.unq.desapp.grupoi.model.AvailabilitySchedule;
 import ar.edu.unq.desapp.grupoi.model.Publication;
 import ar.edu.unq.desapp.grupoi.model.User;
 import ar.edu.unq.desapp.grupoi.model.Vehicle;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PublicationBuilder {
     private User owner = new UserBuilder().build();
     private Vehicle vehicle = new VehicleBuilder().buildVehicle();
     private String city = "Buenos Aires";
-    private String pickUpAdress = "pick up address";
-    private String returnAdress = "return address";
+    private String pickUpAdress = "Quilmes 398";
+    private ArrayList<String> returnAddress = this.returnAddress();
+
+    private ArrayList<String> returnAddress() {
+        ArrayList<String> returnAddress = new ArrayList<>();
+        returnAddress.add("Azcuenaga 2344");
+        return returnAddress;
+    }
+
     private String contactPhone = "123456789";
-    private AvailabilitySchedule schedule = new AvailabilitySchedule();
+    private ArrayList<LocalDate> availableDates = this.exampleDates();
+
+    private ArrayList<LocalDate> exampleDates() {
+        ArrayList<LocalDate> exampleDates = new ArrayList<>();
+        exampleDates.add(LocalDate.parse("2018-05-18"));
+        exampleDates.add(LocalDate.parse("2018-05-17"));
+        exampleDates.add(LocalDate.parse("2018-05-15"));
+        return exampleDates;
+    }
+
     private Integer cost = 400;
     private int id = 1;
 
@@ -36,8 +55,8 @@ public class PublicationBuilder {
         return this;
     }
 
-    public PublicationBuilder withReturnAdress(String returnAdress) {
-        this.returnAdress = returnAdress;
+    public PublicationBuilder withReturnAdress(ArrayList<String> returnAdress) {
+        this.returnAddress = returnAdress;
         return this;
     }
 
@@ -51,17 +70,17 @@ public class PublicationBuilder {
         return this;
     }
 
-    public PublicationBuilder withSchedule(AvailabilitySchedule schedule) {
-        this.schedule = schedule;
-        return this;
-    }
-
     public PublicationBuilder withOwner(User owner) {
         this.owner = owner;
         return this;
     }
 
+    public PublicationBuilder withDates(ArrayList<LocalDate> dates){
+        this.availableDates = dates;
+        return this;
+    }
+
     public Publication build() {
-        return new Publication(id, owner, vehicle, city, pickUpAdress, returnAdress, contactPhone, schedule, cost);
+        return new Publication(owner, vehicle, city, pickUpAdress, returnAddress, contactPhone, availableDates, cost);
     }
 }

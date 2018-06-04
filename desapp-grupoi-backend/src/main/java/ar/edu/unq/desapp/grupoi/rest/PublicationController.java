@@ -9,9 +9,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@CrossOrigin(origins = "localhost:4200")
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+
 @RestController
-@RequestMapping(value = "/publications")
+@RequestMapping(Endpoints.Publications.BASE)
+@CrossOrigin(origins = "http://localhost:4200")
+
 public class PublicationController {
 
     private PublicationService service;
@@ -31,9 +34,9 @@ public class PublicationController {
         return service.getById(id);
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public Publication createPublication(@RequestBody Publication publication) {
-        return service.create(publication);
+    @RequestMapping(method = POST, path = Endpoints.Publications.CREATE)
+    public void create(@RequestBody Publication publication) {
+        service.create(publication);
     }
 }
 

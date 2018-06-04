@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Publication } from './publication';
+import {HttpClient} from '@angular/common/http';
 import { Http, Response } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';

@@ -1,6 +1,8 @@
 package ar.edu.unq.desapp.grupoi.services.publications;
 
 import ar.edu.unq.desapp.grupoi.model.Publication;
+import ar.edu.unq.desapp.grupoi.repositories.PublicationRepository;
+import ar.edu.unq.desapp.grupoi.repositories.PublicationRepositoryImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -8,12 +10,14 @@ import java.util.List;
 
 @Service
 public class PublicationsServiceImpl implements PublicationService {
-
     private List<Publication> publications;
+    public PublicationRepository repository;
 
     public PublicationsServiceImpl() {
+        this.repository = new PublicationRepositoryImpl();
         this.publications = new ArrayList<>();
     }
+
 
     @Override
     public List<Publication> getAll() {
@@ -29,16 +33,7 @@ public class PublicationsServiceImpl implements PublicationService {
     }
 
     @Override
-    public Publication create(Publication publication) {
-        Integer lastId =
-                this.publications
-                        .stream()
-                        .map(publication1 -> publication1.getId())
-                        .max(Integer::compareTo)
-                        .orElse(0);
-
-        publication.setId(lastId + 1);
-        this.publications.add(publication);
-        return publication;
+    public void create(Publication publication) {
+        repository.create(publication);
     }
 }

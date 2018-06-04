@@ -5,4 +5,9 @@ public class Endpoints {
         public static final String BASE = "/users";
         public static final String CREAR = "/create";
     }
+
+    public class Publications {
+        public static final String BASE = "/publications";
+        public static final String CREATE = "/create";
+    }
 }
