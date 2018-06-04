@@ -1,5 +1,5 @@
 <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [disableDefaultUI]="false" [zoomControl]="false" (mapClick)="mapClicked($event)">
-  <agm-marker [latitude]="lat" [longitude]="lng" [markerDraggable]=true (dragEnd)="markerDragEnd(m, $event)">
+  <agm-marker [latitude]="lat" [longitude]="lng" [markerDraggable]=true (dragEnd)="markerDragEnd($event)">
     <agm-info-window>
       <strong>{{location}}</strong>
     </agm-info-window>
@@ -10,6 +10,6 @@
     <input type="text" class="form-control" [(ngModel)]="location">
   </div>
   <div class="col-sm-3">
-    <button type="button" class="btn btn-primary" (click)="findLocation($event)">Set {{name}}</button>
+    <button type="button" class="btn btn-primary" (click)="findLocation()">Set {{name}}</button>
   </div>
 </div>

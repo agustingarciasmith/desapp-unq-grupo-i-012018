@@ -23,6 +23,7 @@ import { CreateVehicleComponent } from './create-vehicle/create-vehicle.componen
 import {DialogModule} from 'primeng/dialog';
 import {FileUploadModule} from 'primeng/fileupload';
 import { StarRatingModule } from 'levon-angular-star-rating';
+import {MyProfileComponent} from './components/my-profile/my-profile.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { StarRatingModule } from 'levon-angular-star-rating';
     LoginComponent,
     AuthComponent,
     CreateVehicleComponent,
+    MyProfileComponent
   ],
   imports: [
     AgmCoreModule.forRoot({

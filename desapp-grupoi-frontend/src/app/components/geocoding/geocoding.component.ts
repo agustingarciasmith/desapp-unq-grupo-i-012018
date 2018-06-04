@@ -5,7 +5,7 @@ import { GeoService } from '../../geo.service';
   selector: 'app-geocoding',
   moduleId: module.id,
   templateUrl: `./geocoding.component.html`,
-  styleUrls: ['/geocoding.component.css'],
+  styleUrls: ['./geocoding.component.css'],
   providers: [GeoService]
 })
 export class GeocodingComponent {
@@ -40,7 +40,7 @@ export class GeocodingComponent {
   }
   mapClicked($event: MouseEvent) {
   }
-  markerDragEnd(m: marker, $event: MouseEvent) {
+  markerDragEnd($event: MouseEvent) {
     var coords: any = $event;
     this.lat = coords.coords.lat;
     this.lng = coords.coords.lng;
