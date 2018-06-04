@@ -10,5 +10,5 @@ export const environment = {
   authResponseType: 'token id_token',
   authAudience: 'http://localhost:9090',
   authRedirectUri: 'http://localhost:4200/auth',
-  authScope: 'openid profile all:all'
+  authScope: 'openid email profile'
 };
