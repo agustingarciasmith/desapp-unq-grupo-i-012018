@@ -1,0 +1,14 @@
+#myVideo {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+}
+
+.overlay {
+  position: absolute;
+  bottom: 40%;
+  color: #f1f1f1;
+  width: 70%;
+}
