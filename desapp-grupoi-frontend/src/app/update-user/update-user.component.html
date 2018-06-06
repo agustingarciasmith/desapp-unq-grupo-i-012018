@@ -4,23 +4,25 @@
   <div [ngSwitch]="userSwitch">
     <div class="card top-buffer" style="width: 18rem;">
       <div class="card-body">
-        <h2 class="card-title">Darth Vader</h2>
+        <h2 class="card-title">{{user.name}}</h2>
         <h5 class="card-text top-buffer">My CUIL</h5>
-        <p class="card-text" *ngSwitchCase="false">27-34353688-6</p>
-        <input class="form-control form-control-sm" *ngSwitchCase="true" type="text" placeholder="CUIL">
+        <p class="card-text" *ngSwitchCase="false">{{user.cuil}}</p>
+        <input class="form-control form-control-sm" *ngSwitchCase="true" type="text" value={{user.cuil}}>
         <h5 class="card-text top-buffer">My Email</h5>
-        <p class="card-text" *ngSwitchCase="false">forcerules@uol.com</p>
-        <input class="form-control form-control-sm" *ngSwitchCase="true" type="email" placeholder="email">
+        <p class="card-text" *ngSwitchCase="false">user.email</p>
+        <input class="form-control form-control-sm" *ngSwitchCase="true" type="email" value={{user.email}}>
         <h5 class="card-text top-buffer">My Address</h5>
-        <p class="card-text" *ngSwitchCase="false">Death Star 1 - Dagobah System</p>
-        <input class="form-control form-control-sm" *ngSwitchCase="true" type="text" placeholder="address">
+        <p class="card-text" *ngSwitchCase="false">{{user.address}}</p>
+        <input class="form-control form-control-sm" *ngSwitchCase="true" type="text" value={{user.address}}>
         <h5 class="card-text top-buffer align-items-center">My Rating</h5>
-          <h3 class="strong">{{rating}}</h3>
-        <star-rating-comp [starType]="'icon'" [rating]=rating [size]="'large'"></star-rating-comp>
+          <h3 class="strong">{{user.score}}</h3>
+        <star-rating-comp [starType]="'icon'" [rating]=user.score [size]="'large'"></star-rating-comp>
         <div class="top-buffer">
-          <button type="button" class="btn btn-primary" (click)="switchUserState()">Modify Profile</button>
+          <button type="button" class="btn btn-primary" *ngSwitchCase="false" (click)="switchUserState()">Modify Profile</button>
+          <button type="button" class="btn btn-danger" *ngSwitchCase="true" (click)="switchUserState()">Cancel</button>
+          <button type="button" class="btn btn-info" *ngSwitchCase="true" (click)="updateUser()">Submit</button>
         </div>
-      </div>s
+      </div>
     </div>
   </div>
 

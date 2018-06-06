@@ -1,4 +1,4 @@
-package ar.edu.unq.desapp.grupoi.services.publications;
+package ar.edu.unq.desapp.grupoi.services.publication;
 
 import ar.edu.unq.desapp.grupoi.model.Publication;
 

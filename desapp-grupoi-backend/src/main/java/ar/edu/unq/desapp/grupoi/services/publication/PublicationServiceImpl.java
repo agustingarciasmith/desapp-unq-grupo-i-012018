@@ -1,4 +1,4 @@
-package ar.edu.unq.desapp.grupoi.services.publications;
+package ar.edu.unq.desapp.grupoi.services.publication;
 
 import ar.edu.unq.desapp.grupoi.model.Publication;
 import ar.edu.unq.desapp.grupoi.repositories.PublicationRepository;
@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class PublicationsServiceImpl implements PublicationService {
+public class PublicationServiceImpl implements PublicationService {
     private List<Publication> publications;
     public PublicationRepository repository;
 
-    public PublicationsServiceImpl() {
+    public PublicationServiceImpl() {
         this.repository = new PublicationRepositoryImpl();
         this.publications = new ArrayList<>();
     }

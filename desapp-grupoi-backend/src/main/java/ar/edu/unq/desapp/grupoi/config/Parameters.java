@@ -7,22 +7,40 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "app.parameters")
 public class Parameters {
 
-  private Integer maxUserNameLenght;
-  private Integer minUserNameLenght;
+  private Integer maxUserNameLength;
+  private Integer minUserNameLength;
+  private Integer minVehicleDescriptionLength;
+  private Integer maxVehicleDescriptionLength;
 
-  public Integer getMaxUserNameLenght() {
-    return this.maxUserNameLenght;
+  public Integer getMaxUserNameLength() {
+    return this.maxUserNameLength;
   }
 
-  public Integer getMinUserNameLenght() {
-    return this.minUserNameLenght;
+  public Integer getMinUserNameLength() {
+    return this.minUserNameLength;
   }
 
-  public void setMaxUserNameLenght(Integer maxUserNameLenght) {
-    this.maxUserNameLenght = maxUserNameLenght;
+  public void setMaxUserNameLength(Integer maxUserNameLenght) {
+    this.maxUserNameLength = maxUserNameLenght;
   }
 
-  public void setMinUserNameLenght(Integer minUserNameLenght) {
-    this.minUserNameLenght = minUserNameLenght;
+  public void setMinUserNameLength(Integer minUserNameLenght) {
+    this.minUserNameLength = minUserNameLenght;
+  }
+
+  public Integer getMinVehicleDescriptionLength() {
+    return this.minVehicleDescriptionLength;
+  }
+
+  public void setMinVehicleDescriptionLength(Integer minVehicleDescriptionLength) {
+    this.minVehicleDescriptionLength = minVehicleDescriptionLength;
+  }
+
+  public Integer getMaxVehicleDescriptionLength() {
+    return this.maxVehicleDescriptionLength;
+  }
+
+  public void setMaxVehicleDescriptionLength(Integer maxVehicleDescriptionLength) {
+    this.maxVehicleDescriptionLength = maxVehicleDescriptionLength;
   }
 }

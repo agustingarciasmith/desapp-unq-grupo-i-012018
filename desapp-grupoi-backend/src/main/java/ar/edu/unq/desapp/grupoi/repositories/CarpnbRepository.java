@@ -1,5 +1,6 @@
 package ar.edu.unq.desapp.grupoi.repositories;
 
+import ar.edu.unq.desapp.grupoi.services.user.UserCustomizableData;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;

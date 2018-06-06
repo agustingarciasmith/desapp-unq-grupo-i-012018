@@ -12,11 +12,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Transactional
 @Service
 public class UserServiceImpl implements UserService {
+  private List<User> users;
   private UserRepository repository;
   private Parameters parameters;
 
@@ -27,51 +29,38 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public User create(User user) {
-    validate(user);
-    repository.save(user);
-    return user;
-  }
-
-  @Override
-  public User update(User user) {
-    validateUpdate(user);
-
+  public void update(UserCustomizableData userData) {
+    validate(userData);
+    User user = repository.get(userData.getId());
+    user.updateFrom(userData);
     repository.update(user);
-    return user;
   }
 
   @Override
   public User createIfNotExists(User user) {
-    return this.repository.createIfNotExists(user);
+    if (isNullOrEmpty(user.getEmail())) throw new InvalidRequestException(
+      "User data error",
+      Collections.singletonList(ErrorCode.User.EMAIL_NOT_PRESENT));
+    if (!EmailFormatValidator.runValidation(user.getEmail())) throw new InvalidRequestException(
+      "User email error",
+      Collections.singletonList(ErrorCode.User.EMAIL_INVALID_FORMAT));
+
+    return repository.createIfNotExists(user);
   }
 
-  private void validateUpdate(User user) {
+  private void validate(UserCustomizableData user) {
     List<String> errors = new ArrayList<>();
+
     if (user.getId() == null) errors.add(ErrorCode.User.ID_NOT_PRESENT);
-    completeValidations(user, errors);
-  }
-
-  private void validate(User user) {
-    List<String> errors = new ArrayList<>();
-    completeValidations(user, errors);
-  }
-
-  private void completeValidations(User user, List<String> errors) {
     if (isNullOrEmpty(user.getAddress())) errors.add(ErrorCode.User.ADDRESS_NOT_PRESENT);
-
     if (isNullOrEmpty(user.getCuil())) errors.add(ErrorCode.User.CUIL_NOT_PRESENT);
     if (user.getCuil() != null &&
       !CuilValidator.runValidation(user.getCuil())) errors.add(ErrorCode.User.CUIL_INVALID_FORMAT);
 
-    if (isNullOrEmpty(user.getEmail())) errors.add(ErrorCode.User.EMAIL_NOT_PRESENT);
-    if (user.getEmail() != null &&
-      !EmailFormatValidator.runValidation(user.getEmail())) errors.add(ErrorCode.User.EMAIL_INVALID_FORMAT);
-
     if (isNullOrEmpty(user.getName())) errors.add(ErrorCode.User.NAME_NOT_PRESENT);
     if (user.getName() != null && (
-      user.getName().length() < parameters.getMinUserNameLenght() ||
-      user.getName().length() > parameters.getMaxUserNameLenght())) {
+      user.getName().length() < parameters.getMinUserNameLength() ||
+        user.getName().length() > parameters.getMaxUserNameLength())) {
       errors.add(ErrorCode.User.NAME_OUT_OF_BOUNDS);
     }
 
@@ -79,6 +68,7 @@ public class UserServiceImpl implements UserService {
       throw new InvalidRequestException("Error validating user data", errors);
     }
   }
+
 
   private Boolean isNullOrEmpty(String field) {
     return field == null || field.isEmpty();

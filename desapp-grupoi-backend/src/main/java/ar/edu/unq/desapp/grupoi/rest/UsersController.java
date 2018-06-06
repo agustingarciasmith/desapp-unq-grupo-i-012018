@@ -1,19 +1,13 @@
 package ar.edu.unq.desapp.grupoi.rest;
 
 import ar.edu.unq.desapp.grupoi.model.User;
+import ar.edu.unq.desapp.grupoi.services.user.UserCustomizableData;
 import ar.edu.unq.desapp.grupoi.services.user.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @RestController
@@ -28,9 +22,14 @@ public class UsersController {
     this.service = service;
   }
 
-  @RequestMapping(method = POST, path = Endpoints.Users.CREAR)
-  public void create(@RequestBody User user) {
-    logger.info(String.format("Creando usuario => %s %s %s", user.getName(), user.getEmail(), user.getCuil()));
-    service.create(user);
+  @PutMapping("update/{id}")
+  public void update(@RequestBody UserCustomizableData user) {
+    logger.info(String.format("Updating user => %s %s %s", user.getId().toString(), user.getName(), user.getCuil()));
+    service.update(user);
+  }
+
+  @GetMapping("login")
+  public User login(@RequestBody User user) {
+    return this.service.createIfNotExists(user);
   }
 }

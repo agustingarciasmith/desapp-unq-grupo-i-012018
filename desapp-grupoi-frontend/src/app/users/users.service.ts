@@ -2,6 +2,10 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
+import 'rxjs/add/operator/catch';
+import {Observable} from 'rxjs/Observable';
+import {User} from './user';
+
 @Injectable()
 export class UsersService {
   constructor(private http: HttpClient) {
@@ -10,7 +14,7 @@ export class UsersService {
   postUser(model: any) {
     this.http.post('http://localhost:9090/users/create', model, {})
       .subscribe((val) =>  {
-        console.log(model);
+          console.log(model);
           console.log('success');
         },
         response => {
@@ -18,5 +22,17 @@ export class UsersService {
           console.log('error');
           console.log(response);
         });
+  }
+
+  getUserById(id: number): Observable<any> {
+    return this.http.get('http://localhost:9090/users/' + id)
+      .map(response => response)
+      .catch(error => Observable.throw('Error in user service'));
+  }
+
+  updateUser(user: User): Observable<any> {
+    return this.http.put('http://localhost:9090/users/update/1', user)
+      .map(response => response)
+      .catch(error => Observable.throw('Error in user service'));
   }
 }

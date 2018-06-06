@@ -38,8 +38,8 @@ export class PublicationViewComponent implements OnInit {
   getCoordinates(address: any, city: any) {
       this.publicationService.getCoordinates(address, city).subscribe(
         response => {
-          this.lat = response.json().results[0].geometry.location.lat;
-          this.lng = response.json().results[0].geometry.location.lng;
+          this.lat = response[0].geometry.location.lat;
+          this.lng = response[0].geometry.location.lng;
         },
         err => {
           console.log(err);

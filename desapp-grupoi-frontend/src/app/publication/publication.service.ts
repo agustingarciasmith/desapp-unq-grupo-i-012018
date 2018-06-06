@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Publication } from './publication';
 import {HttpClient} from '@angular/common/http';
-import { Http, Response } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { Observable } from 'rxjs/Observable';
@@ -9,9 +8,9 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class PublicationService {
 
-  private apiUrl = 'http://localhost:8080/publications';
+  private apiUrl = 'http://localhost:9090/publications';
 
-  constructor(private http: Http) {
+  constructor(private http: HttpClient) {
   }
 
   findAll(): Observable<any[]>  {
@@ -41,7 +40,7 @@ export class PublicationService {
     return null;
   }
 
-  getCoordinates(address: any, city: any): Observable<Response> {
+  getCoordinates(address: any, city: any): Observable<Object> {
     const formattedAddress = (String(address) + ' ' + String(city)).replace(/\s+/g, '+');
     console.log(formattedAddress);
     // tslint:disable-next-line:max-line-length
