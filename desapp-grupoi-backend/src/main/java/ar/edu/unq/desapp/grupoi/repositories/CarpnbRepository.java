@@ -1,6 +1,8 @@
 package ar.edu.unq.desapp.grupoi.repositories;
 
 import ar.edu.unq.desapp.grupoi.services.user.UserCustomizableData;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -12,7 +14,7 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import java.util.Optional;
 
-@Transactional(readOnly = true)
+@Transactional
 public abstract class CarpnbRepository<B, K extends Serializable> {
 
   private Class<B> beanClass;

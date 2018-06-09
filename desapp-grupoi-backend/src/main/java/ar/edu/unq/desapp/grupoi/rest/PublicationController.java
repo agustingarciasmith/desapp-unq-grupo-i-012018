@@ -4,10 +4,9 @@ import ar.edu.unq.desapp.grupoi.model.Publication;
 import ar.edu.unq.desapp.grupoi.services.publication.PublicationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -16,7 +15,6 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @CrossOrigin(origins = "http://localhost:4200")
 
 public class PublicationController {
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private PublicationService service;
 
     @Autowired
@@ -26,12 +24,11 @@ public class PublicationController {
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Publication> getPublications() {
-        logger.info(String.format("Getting publications"));
         return service.getAll();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Publication getPublication(@PathVariable("id") Long id) {
+    public Optional<Publication> getPublication(@PathVariable("id") Long id) {
         return service.getById(id);
     }
 

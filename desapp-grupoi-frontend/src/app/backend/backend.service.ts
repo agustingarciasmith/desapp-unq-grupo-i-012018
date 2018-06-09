@@ -20,7 +20,7 @@ export class BackendService {
   }
 
   public test() {
-    let a = this.http.get(this.testAuth, {
+    const a = this.http.get(this.testAuth, {
       headers: this.headers()
     });
     return a;
@@ -33,7 +33,7 @@ export class BackendService {
         }
       ).subscribe(value1 => {
         console.log(value1);
-      })
-    })
+      });
+    });
   }
 }

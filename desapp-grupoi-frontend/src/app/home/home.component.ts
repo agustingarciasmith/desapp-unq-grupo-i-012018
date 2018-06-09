@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.backend.login(this.auth.getUserInfo())
+    this.backend.login(this.auth.getUserInfo());
   }
 
   holis() {

@@ -1,10 +1,7 @@
 package ar.edu.unq.desapp.grupoi.repositories;
 
 import ar.edu.unq.desapp.grupoi.model.Publication;
+import org.springframework.data.repository.CrudRepository;
 
-import java.util.List;
-
-public interface PublicationRepository {
-    void create(Publication publication);
-    List<Publication> getAll();
+public interface PublicationRepository  extends CrudRepository<Publication, Long> {
 }
