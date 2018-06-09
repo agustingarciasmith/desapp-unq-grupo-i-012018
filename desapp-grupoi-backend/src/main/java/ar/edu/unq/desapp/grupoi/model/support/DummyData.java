@@ -29,14 +29,14 @@ public class DummyData {
             withDescription("Ford Ranger 2014, 4x4, black, with leather seats").
             withLicense("NUY340").
             withPassengers(2).
-            withType(VehicleType.CAMIONETA).
+            withType(VehicleType.PICKUP).
             buildVehicle();
 
     public static Vehicle kawasaki2018 = vehicleBuilder.
             withDescription("Kawasaki Ninja 2018, red, full tank, with helmets for driver and partner").
             withLicense("222FGS").
             withPassengers(2).
-            withType(VehicleType.MOTOCICLETA).
+            withType(VehicleType.MOTORBIKE).
             buildVehicle();
 
     public static User jorgeLopez = userBuilder.

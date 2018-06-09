@@ -41,7 +41,7 @@ public class UserServiceTest extends JavaSpec<TestContext> {
       describe("Create a user", () -> {
         describe("successfull user creation", () -> {
           it("creates a user", () -> {
-            User validUser = new User(null, "name", "address", "mail@test.com", "10-12345678-1", "lala");
+            User validUser = new User("name", "address", "mail@test.com", "10-12345678-1", "lala");
             service.createIfNotExists(validUser);
             verify(mockRepository, times(1)).createIfNotExists(validUser);
           });
@@ -49,7 +49,7 @@ public class UserServiceTest extends JavaSpec<TestContext> {
         describe("can't create a user", () -> {
           it("without mail", () -> {
             try {
-              service.createIfNotExists(new User(null, "", "address", null, "cuil", "laal"));
+              service.createIfNotExists(new User("", "address", null, "cuil", "laal"));
               failBecauseExceptionWasNotThrown(InvalidRequestException.class);
             } catch (InvalidRequestException e) {
               assertThat(e.errores()).contains(ErrorCode.User.EMAIL_NOT_PRESENT);
@@ -58,7 +58,7 @@ public class UserServiceTest extends JavaSpec<TestContext> {
 
           it("with blank mail", () -> {
             try {
-              service.createIfNotExists(new User(null, "name", "address", "", "cuil", "lala"));
+              service.createIfNotExists(new User("name", "address", "", "cuil", "lala"));
               failBecauseExceptionWasNotThrown(InvalidRequestException.class);
             } catch (InvalidRequestException e) {
               assertThat(e.errores()).contains(ErrorCode.User.EMAIL_NOT_PRESENT);
@@ -67,7 +67,7 @@ public class UserServiceTest extends JavaSpec<TestContext> {
 
           it("with invalid mail", () -> {
             try {
-              service.createIfNotExists(new User(null, "name", "address", "invalid mail", "cuil", "lala"));
+              service.createIfNotExists(new User("name", "address", "invalid mail", "cuil", "lala"));
               failBecauseExceptionWasNotThrown(InvalidRequestException.class);
             } catch (InvalidRequestException e) {
               assertThat(e.errores()).contains(ErrorCode.User.EMAIL_INVALID_FORMAT);
@@ -79,7 +79,6 @@ public class UserServiceTest extends JavaSpec<TestContext> {
           describe("successfull user data update", () -> {
             beforeEach(() -> {
               this.existentUser = new User(
-                Long.valueOf(1),
                 "name",
                 "address",
                 "prueba@prueba.prueba",

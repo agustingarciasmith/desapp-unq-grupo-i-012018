@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {UsersService} from '../users/users.service';
 import {User} from '../users/user';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-update-user',
@@ -10,8 +11,6 @@ import {User} from '../users/user';
 })
 export class UpdateUserComponent implements OnInit {
 
-  constructor(private http: HttpClient, private user: User) {
-  }
   userSwitch = false;
   user: User;
 

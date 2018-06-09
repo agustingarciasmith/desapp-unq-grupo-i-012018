@@ -10,26 +10,21 @@ import java.util.List;
 
 @Service
 public class PublicationServiceImpl implements PublicationService {
-    private List<Publication> publications;
     public PublicationRepository repository;
 
     public PublicationServiceImpl() {
         this.repository = new PublicationRepositoryImpl();
-        this.publications = new ArrayList<>();
     }
 
 
     @Override
     public List<Publication> getAll() {
-        return this.publications;
+        return this.repository.getAll();
     }
 
     @Override
     public Publication getById(Long id) {
-        return this.publications
-                .stream()
-                .filter(publication -> publication.getId() == id)
-                .findFirst().orElse(null);
+        return null;
     }
 
     @Override
