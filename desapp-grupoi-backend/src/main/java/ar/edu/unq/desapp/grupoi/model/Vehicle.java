@@ -1,8 +1,5 @@
 package ar.edu.unq.desapp.grupoi.model;
 
-import ar.edu.unq.desapp.grupoi.model.errors.model.DescriptionLengthOutOfBounds;
-import ar.edu.unq.desapp.grupoi.model.errors.model.FieldMissing;
-
 import javax.persistence.*;
 
 @Entity
@@ -13,22 +10,24 @@ public class Vehicle {
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "ID")
   private Long id;
-  @Column
+
+  @Column(name = "PASSANGERS_NUMBER", nullable = false)
   private Integer numberOfPassengers;
 
-  @Column
+  @Column(name = "TYPE", nullable = false)
   private VehicleType type;
 
-  @Column
+  @Column(name = "DESCRIPTION", nullable = false)
   private String description;
 
-  @Column
+  @Column(name = "LICENSE", unique = true, nullable = false)
   private String license;
 
   public Vehicle() {
   }
 
-  public Vehicle(VehicleType type, Integer numberOfPassengers, String description, String license) {
+  public Vehicle(Long id, VehicleType type, Integer numberOfPassengers, String description, String license) {
+    this.id = id;
     this.type = type;
     this.numberOfPassengers = numberOfPassengers;
     this.description = description;
@@ -49,21 +48,6 @@ public class Vehicle {
 
   public String getLicense() {
     return license;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-
-    Vehicle vehicle = (Vehicle) o;
-
-    return license != null ? license.equals(vehicle.license) : vehicle.license == null;
-  }
-
-  @Override
-  public int hashCode() {
-    return license != null ? license.hashCode() : 0;
   }
 
   public Long getId() {

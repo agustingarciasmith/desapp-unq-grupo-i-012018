@@ -15,15 +15,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class ReservationTimeTests extends TestCase{
-    private ReservationBuilder builder = new ReservationBuilder();
-    private Clock mockClock;
-    private Reservation reservationWaitingClientReceptionConfirmation;
-    private Reservation reservationWaitingOwnerDeliverConfirmation;
-    private Reservation reservationStarted;
-    private Instant tenHoursLater;
-    private Instant thirtyOneMinutesLater;
+public class ReservationTimeTests {
+  private ReservationBuilder builder = new ReservationBuilder();
+  private Clock mockClock;
+  private Reservation reservationWaitingClientReceptionConfirmation;
+  private Reservation reservationWaitingOwnerDeliverConfirmation;
+  private Reservation reservationStarted;
+  private Instant tenHoursLater;
+  private Instant thirtyOneMinutesLater;
 
+  @Test
+  public void nada() {
+
+  }
 //    @Before
 //    public void setUp() {
 //        tenHoursLater = Instant.now().plus(10, ChronoUnit.HOURS);

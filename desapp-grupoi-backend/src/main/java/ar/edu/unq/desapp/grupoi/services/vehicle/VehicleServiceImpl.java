@@ -7,6 +7,7 @@ import ar.edu.unq.desapp.grupoi.model.errors.ErrorCode;
 import ar.edu.unq.desapp.grupoi.model.errors.InvalidRequestException;
 import ar.edu.unq.desapp.grupoi.repositories.UserRepository;
 import ar.edu.unq.desapp.grupoi.repositories.VehicleRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -21,6 +22,7 @@ public class VehicleServiceImpl implements VehicleService {
   private VehicleRepository vehicleRepository;
   private Parameters parameters;
 
+  @Autowired
   public VehicleServiceImpl(
     UserRepository userRepository,
     VehicleRepository vehicleRepository,
@@ -54,10 +56,19 @@ public class VehicleServiceImpl implements VehicleService {
     validateUserIdPresence(userId);
     validateVehicleIdPresence(vehicle);
 
+    User user = userRepository.get(userId);
+    user.removeVehicle(vehicle);
     this.vehicleRepository.delete(vehicle);
   }
 
   private void validateVehicleIdPresence(Vehicle vehicle) {
+    if(vehicle == null) {
+      throw new InvalidRequestException(
+        "Error fetching vehicle",
+        Collections.singletonList(ErrorCode.Vehicle.NOT_PRESENT)
+      );
+    }
+
     if (vehicle.getId() == null) {
       throw new InvalidRequestException(
         "Error fetching vehicle",
@@ -68,21 +79,29 @@ public class VehicleServiceImpl implements VehicleService {
 
   private void validateVehicleCreation(Vehicle vehicle) {
     List<String> errors = new ArrayList<>();
-    if (vehicle.getType() == null) errors.add(ErrorCode.Vehicle.TYPE_NOT_PRESENT);
 
-    if (vehicle.getNumberOfPassengers() == null || vehicle.getNumberOfPassengers() <= 0) {
-      errors.add(ErrorCode.Vehicle.NUMBER_OF_PASSANGERS_INVALID);
+    if(vehicle == null) {
+      errors.add(ErrorCode.Vehicle.NOT_PRESENT);
+    } else {
+      if (vehicle.getType() == null) {
+        errors.add(ErrorCode.Vehicle.TYPE_NOT_PRESENT);
+      }
+
+      if (vehicle.getNumberOfPassengers() == null || vehicle.getNumberOfPassengers() <= 0) {
+        errors.add(ErrorCode.Vehicle.NUMBER_OF_PASSANGERS_INVALID);
+      }
+
+      if (vehicle.getDescription() == null ||
+        (vehicle.getDescription().length() < parameters.getMinVehicleDescriptionLength() ||
+          vehicle.getDescription().length() > parameters.getMaxVehicleDescriptionLength())) {
+        errors.add(ErrorCode.Vehicle.DESCRIPTION_OUT_OF_BOUNDS);
+      }
+
+      if (vehicle.getLicense() == null || vehicle.getLicense().isEmpty()) {
+        errors.add(ErrorCode.Vehicle.LICENSE_NOT_PRESENT);
+      }
     }
 
-    if (vehicle.getDescription() == null ||
-      (vehicle.getDescription().length() < parameters.getMinVehicleDescriptionLength() ||
-        vehicle.getDescription().length() > parameters.getMaxVehicleDescriptionLength())) {
-      errors.add(ErrorCode.Vehicle.DESCRIPTION_OUT_OF_BOUNDS);
-    }
-
-    if (vehicle.getLicense() == null || vehicle.getLicense().isEmpty()) {
-      errors.add(ErrorCode.Vehicle.LICENSE_NOT_PRESENT);
-    }
 
     if (!errors.isEmpty()) {
       throw new InvalidRequestException("Error creting vehicle", errors);

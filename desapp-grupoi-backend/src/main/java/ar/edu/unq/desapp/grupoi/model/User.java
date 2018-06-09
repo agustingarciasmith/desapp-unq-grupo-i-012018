@@ -15,13 +15,13 @@ public class User {
   @Column(name = "ID")
   private Long id;
 
-  @Column(name = "CUIL", unique = true, nullable = true)
+  @Column(name = "CUIL", unique = true)
   private String cuil;
 
   @Column(name = "NAME", nullable = false)
   private String name;
 
-  @Column(name = "ADRESS", nullable = true)
+  @Column(name = "ADRESS")
   private String address;
 
   @Column(name = "EMAIL", unique = true, nullable = false)
@@ -32,7 +32,7 @@ public class User {
 
   @OneToMany
   @JoinColumn(name = "VEHICLE_ID", unique = true)
-  private List<Vehicle> vehicles = new ArrayList<>();
+  private List<Vehicle> vehicles;
 
   @Column(name = "TOTAL_SCORE")
   private Integer totalScore;
@@ -41,7 +41,7 @@ public class User {
   private Integer votesNumber;
 
   public User() {
-
+    this.vehicles = new ArrayList<>();
   }
 
   public User(Long id, String name, String address, String email, String cuil, String avatar) {
@@ -101,5 +101,9 @@ public class User {
     this.cuil = userData.getCuil();
     this.address = userData.getAddress();
     this.avatar = userData.getAvatar();
+  }
+
+  public void removeVehicle(Vehicle vehicle) {
+    this.vehicles.remove(vehicle);
   }
 }

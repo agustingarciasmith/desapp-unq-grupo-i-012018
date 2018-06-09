@@ -16,9 +16,12 @@ import static org.junit.Assert.assertTrue;
 @RunWith(JavaSpecRunner.class)
 public class ReservationTests extends JavaSpec<TestContext> {
 
-    @Override
-    public void define() {
+  @Override
+  public void define() {
 
+    xit("nada", () -> {
+
+    });
 //        Variable<ReservationBuilder> builder = Variable.create();
 //        Variable<Reservation> reservation = Variable.create();
 //
@@ -86,7 +89,7 @@ public class ReservationTests extends JavaSpec<TestContext> {
 //
 //            });
 //        });
-    }
+  }
 }
 
 

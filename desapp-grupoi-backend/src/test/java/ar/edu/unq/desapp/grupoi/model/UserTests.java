@@ -20,6 +20,9 @@ public class UserTests extends JavaSpec<TestContext> {
   @Override
   public void define() {
 
+    xit("nada", () -> {
+
+    });
 //    Variable<UserBuilder> userBuilder = Variable.create();
 //
 //    beforeEach(()-> {
