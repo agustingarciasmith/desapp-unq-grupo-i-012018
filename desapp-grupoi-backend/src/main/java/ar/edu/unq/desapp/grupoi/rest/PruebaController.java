@@ -49,7 +49,6 @@ public class PruebaController {
       return userService.createIfNotExists(
       Optional.of(userInfo)
         .map(realUserInfo -> new User(
-          null,
           realUserInfo.getName(),
           null,
           realUserInfo.getEmail(),

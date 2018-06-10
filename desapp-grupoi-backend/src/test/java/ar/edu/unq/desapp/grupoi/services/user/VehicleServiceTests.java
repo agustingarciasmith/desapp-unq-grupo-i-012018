@@ -36,7 +36,7 @@ public class VehicleServiceTests extends JavaSpec<TestContext> {
       this.vehicleRepo = mock(VehicleRepositoryImpl.class);
       this.parameters = new Parameters();
       this.service = new VehicleServiceImpl(userRepo, vehicleRepo, parameters);
-      this.existentUser = new User(Long.valueOf(1), "name", "address", "email", "cuil", "avatar");
+      this.existentUser = new User("name", "address", "email", "cuil", "avatar");
     });
 
     describe("create a vehicle", () -> {

@@ -44,8 +44,7 @@ public class User {
 
   }
 
-  public User(Long id, String name, String address, String email, String cuil, String avatar) {
-    this.id = id;
+  public User(String name, String address, String email, String cuil, String avatar) {
     this.name = name;
     this.address = address;
     this.email = email;
