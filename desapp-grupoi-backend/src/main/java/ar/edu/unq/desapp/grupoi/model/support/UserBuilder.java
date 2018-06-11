@@ -7,6 +7,7 @@ public class UserBuilder {
     private String name = "this is the name";
     private String address = "this is the address";
     private String email = "email@this.is";
+    private Long id = 1L;
 
     public UserBuilder withCuil(String cuil) {
         this.cuil = cuil;
@@ -28,5 +29,5 @@ public class UserBuilder {
         return this;
     }
 
-    public User build() { return new User(name, address, email, cuil, null); }
+    public User build() { return new User(id, name, address, email, cuil, null); }
 }

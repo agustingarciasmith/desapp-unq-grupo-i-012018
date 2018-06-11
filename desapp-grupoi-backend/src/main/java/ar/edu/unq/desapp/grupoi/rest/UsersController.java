@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+
 @RestController
 @RequestMapping(Endpoints.Users.BASE)
 @CrossOrigin(origins = "http://localhost:4200")
@@ -30,8 +32,9 @@ public class UsersController {
     return service.getById(id);
   }
 
-  @GetMapping("login")
-  public User login(@RequestBody User user) {
-    return this.service.createIfNotExists(user);
+  @RequestMapping(method = POST, path = "/login")
+  public User login(@RequestBody UserInfo userInfo) {
+    return service.login(userInfo);
   }
+
 }

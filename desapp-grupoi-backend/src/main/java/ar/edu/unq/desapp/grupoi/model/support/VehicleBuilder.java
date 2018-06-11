@@ -4,6 +4,7 @@ import ar.edu.unq.desapp.grupoi.model.Vehicle;
 import ar.edu.unq.desapp.grupoi.model.VehicleType;
 
 public class VehicleBuilder {
+    private Long id = Long.valueOf(1);
     private VehicleType type = VehicleType.AUTO;
     private Integer passengers = 4;
     private String description = "This is an appropriate description";
@@ -29,5 +30,5 @@ public class VehicleBuilder {
         return this;
     }
 
-    public Vehicle buildVehicle() { return new Vehicle(type, passengers, description, license); }
+    public Vehicle buildVehicle() { return new Vehicle(id, type, passengers, description, license); }
 }

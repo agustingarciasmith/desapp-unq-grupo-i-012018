@@ -1,57 +1,69 @@
 <h1 class="display-3">My Profile</h1>
 <hr/>
-<div class="row nav-item-margin justify-content-center">
-  <div [ngSwitch]="userSwitch">
-    <div class="card top-buffer" style="width: 18rem;">
-      <img class="card-img-top" src="{{user.avatar}}" alt="Card image cap">
-      <div class="card-body">
-        <h2 class="card-title">{{user.name}}</h2>
-        <h5 class="card-text top-buffer">My CUIL</h5>
-        <p class="card-text" *ngSwitchCase="false">{{user.cuil}}</p>
-        <input class="form-control form-control-sm" *ngSwitchCase="true" type="text" value={{user.cuil}}>
-        <h5 class="card-text top-buffer">My Email</h5>
-        <p class="card-text" *ngSwitchCase="false">user.email</p>
-        <input class="form-control form-control-sm" *ngSwitchCase="true" type="email" value={{user.email}}>
-        <h5 class="card-text top-buffer">My Address</h5>
-        <p class="card-text" *ngSwitchCase="false">{{user.address}}</p>
-        <input class="form-control form-control-sm" *ngSwitchCase="true" type="text" value={{user.address}}>
-        <h5 class="card-text top-buffer align-items-center">My Rating</h5>
+<div class="row nav-item-margin">
+  <div *ngIf="user$ | async as user">
+
+    <div [ngSwitch]="userSwitch">
+      <div class="card top-buffer" style="width: 18rem;">
+
+        <div class="card-body">
+
+          <h2 class="card-title">{{user.name}}</h2>
+          <h5 class="card-text top-buffer">My CUIL</h5>
+
+          <p class="card-text" *ngSwitchCase="false">{{user.cuil}}</p>
+
+          <input class="form-control form-control-sm" *ngSwitchCase="true" type="text" value={{user.cuil}}>
+
+          <h5 class="card-text top-buffer">My Email</h5>
+          <p class="card-text" *ngSwitchCase="false">{{user.email}}</p>
+          <input class="form-control form-control-sm" *ngSwitchCase="true" type="email" value={{user.email}}>
+
+          <h5 class="card-text top-buffer">My Address</h5>
+          <p class="card-text" *ngSwitchCase="false">{{user.address}}</p>
+          <input class="form-control form-control-sm" *ngSwitchCase="true" type="text" value={{user.address}}>
+
+          <h5 class="card-text top-buffer align-items-center">My Rating</h5>
           <h3 class="strong">{{user.score}}</h3>
-        <star-rating-comp [starType]="'icon'" [rating]=user.score [size]="'large'"></star-rating-comp>
-        <div class="top-buffer">
-          <button type="button" class="btn btn-primary" *ngSwitchCase="false" (click)="switchUserState()">Modify Profile</button>
-          <button type="button" class="btn btn-danger" *ngSwitchCase="true" (click)="switchUserState()">Cancel</button>
-          <button type="button" class="btn btn-info" *ngSwitchCase="true" (click)="updateUser()">Submit</button>
+
+          <div class="top-buffer">
+            <button type="button" class="btn btn-primary" *ngSwitchCase="false" (click)="switchUserState()">Modify
+              Profile
+            </button>
+            <button type="button" class="btn btn-danger" *ngSwitchCase="true" (click)="switchUserState()">Cancel
+            </button>
+            <button type="button" class="btn btn-info" *ngSwitchCase="true" (click)="updateUser()">Submit</button>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="card top-buffer nav-item-margin" style="width: 18rem;">
+        <img class="card">
+        <div class="card-body">
+          <h2 class="card-title">My vehicles</h2>
+          <ul>
+            <li *ngFor="let vehicle of user.vehicles">
+              {{vehicle.license}}
+            </li>
+          </ul>
+          <app-create-vehicle userId="{{user.id}}"></app-create-vehicle>
+        </div>
+      </div>
+      <div class="card top-buffer nav-item-margin" style="width: 18rem;">
+        <img class="card">
+        <div class="card-body">
+          <h2 class="card-title">My publications</h2>
+        </div>
+      </div>
+      <div class="card top-buffer nav-item-margin" style="width: 18rem;">
+        <img class="card">
+        <div class="card-body">
+          <h2 class="card-title">My reservations</h2>
         </div>
       </div>
     </div>
-  </div>
-
-
-  <div class="card top-buffer nav-item-margin" style="width: 18rem;">
-    <img class="card">
-    <div class="card-body">
-      <h2 class="card-title">My vehicles</h2>
-      <ul>
-        <li *ngFor="let vehicle of user.vehicles">
-          {{vehicle.license}}
-        </li>
-      </ul>
-      <app-create-vehicle userId="{{user.id}}"></app-create-vehicle>
-
+    <div *ngIf="!(user$ | async)">
+      Loading...
     </div>
   </div>
-  <div class="card top-buffer nav-item-margin" style="width: 18rem;">
-    <img class="card">
-    <div class="card-body">
-      <h2 class="card-title">My publications</h2>
-    </div>
-  </div>
-  <div class="card top-buffer nav-item-margin" style="width: 18rem;">
-    <img class="card">
-    <div class="card-body">
-      <h2 class="card-title">My reservations</h2>
-
-    </div>
-  </div>
-</div>

@@ -33,6 +33,7 @@ public enum ErrorCode {
 
   public class Vehicle {
     private static final String BASE = "vehicle";
+    public static final String NOT_PRESENT = BASE + ErrorCode.NOT_PRESENT;
     public static final String TYPE_NOT_PRESENT = BASE + ".type" + NOT_PRESENT;
     public static final String NUMBER_OF_PASSANGERS_INVALID = BASE + ".numberOfPassangers.invalid";
     public static final String DESCRIPTION_OUT_OF_BOUNDS = BASE + ".description" + OUT_OF_BOUNDS;

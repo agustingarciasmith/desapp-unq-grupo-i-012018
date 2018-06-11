@@ -23,13 +23,11 @@ public class PruebaController {
 
   private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-  private UserService userService;
   private MailClient mailClient;
 
   @Autowired
-  public PruebaController(MailClient mailClient, UserService userService) {
+  public PruebaController(MailClient mailClient) {
     this.mailClient = mailClient;
-    this.userService = userService;
   }
 
   @RequestMapping("/holis")
@@ -42,21 +40,5 @@ public class PruebaController {
     logger.info("mandando");
     this.mailClient.prepareAndSend("garciasmithagustin@gmail.com", "Holiiiiis");
     return "mandadin";
-  }
-
-  @RequestMapping(method = POST, path = "/login")
-  public User login(@RequestBody UserInfo userInfo) {
-      return userService.createIfNotExists(
-      Optional.of(userInfo)
-        .map(realUserInfo -> new User(
-          realUserInfo.getName(),
-          null,
-          realUserInfo.getEmail(),
-          null,
-          realUserInfo.getPicture()))
-        .orElseThrow(() -> new InvalidRequestException(
-          "Error in login ",
-          Collections.singletonList(ErrorCode.Login.USER_INFO_NOT_PRESENT)))
-    );
   }
 }

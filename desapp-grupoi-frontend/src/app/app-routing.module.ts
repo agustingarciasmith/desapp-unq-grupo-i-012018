@@ -16,7 +16,6 @@ const appRoutes: Routes = [
   {path: 'auth', component: AuthComponent},
   {path: 'home', component: HomeComponent, canActivate: [GuardService]},
   {path: 'publication', component: PublicationListComponent, canActivate: [GuardService]},
-  {path: 'users/update', component: UpdateUserComponent, canActivate: [GuardService]},
 ];
 
 @NgModule({

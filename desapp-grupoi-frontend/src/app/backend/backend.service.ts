@@ -1,14 +1,17 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
+import {User} from '../users/user';
+import {mergeMap} from 'rxjs/operators';
+import {UserInfo} from '../auth/auth.service';
 
 @Injectable()
 export class BackendService {
-  private base = 'http://localhost:9090/backend';
-  private testAuth = this.base + '/holis';
-  private loginUrl = this.base + '/login';
+  private base = 'http://localhost:9090/backend/';
+  private loginUrl = this.base + 'users/login';
 
   private http: HttpClient;
+  private user: Observable<User>;
 
   constructor(http: HttpClient) {
     this.http = http;
@@ -19,21 +22,18 @@ export class BackendService {
       .set('Authorization', `Bearer ${localStorage.getItem('access_token')}`);
   }
 
-  public test() {
-    const a = this.http.get(this.testAuth, {
-      headers: this.headers()
-    });
-    return a;
+  login(userInfoObservable: Observable<UserInfo>) {
+    this.user = userInfoObservable
+      .pipe(
+        mergeMap((userInfo: UserInfo) => {
+          return this.http.post<User>(this.loginUrl, userInfo, {
+            headers: this.headers()
+          });
+        })
+      );
   }
 
-  login(userInfo: Observable<Object>) {
-    userInfo.subscribe(value => {
-      this.http.post(this.loginUrl, value, {
-          headers: this.headers()
-        }
-      ).subscribe(value1 => {
-        console.log(value1);
-      });
-    });
+  getUser(): Observable<User> {
+    return this.user;
   }
 }

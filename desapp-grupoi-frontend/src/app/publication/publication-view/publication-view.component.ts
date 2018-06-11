@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { PublicationService } from '../publication.service';
-import { Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {PublicationService} from '../publication.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-publication-view',
@@ -19,7 +19,8 @@ export class PublicationViewComponent implements OnInit {
   }
 
   constructor(private router: Router,
-    private publicationService: PublicationService) { }
+              private publicationService: PublicationService) {
+  }
 
   getPublication() {
     this.publicationService.findById(Number(window.location.pathname.slice(-1))).subscribe(
@@ -35,14 +36,14 @@ export class PublicationViewComponent implements OnInit {
   }
 
   getCoordinates(address: string) {
-      this.publicationService.getCoordinates(address).subscribe(
-        response => {
-          this.lat = response[0].geometry.location.lat;
-          this.lng = response[0].geometry.location.lng;
-        },
-        err => {
-          console.log(err);
-        }
-      );
+    // this.publicationService.getCoordinates(address).subscribe({
+    //   next: (response) => {
+    //     this.lat = response[0].geometry.location.lat;
+    //     this.lng = response[0].geometry.location.lng;
+    //   },
+    //   err: (err) => {
+    //     console.log(err);
+    //   }
+    // });
   }
 }
