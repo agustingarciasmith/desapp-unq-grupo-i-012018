@@ -4,6 +4,20 @@ import {Router} from '@angular/router';
 import {environment} from '../../environments/environment';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+import {User} from '../users/user';
+
+export class UserInfo {
+  constructor(
+    private picture: string,
+    private email: string,
+    private givenName: string,
+    private familyName: string,
+    private name: string) {
+
+  }
+
+}
 
 @Injectable()
 export class AuthService {
@@ -16,7 +30,7 @@ export class AuthService {
     redirectUri: environment.authRedirectUri,
     scope: environment.authScope,
   });
-  public userInfo: Observable<Object>;
+  public userInfo: Observable<UserInfo>;
 
   constructor(public router: Router, public http: HttpClient) {
   }
@@ -62,19 +76,20 @@ export class AuthService {
     return new Date().getTime() < expiresAt;
   }
 
-  public getUserInfo(): Observable<Object> {
+  public getUserInfo(): Observable<UserInfo> {
     const accessToken = localStorage.getItem('access_token');
 
     if (!accessToken) {
       throw new Error('Access Token must exist to fetch profile');
     }
 
-    if(this.userInfo) {
+    if (this.userInfo) {
       return this.userInfo;
     } else {
-      this.userInfo = this.http.get("https://unq-desa-grupoi.auth0.com/userinfo", {
-        headers: new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('access_token')}`)
-      });
+      this.userInfo = this.http
+        .get<UserInfo>('https://unq-desa-grupoi.auth0.com/userinfo', {
+          headers: new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('access_token')}`)
+        });
       return this.userInfo;
     }
   }

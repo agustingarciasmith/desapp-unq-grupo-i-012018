@@ -43,21 +43,4 @@ public class PruebaController {
     this.mailClient.prepareAndSend("garciasmithagustin@gmail.com", "Holiiiiis");
     return "mandadin";
   }
-
-  @RequestMapping(method = POST, path = "/login")
-  public User login(@RequestBody UserInfo userInfo) {
-      return userService.createIfNotExists(
-      Optional.of(userInfo)
-        .map(realUserInfo -> new User(
-          null,
-          realUserInfo.getName(),
-          null,
-          realUserInfo.getEmail(),
-          null,
-          realUserInfo.getPicture()))
-        .orElseThrow(() -> new InvalidRequestException(
-          "Error in login ",
-          Collections.singletonList(ErrorCode.Login.USER_INFO_NOT_PRESENT)))
-    );
-  }
 }

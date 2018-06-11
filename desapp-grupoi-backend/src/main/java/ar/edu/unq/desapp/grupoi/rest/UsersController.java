@@ -1,12 +1,17 @@
 package ar.edu.unq.desapp.grupoi.rest;
 
 import ar.edu.unq.desapp.grupoi.model.User;
+import ar.edu.unq.desapp.grupoi.model.errors.ErrorCode;
+import ar.edu.unq.desapp.grupoi.model.errors.InvalidRequestException;
 import ar.edu.unq.desapp.grupoi.services.user.UserCustomizableData;
 import ar.edu.unq.desapp.grupoi.services.user.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Collections;
+import java.util.Optional;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -28,8 +33,9 @@ public class UsersController {
     service.update(user);
   }
 
-  @GetMapping("login")
-  public User login(@RequestBody User user) {
-    return this.service.createIfNotExists(user);
+  @RequestMapping(method = POST, path = "/login")
+  public User login(@RequestBody UserInfo userInfo) {
+    return service.login(userInfo);
   }
+
 }

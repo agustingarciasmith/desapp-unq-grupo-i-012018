@@ -10,26 +10,24 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
 public class VehicleController {
 
-    private VehicleService service;
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+  private final Logger logger = LoggerFactory.getLogger(this.getClass());
+  private VehicleService service;
 
-    @Autowired
-    VehicleController(VehicleService service) {
-        this.service = service;
-    }
+  @Autowired
+  VehicleController(VehicleService service) {
+    this.service = service;
+  }
 
-    @GetMapping("/users/{id}/vehicles")
-    public List<Vehicle> getVehiclesFromUser(@PathVariable Long id) {
-        return service.getFromUser(id);
-    }
+  @GetMapping("/users/{id}/vehicles")
+  public List<Vehicle> getVehiclesFromUser(@PathVariable Long id) {
+    return service.getFromUser(id);
+  }
 
-    @PostMapping("users/{id}/vehicles")
-    public void addVehicleToUser(@PathVariable Long id, @RequestBody Vehicle vehicle) {
-        logger.info(String.format("Agregando Vehiculo a usuario => %s %s %s", id, vehicle.getLicense(), vehicle.getNumberOfPassengers()));
-        service.create(id, vehicle);
-    }
-
+  @PostMapping("users/{id}/vehicles")
+  public void addVehicleToUser(@PathVariable Long id, @RequestBody Vehicle vehicle) {
+    logger.info(String.format("Agregando Vehiculo a usuario => %s %s %s", id, vehicle.getLicense(), vehicle.getNumberOfPassengers()));
+    service.create(id, vehicle);
+  }
 }

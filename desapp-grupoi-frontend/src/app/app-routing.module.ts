@@ -13,7 +13,7 @@ const appRoutes: Routes = [
   {path: 'welcome', component: WelcomeComponent},
   {path: 'login', component: LoginComponent},
   {path: 'auth', component: AuthComponent},
-  {path: 'home', component: HomeComponent, canActivate: [GuardService]},
+    {path: 'home', component: HomeComponent, canActivate: [GuardService]},
   {path: 'publication', component: PublicationListComponent, canActivate: [GuardService]}
 ];
 
