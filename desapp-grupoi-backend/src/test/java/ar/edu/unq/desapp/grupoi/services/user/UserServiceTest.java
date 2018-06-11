@@ -79,7 +79,7 @@ public class UserServiceTest extends JavaSpec<TestContext> {
           describe("successfull user data update", () -> {
             beforeEach(() -> {
               this.existentUser = new User(
-                Long.valueOf(1),
+                1L,
                 "name",
                 "address",
                 "prueba@prueba.prueba",
@@ -89,7 +89,7 @@ public class UserServiceTest extends JavaSpec<TestContext> {
               Mockito.when(this.mockRepository.get(1)).thenReturn(this.existentUser);
             });
 
-            it("user user data", () -> {
+            it("update user data", () -> {
               UserCustomizableData userData = new UserCustomizableData(
                 this.existentUser.getId(),
                 this.existentUser.getName(),

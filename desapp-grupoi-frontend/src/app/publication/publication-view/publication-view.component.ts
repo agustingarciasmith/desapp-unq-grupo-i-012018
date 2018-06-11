@@ -26,24 +26,25 @@ export class PublicationViewComponent implements OnInit {
     this.publicationService.findById(Number(window.location.pathname.slice(-1))).subscribe(
       publication => {
         this.publication = publication;
-        this.getCoordinates(publication.pickUpAddress, publication.city);
+        this.getCoordinates(publication.pickUpAddress);
       },
       err => {
         console.log(err);
       }
     );
-    return this.publication;
+    console.log(this.publication);
   }
 
-  getCoordinates(address: any, city: any) {
-      this.publicationService.getCoordinates(address, city).subscribe(
-        response => {
-          this.lat = response[0].geometry.location.lat;
-          this.lng = response[0].geometry.location.lng;
-        },
-        err => {
-          console.log(err);
-        }
-      );
+  getCoordinates(address: string) {
+      // this.publicationService.getCoordinates(address).subscribe(
+      //   response => {
+      //     console.log(response.results[0]);
+      //     this.lat = response.results[0].geometry.location.lat;
+      //     this.lng = response.results[0].geometry.location.lng;
+      //   },
+      //   err => {
+      //     console.log(err);
+      //   }
+      // );
   }
 }

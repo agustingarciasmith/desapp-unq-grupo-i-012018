@@ -23,13 +23,11 @@ public class PruebaController {
 
   private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-  private UserService userService;
   private MailClient mailClient;
 
   @Autowired
-  public PruebaController(MailClient mailClient, UserService userService) {
+  public PruebaController(MailClient mailClient) {
     this.mailClient = mailClient;
-    this.userService = userService;
   }
 
   @RequestMapping("/holis")

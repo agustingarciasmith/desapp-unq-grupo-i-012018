@@ -20,7 +20,6 @@ import {CalendarModule} from 'primeng/calendar';
 import {CreateVehicleComponent} from './create-vehicle/create-vehicle.component';
 import {DialogModule} from 'primeng/dialog';
 import {FileUploadModule} from 'primeng/fileupload';
-import {StarRatingModule} from 'levon-angular-star-rating';
 import {MyProfileComponent} from './components/my-profile/my-profile.component';
 import {PublicationModule} from './publication/publication.module';
 import {WelcomeComponent} from './welcome/welcome.component';
@@ -50,7 +49,6 @@ import {WelcomeComponent} from './welcome/welcome.component';
     CalendarModule,
     DialogModule,
     FileUploadModule,
-    StarRatingModule,
     PublicationModule
   ],
   providers: [

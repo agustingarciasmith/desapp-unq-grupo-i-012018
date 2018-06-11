@@ -2,38 +2,36 @@ package ar.edu.unq.desapp.grupoi.services.publication;
 
 import ar.edu.unq.desapp.grupoi.model.Publication;
 import ar.edu.unq.desapp.grupoi.repositories.PublicationRepository;
-import ar.edu.unq.desapp.grupoi.repositories.PublicationRepositoryImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
+@Transactional
 @Service
 public class PublicationServiceImpl implements PublicationService {
-    private List<Publication> publications;
+
+    @Autowired
     public PublicationRepository repository;
 
     public PublicationServiceImpl() {
-        this.repository = new PublicationRepositoryImpl();
-        this.publications = new ArrayList<>();
     }
 
 
     @Override
     public List<Publication> getAll() {
-        return this.publications;
+        return (List<Publication>) this.repository.findAll();
     }
 
     @Override
-    public Publication getById(Long id) {
-        return this.publications
-                .stream()
-                .filter(publication -> publication.getId() == id)
-                .findFirst().orElse(null);
+    public Optional<Publication> getById(Long id) {
+        return this.repository.findById(id);
     }
 
     @Override
     public void create(Publication publication) {
-        repository.create(publication);
+        repository.save(publication);
     }
 }

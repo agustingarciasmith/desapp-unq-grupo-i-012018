@@ -25,7 +25,6 @@
 
           <h5 class="card-text top-buffer align-items-center">My Rating</h5>
           <h3 class="strong">{{user.score}}</h3>
-          <star-rating-comp [starType]="'icon'" [rating]=user.score [size]="'large'"></star-rating-comp>
 
           <div class="top-buffer">
             <button type="button" class="btn btn-primary" *ngSwitchCase="false" (click)="switchUserState()">Modify

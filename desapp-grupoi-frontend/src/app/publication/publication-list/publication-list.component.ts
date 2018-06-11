@@ -12,8 +12,7 @@ export class PublicationListComponent implements OnInit {
 
   public publications: any[];
 
-  constructor(private router: Router,
-    private publicationService: PublicationService) { }
+  constructor(private router: Router, private publicationService: PublicationService) { }
 
   ngOnInit() { // when component loading get all publications and set the publications[]
     this.getAllPublications();

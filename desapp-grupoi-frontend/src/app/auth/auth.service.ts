@@ -78,7 +78,6 @@ export class AuthService {
 
   public getUserInfo(): Observable<UserInfo> {
     const accessToken = localStorage.getItem('access_token');
-
     if (!accessToken) {
       throw new Error('Access Token must exist to fetch profile');
     }
