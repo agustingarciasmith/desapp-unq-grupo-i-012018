@@ -7,6 +7,8 @@ import ar.edu.unq.desapp.grupoi.model.errors.ErrorCode;
 import ar.edu.unq.desapp.grupoi.model.errors.InvalidRequestException;
 import ar.edu.unq.desapp.grupoi.repositories.UserRepository;
 import ar.edu.unq.desapp.grupoi.repositories.VehicleRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -20,6 +22,7 @@ public class VehicleServiceImpl implements VehicleService {
   private UserRepository userRepository;
   private VehicleRepository vehicleRepository;
   private Parameters parameters;
+  private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
   public VehicleServiceImpl(
     UserRepository userRepository,
@@ -38,16 +41,14 @@ public class VehicleServiceImpl implements VehicleService {
   }
 
   @Override
-  public Vehicle create(Long userId, Vehicle vehicle) {
+  public void create(Long userId, Vehicle vehicle) {
     validateUserIdPresence(userId);
     validateVehicleCreation(vehicle);
 
     User user = userRepository.get(userId);
     vehicleRepository.create(vehicle);
     user.addVehicle(vehicle);
-
-    return vehicle;
-  }
+    }
 
   @Override
   public void delete(Long userId, Vehicle vehicle) {

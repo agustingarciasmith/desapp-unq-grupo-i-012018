@@ -1,5 +1,5 @@
 import {User} from '../users/user';
-import {Vehicle} from '../vehicle';
+import {Vehicle} from '../vehicles/vehicle';
 
 export interface Publication {
     id: number;

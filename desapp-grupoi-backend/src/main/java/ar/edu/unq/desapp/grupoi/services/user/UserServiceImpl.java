@@ -37,6 +37,11 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
+  public User getById(Long id) {
+    return repository.get(id);
+  }
+
+  @Override
   public User createIfNotExists(User user) {
     if (isNullOrEmpty(user.getEmail())) throw new InvalidRequestException(
       "User data error",

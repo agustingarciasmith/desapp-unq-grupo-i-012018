@@ -1,4 +1,4 @@
-import {Vehicle} from '../vehicle';
+import {Vehicle} from '../vehicles/vehicle';
 
 export interface User {
   id: string;
@@ -6,6 +6,7 @@ export interface User {
   name: string;
   address: string;
   email: string;
+  avatar: string;
   vehicles: Vehicle[];
   score: number;
 }

@@ -28,7 +28,6 @@ public class VehicleController {
 
     @PostMapping("users/{id}/vehicles")
     public void addVehicleToUser(@PathVariable Long id, @RequestBody Vehicle vehicle) {
-        logger.info(String.format("Agregando Vehiculo a usuario => %s %s %s", id, vehicle.getLicense(), vehicle.getNumberOfPassengers()));
         service.create(id, vehicle);
     }
 

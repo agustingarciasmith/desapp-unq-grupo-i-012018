@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface VehicleService {
     List<Vehicle> getFromUser(Long userId);
-    Vehicle create(Long userId, Vehicle vehicle);
+    void create(Long userId, Vehicle vehicle);
     void delete(Long userId, Vehicle vehicle);
 }

@@ -13,7 +13,6 @@ export class PublicationViewComponent implements OnInit {
   lat = 51.678418;
   lng = 7.809007;
   public publication: any;
-  formattedAddress: string;
 
   ngOnInit(): void {
     this.getPublication();
@@ -38,9 +37,8 @@ export class PublicationViewComponent implements OnInit {
   getCoordinates(address: string) {
       this.publicationService.getCoordinates(address).subscribe(
         response => {
-          console.log(response.results[0]);
-          this.lat = response.results[0].geometry.location.lat;
-          this.lng = response.results[0].geometry.location.lng;
+          this.lat = response[0].geometry.location.lat;
+          this.lng = response[0].geometry.location.lng;
         },
         err => {
           console.log(err);

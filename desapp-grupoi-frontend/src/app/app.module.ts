@@ -7,7 +7,7 @@ import {AppComponent} from './app.component';
 import {AgmCoreModule} from '@agm/core';
 import {HomeComponent} from './home/home.component';
 import {HttpClientModule} from '@angular/common/http';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {UpdateUserComponent} from './update-user/update-user.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ToasterModule} from 'angular5-toaster/dist';
@@ -45,6 +45,7 @@ import {WelcomeComponent} from './welcome/welcome.component';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     ToasterModule,
     CalendarModule,
