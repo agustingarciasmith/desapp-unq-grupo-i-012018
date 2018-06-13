@@ -34,7 +34,7 @@ public class User {
   @JoinColumn(name = "VEHICLE_ID", unique = true)
   private List<Vehicle> vehicles;
 
-  @Column(name = "TOTAL_SCORE")
+  @Column(name = "TOTAL_SCORE", nullable = false, columnDefinition = "int default 0")
   private Integer totalScore;
 
   @Column(name = "VOTES_NUMBER")

@@ -5,7 +5,7 @@ import java.util.List;
 public class CarpnbException extends RuntimeException {
 
   protected ErrorCode errorCode;
-  protected List<String> errores;
+  protected List<String> errors;
 
 
   public CarpnbException(Throwable e) {
@@ -20,29 +20,29 @@ public class CarpnbException extends RuntimeException {
     super();
   }
 
-  public CarpnbException(String mensaje, Throwable causa) {
-    super(mensaje, causa);
+  public CarpnbException(String mensaje, Throwable cause) {
+    super(mensaje, cause);
     this.errorCode = ErrorCode.UNEXPECTER_ERROR;
   }
 
-  public CarpnbException(String mensaje, ErrorCode errorCode, List<String> errores) {
+  public CarpnbException(String mensaje, ErrorCode errorCode, List<String> errors) {
     super(mensaje);
     this.errorCode = errorCode;
-    this.errores = errores;
+    this.errors = errors;
   }
 
-  public CarpnbException(String mensaje, ErrorCode errorCode, List<String> errores, Throwable causa) {
+  public CarpnbException(String mensaje, ErrorCode errorCode, List<String> errors, Throwable causa) {
     super(mensaje, causa);
     this.errorCode = errorCode;
-    this.errores = errores;
+    this.errors = errors;
   }
 
-  public ErrorCode codigoError() {
+  public ErrorCode errorCode() {
     return errorCode;
   }
 
-  public List<String> errores() {
-    return errores;
+  public List<String> errors() {
+    return errors;
   }
 
 }

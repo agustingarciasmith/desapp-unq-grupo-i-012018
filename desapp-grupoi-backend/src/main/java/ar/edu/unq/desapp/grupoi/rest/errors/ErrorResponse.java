@@ -12,7 +12,7 @@ public class ErrorResponse {
   private ErrorCode errorCode;
   private String message;
   private String simpleName;
-  private List<String> errores;
+  private List<String> errors;
 
   public ErrorResponse() {
   }
@@ -21,20 +21,20 @@ public class ErrorResponse {
     this.errorCode = errorCode;
     this.message = message;
     this.simpleName = simpleName;
-    this.errores = Collections.emptyList();
+    this.errors = Collections.emptyList();
   }
 
-  public ErrorResponse(ErrorCode errorCode, List<String> errores, String message, String simpleName) {
+  public ErrorResponse(ErrorCode errorCode, List<String> errors, String message, String simpleName) {
     this.errorCode = errorCode;
-    this.errores = errores;
+    this.errors = errors;
   }
 
   public ErrorCode getErrorCode() {
     return errorCode;
   }
 
-  public List<String> getErrores() {
-    return errores;
+  public List<String> getErrors() {
+    return errors;
   }
 
   public String getMessage() {

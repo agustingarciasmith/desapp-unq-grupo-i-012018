@@ -38,7 +38,7 @@ public class ErrorHandler {
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   @ResponseBody
   public ErrorResponse invalidRequest(InvalidRequestException e) {
-    return createError(e.codigoError(), e.errores(), e);
+    return createError(e.errorCode(), e.errors(), e);
   }
 
   @ExceptionHandler
@@ -84,8 +84,8 @@ public class ErrorHandler {
     return createError(UNEXPECTER_ERROR, e);
   }
 
-  private ErrorResponse createError(ErrorCode codigo, List<String> errores, Throwable e) {
-    return new ErrorResponse(codigo, errores, e.getMessage(), e.getClass().getSimpleName());
+  private ErrorResponse createError(ErrorCode code, List<String> errors, Throwable e) {
+    return new ErrorResponse(code, errors, e.getMessage(), e.getClass().getSimpleName());
   }
 
   private ErrorResponse createError(ErrorCode codigo, Throwable e) {

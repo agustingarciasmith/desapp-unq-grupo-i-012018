@@ -70,7 +70,7 @@ public class VehicleServiceTests extends JavaSpec<TestContext> {
           service.create(null, null);
           failBecauseExceptionWasNotThrown(InvalidRequestException.class);
         } catch (InvalidRequestException e) {
-          assertThat(e.errores()).contains(ErrorCode.User.ID_NOT_PRESENT);
+          assertThat(e.errors()).contains(ErrorCode.User.ID_NOT_PRESENT);
           verify(vehicleRepo, times(0)).create(any(Vehicle.class));
         }
       });
@@ -80,7 +80,7 @@ public class VehicleServiceTests extends JavaSpec<TestContext> {
           service.create(Long.valueOf(1), null);
           failBecauseExceptionWasNotThrown(InvalidRequestException.class);
         } catch (InvalidRequestException e) {
-          assertThat(e.errores()).contains(ErrorCode.Vehicle.NOT_PRESENT);
+          assertThat(e.errors()).contains(ErrorCode.Vehicle.NOT_PRESENT);
           verify(vehicleRepo, times(0)).create(any(Vehicle.class));
         }
       });
@@ -91,7 +91,7 @@ public class VehicleServiceTests extends JavaSpec<TestContext> {
           service.create(Long.valueOf(1), vehicle);
           failBecauseExceptionWasNotThrown(InvalidRequestException.class);
         } catch (InvalidRequestException e) {
-          assertThat(e.errores()).contains(ErrorCode.Vehicle.TYPE_NOT_PRESENT);
+          assertThat(e.errors()).contains(ErrorCode.Vehicle.TYPE_NOT_PRESENT);
           verify(vehicleRepo, times(0)).create(any(Vehicle.class));
         }
       });
@@ -103,7 +103,7 @@ public class VehicleServiceTests extends JavaSpec<TestContext> {
             service.create(Long.valueOf(1), vehicle);
             failBecauseExceptionWasNotThrown(InvalidRequestException.class);
           } catch (InvalidRequestException e) {
-            assertThat(e.errores()).contains(ErrorCode.Vehicle.NUMBER_OF_PASSANGERS_INVALID);
+            assertThat(e.errors()).contains(ErrorCode.Vehicle.NUMBER_OF_PASSANGERS_INVALID);
             verify(vehicleRepo, times(0)).create(any(Vehicle.class));
           }
         };
@@ -128,7 +128,7 @@ public class VehicleServiceTests extends JavaSpec<TestContext> {
             service.create(Long.valueOf(1), vehicle);
             failBecauseExceptionWasNotThrown(InvalidRequestException.class);
           } catch (InvalidRequestException e) {
-            assertThat(e.errores()).contains(ErrorCode.Vehicle.DESCRIPTION_OUT_OF_BOUNDS);
+            assertThat(e.errors()).contains(ErrorCode.Vehicle.DESCRIPTION_OUT_OF_BOUNDS);
             verify(vehicleRepo, times(0)).create(any(Vehicle.class));
           }
         };
@@ -154,7 +154,7 @@ public class VehicleServiceTests extends JavaSpec<TestContext> {
           service.create(Long.valueOf(1), vehicle);
           failBecauseExceptionWasNotThrown(InvalidRequestException.class);
         } catch (InvalidRequestException e) {
-          assertThat(e.errores()).contains(ErrorCode.Vehicle.LICENSE_NOT_PRESENT);
+          assertThat(e.errors()).contains(ErrorCode.Vehicle.LICENSE_NOT_PRESENT);
           verify(vehicleRepo, times(0)).create(any(Vehicle.class));
         }
       });
@@ -181,7 +181,7 @@ public class VehicleServiceTests extends JavaSpec<TestContext> {
           service.delete(null, existingVehicle);
           failBecauseExceptionWasNotThrown(InvalidRequestException.class);
         } catch (InvalidRequestException e) {
-          assertThat(e.errores()).contains(ErrorCode.User.ID_NOT_PRESENT);
+          assertThat(e.errors()).contains(ErrorCode.User.ID_NOT_PRESENT);
           assertThat(existentUser.getVehicles()).contains(existingVehicle);
           verify(vehicleRepo, times(0)).delete(existingVehicle);
         }
@@ -192,7 +192,7 @@ public class VehicleServiceTests extends JavaSpec<TestContext> {
           service.delete(Long.valueOf(1), null);
           failBecauseExceptionWasNotThrown(InvalidRequestException.class);
         } catch (InvalidRequestException e) {
-          assertThat(e.errores()).contains(ErrorCode.Vehicle.NOT_PRESENT);
+          assertThat(e.errors()).contains(ErrorCode.Vehicle.NOT_PRESENT);
           assertThat(existentUser.getVehicles()).contains(existingVehicle);
           verify(vehicleRepo, times(0)).delete(existingVehicle);
         }
@@ -205,7 +205,7 @@ public class VehicleServiceTests extends JavaSpec<TestContext> {
           service.delete(1L, vehicle);
           failBecauseExceptionWasNotThrown(InvalidRequestException.class);
         } catch (InvalidRequestException e) {
-          assertThat(e.errores()).contains(ErrorCode.Vehicle.ID_NOT_PRESENT);
+          assertThat(e.errors()).contains(ErrorCode.Vehicle.ID_NOT_PRESENT);
           assertThat(existentUser.getVehicles()).contains(existingVehicle);
           verify(vehicleRepo, times(0)).delete(existingVehicle);
         }
@@ -233,7 +233,7 @@ public class VehicleServiceTests extends JavaSpec<TestContext> {
           service.getFromUser(null);
           failBecauseExceptionWasNotThrown(InvalidRequestException.class);
         } catch (InvalidRequestException e) {
-          assertThat(e.errores()).contains(ErrorCode.User.ID_NOT_PRESENT);
+          assertThat(e.errors()).contains(ErrorCode.User.ID_NOT_PRESENT);
         }
       });
     });

@@ -23,6 +23,7 @@ import {FileUploadModule} from 'primeng/fileupload';
 import {MyProfileComponent} from './components/my-profile/my-profile.component';
 import {PublicationModule} from './publication/publication.module';
 import {WelcomeComponent} from './welcome/welcome.component';
+import {User} from './user';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,7 @@ import {WelcomeComponent} from './welcome/welcome.component';
     AuthComponent,
     CreateVehicleComponent,
     MyProfileComponent,
-    WelcomeComponent
+    WelcomeComponent,
   ],
   imports: [
     AgmCoreModule.forRoot({

@@ -57,17 +57,19 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public User login(UserInfo mayBeUserInfo) {
-    return Optional.of(mayBeUserInfo)
-      .map(userInfo -> new User(
-        null,
-        userInfo.getName(),
-        null,
-        userInfo.getEmail(),
-        null,
-        userInfo.getPicture()))
-      .orElseThrow(() -> new InvalidRequestException(
-        "Error in login ",
-        Collections.singletonList(ErrorCode.Login.USER_INFO_NOT_PRESENT)));
+    return this.createIfNotExists(
+      Optional.of(mayBeUserInfo)
+        .map(userInfo -> new User(
+          null,
+          userInfo.getName(),
+          null,
+          userInfo.getEmail(),
+          null,
+          userInfo.getPicture()))
+        .orElseThrow(() -> new InvalidRequestException(
+          "Error in login ",
+          Collections.singletonList(ErrorCode.Login.USER_INFO_NOT_PRESENT)))
+    );
   }
 
   private void validate(UserCustomizableData user) {

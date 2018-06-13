@@ -1,14 +1,15 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
-import {User} from '../users/user';
 import {mergeMap} from 'rxjs/operators';
 import {UserInfo} from '../auth/auth.service';
+import {User} from '../user';
 
 @Injectable()
 export class BackendService {
   private base = 'http://localhost:9090/backend/';
   private loginUrl = this.base + 'users/login';
+  private updateUserUrl = this.base + 'users/update';
 
   private http: HttpClient;
   private user: Observable<User>;
@@ -34,6 +35,14 @@ export class BackendService {
   }
 
   getUser(): Observable<User> {
+    return this.user;
+  }
+
+  updateUser(user: User): Observable<User> {
+    this.user = this.http.put<User>(this.updateUserUrl, user, {
+      headers: this.headers()
+    });
+
     return this.user;
   }
 }

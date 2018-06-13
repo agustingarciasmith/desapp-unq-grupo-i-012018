@@ -22,7 +22,7 @@ public class UsersController {
     this.service = service;
   }
 
-  @PutMapping("update/{id}")
+  @PutMapping("/update")
   public void update(@RequestBody UserCustomizableData user) {
     service.update(user);
   }

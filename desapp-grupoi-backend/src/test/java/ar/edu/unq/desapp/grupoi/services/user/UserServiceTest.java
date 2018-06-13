@@ -52,7 +52,7 @@ public class UserServiceTest extends JavaSpec<TestContext> {
               service.createIfNotExists(new User(null, "", "address", null, "cuil", "laal"));
               failBecauseExceptionWasNotThrown(InvalidRequestException.class);
             } catch (InvalidRequestException e) {
-              assertThat(e.errores()).contains(ErrorCode.User.EMAIL_NOT_PRESENT);
+              assertThat(e.errors()).contains(ErrorCode.User.EMAIL_NOT_PRESENT);
             }
           });
 
@@ -61,7 +61,7 @@ public class UserServiceTest extends JavaSpec<TestContext> {
               service.createIfNotExists(new User(null, "name", "address", "", "cuil", "lala"));
               failBecauseExceptionWasNotThrown(InvalidRequestException.class);
             } catch (InvalidRequestException e) {
-              assertThat(e.errores()).contains(ErrorCode.User.EMAIL_NOT_PRESENT);
+              assertThat(e.errors()).contains(ErrorCode.User.EMAIL_NOT_PRESENT);
             }
           });
 
@@ -70,7 +70,7 @@ public class UserServiceTest extends JavaSpec<TestContext> {
               service.createIfNotExists(new User(null, "name", "address", "invalid mail", "cuil", "lala"));
               failBecauseExceptionWasNotThrown(InvalidRequestException.class);
             } catch (InvalidRequestException e) {
-              assertThat(e.errores()).contains(ErrorCode.User.EMAIL_INVALID_FORMAT);
+              assertThat(e.errors()).contains(ErrorCode.User.EMAIL_INVALID_FORMAT);
             }
           });
         });
@@ -109,7 +109,7 @@ public class UserServiceTest extends JavaSpec<TestContext> {
                 service.update(new UserCustomizableData(null, "name", "address", "cuil", "lala"));
                 failBecauseExceptionWasNotThrown(InvalidRequestException.class);
               } catch (InvalidRequestException e) {
-                assertThat(e.errores()).contains(ErrorCode.User.ID_NOT_PRESENT);
+                assertThat(e.errors()).contains(ErrorCode.User.ID_NOT_PRESENT);
               }
             });
             it("without a name", () -> {
@@ -117,7 +117,7 @@ public class UserServiceTest extends JavaSpec<TestContext> {
                 service.update(new UserCustomizableData(Long.valueOf(1), null, "address", "cuil", "lala"));
                 failBecauseExceptionWasNotThrown(InvalidRequestException.class);
               } catch (InvalidRequestException e) {
-                assertThat(e.errores()).contains(ErrorCode.User.NAME_NOT_PRESENT);
+                assertThat(e.errors()).contains(ErrorCode.User.NAME_NOT_PRESENT);
               }
             });
 
@@ -126,7 +126,7 @@ public class UserServiceTest extends JavaSpec<TestContext> {
                 service.update(new UserCustomizableData(Long.valueOf(1), "", "address", "cuil", "lala"));
                 failBecauseExceptionWasNotThrown(InvalidRequestException.class);
               } catch (InvalidRequestException e) {
-                assertThat(e.errores()).contains(ErrorCode.User.NAME_NOT_PRESENT);
+                assertThat(e.errors()).contains(ErrorCode.User.NAME_NOT_PRESENT);
               }
             });
 
@@ -136,7 +136,7 @@ public class UserServiceTest extends JavaSpec<TestContext> {
                 service.update(new UserCustomizableData(Long.valueOf(1), "132456789132465798123456789", "address", "cuil", "lala"));
                 failBecauseExceptionWasNotThrown(InvalidRequestException.class);
               } catch (InvalidRequestException e) {
-                assertThat(e.errores()).contains(ErrorCode.User.NAME_OUT_OF_BOUNDS);
+                assertThat(e.errors()).contains(ErrorCode.User.NAME_OUT_OF_BOUNDS);
               }
             });
 
@@ -146,7 +146,7 @@ public class UserServiceTest extends JavaSpec<TestContext> {
                 service.update(new UserCustomizableData(Long.valueOf(1), "123", "address", "cuil", "lala"));
                 failBecauseExceptionWasNotThrown(InvalidRequestException.class);
               } catch (InvalidRequestException e) {
-                assertThat(e.errores()).contains(ErrorCode.User.NAME_OUT_OF_BOUNDS);
+                assertThat(e.errors()).contains(ErrorCode.User.NAME_OUT_OF_BOUNDS);
               }
             });
 
@@ -155,7 +155,7 @@ public class UserServiceTest extends JavaSpec<TestContext> {
                 service.update(new UserCustomizableData(Long.valueOf(1), "name", null, "cuil", "lala"));
                 failBecauseExceptionWasNotThrown(InvalidRequestException.class);
               } catch (InvalidRequestException e) {
-                assertThat(e.errores()).contains(ErrorCode.User.ADDRESS_NOT_PRESENT);
+                assertThat(e.errors()).contains(ErrorCode.User.ADDRESS_NOT_PRESENT);
               }
             });
 
@@ -164,7 +164,7 @@ public class UserServiceTest extends JavaSpec<TestContext> {
                 service.update(new UserCustomizableData(Long.valueOf(1), "name", "", "cuil", "lala"));
                 failBecauseExceptionWasNotThrown(InvalidRequestException.class);
               } catch (InvalidRequestException e) {
-                assertThat(e.errores()).contains(ErrorCode.User.ADDRESS_NOT_PRESENT);
+                assertThat(e.errors()).contains(ErrorCode.User.ADDRESS_NOT_PRESENT);
               }
             });
 
@@ -173,7 +173,7 @@ public class UserServiceTest extends JavaSpec<TestContext> {
                 service.update(new UserCustomizableData(Long.valueOf(1), "name", "address", null, "lala"));
                 failBecauseExceptionWasNotThrown(InvalidRequestException.class);
               } catch (InvalidRequestException e) {
-                assertThat(e.errores()).contains(ErrorCode.User.CUIL_NOT_PRESENT);
+                assertThat(e.errors()).contains(ErrorCode.User.CUIL_NOT_PRESENT);
               }
             });
 
@@ -182,7 +182,7 @@ public class UserServiceTest extends JavaSpec<TestContext> {
                 service.update(new UserCustomizableData(Long.valueOf(1), "name", "address", "", "lala"));
                 failBecauseExceptionWasNotThrown(InvalidRequestException.class);
               } catch (InvalidRequestException e) {
-                assertThat(e.errores()).contains(ErrorCode.User.CUIL_NOT_PRESENT);
+                assertThat(e.errors()).contains(ErrorCode.User.CUIL_NOT_PRESENT);
               }
             });
 
@@ -191,7 +191,7 @@ public class UserServiceTest extends JavaSpec<TestContext> {
                 service.update(new UserCustomizableData(Long.valueOf(1), "name", "address", "invalid cuil", "lala"));
                 failBecauseExceptionWasNotThrown(InvalidRequestException.class);
               } catch (InvalidRequestException e) {
-                assertThat(e.errores()).contains(ErrorCode.User.CUIL_INVALID_FORMAT);
+                assertThat(e.errors()).contains(ErrorCode.User.CUIL_INVALID_FORMAT);
               }
             });
 
