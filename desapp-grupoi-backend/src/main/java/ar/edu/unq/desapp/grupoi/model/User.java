@@ -31,7 +31,7 @@ public class User {
   private String avatar;
 
   @OneToMany
-  @JoinColumn(name = "VEHICLE_ID", unique = true)
+  @JoinColumn(name = "VEHICLE_ID")
   private List<Vehicle> vehicles;
 
   @Column(name = "TOTAL_SCORE", nullable = false, columnDefinition = "int default 0")

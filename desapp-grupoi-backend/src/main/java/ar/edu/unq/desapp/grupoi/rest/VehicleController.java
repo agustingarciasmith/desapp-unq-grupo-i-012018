@@ -9,7 +9,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+
 @RestController
+@RequestMapping(Endpoints.Users.BASE)
+@CrossOrigin(origins = "http://localhost:4200")
 public class VehicleController {
 
   private final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -20,12 +25,12 @@ public class VehicleController {
     this.service = service;
   }
 
-  @GetMapping("/users/{id}/vehicles")
+    @RequestMapping(method = GET, path = "/{id}/vehicles")
   public List<Vehicle> getVehiclesFromUser(@PathVariable Long id) {
     return service.getFromUser(id);
   }
 
-  @PostMapping("users/{id}/vehicles")
+  @RequestMapping(method = POST, path = "/{id}/vehicles")
   public void addVehicleToUser(@PathVariable Long id, @RequestBody Vehicle vehicle) {
     logger.info(String.format("Agregando Vehiculo a usuario => %s %s %s", id, vehicle.getLicense(), vehicle.getNumberOfPassengers()));
     service.create(id, vehicle);

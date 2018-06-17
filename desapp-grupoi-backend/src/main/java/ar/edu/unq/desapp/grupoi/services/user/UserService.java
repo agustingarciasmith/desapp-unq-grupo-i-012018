@@ -4,7 +4,7 @@ import ar.edu.unq.desapp.grupoi.model.User;
 import ar.edu.unq.desapp.grupoi.rest.UserInfo;
 
 public interface UserService {
-  void update(UserCustomizableData user);
+  void update(User user);
 
   User getById(Long id);
 

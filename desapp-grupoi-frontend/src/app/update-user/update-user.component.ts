@@ -4,6 +4,7 @@ import {BackendService} from '../backend/backend.service';
 import {ToasterConfig, ToasterService} from 'angular5-toaster/dist';
 import {UserProfileErrors} from '../backend/error';
 import {User} from '../user';
+import {Vehicle} from 'app/vehicles/vehicle';
 
 @Component({
   selector: 'app-update-user',
@@ -13,9 +14,9 @@ import {User} from '../user';
 })
 export class UpdateUserComponent implements OnInit {
 
-  loading: boolean = true;
-  error: boolean = false;
-  userSwitch: boolean = false;
+  loading = true;
+  error = false;
+  userSwitch = false;
   user: User;
   userUpdate: User;
 
@@ -70,7 +71,7 @@ export class UpdateUserComponent implements OnInit {
   }
 
   private handleUpdateError(error) {
-    let errors = UserProfileErrors.from(error);
+    const errors = UserProfileErrors.from(error);
     if (errors.isInvalidRequest()) {
       this.toaster.pop('error', 'Error changing profile', 'Details: ' + errors.formatErors());
     } else {
@@ -78,7 +79,7 @@ export class UpdateUserComponent implements OnInit {
     }
   }
 
-  public toasterconfig : ToasterConfig =
+  public toasterconfig: ToasterConfig =
     new ToasterConfig({
       showCloseButton: true,
       tapToDismiss: false,

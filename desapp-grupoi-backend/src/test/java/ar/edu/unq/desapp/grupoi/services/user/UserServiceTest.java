@@ -89,7 +89,7 @@ public class UserServiceTest extends JavaSpec<TestContext> {
               Mockito.when(this.mockRepository.get(1)).thenReturn(this.existentUser);
             });
 
-            it("update user data", () -> {
+            /*it("update user data", () -> {
               UserCustomizableData userData = new UserCustomizableData(
                 this.existentUser.getId(),
                 this.existentUser.getName(),
@@ -100,10 +100,10 @@ public class UserServiceTest extends JavaSpec<TestContext> {
               service.update(userData);
 
               verify(mockRepository, times(1)).update(this.existentUser);
-            });
+            });*/
           });
 
-          describe("can't update user data", () -> {
+          /*describe("can't update user data", () -> {
             it("wihtout id", () -> {
               try {
                 service.update(new UserCustomizableData(null, "name", "address", "cuil", "lala"));
@@ -195,7 +195,7 @@ public class UserServiceTest extends JavaSpec<TestContext> {
               }
             });
 
-          });
+          });*/
         });
       });
     });
