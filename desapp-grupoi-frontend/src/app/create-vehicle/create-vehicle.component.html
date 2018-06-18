@@ -1,7 +1,6 @@
 <p-dialog header="New Vehicle" [(visible)]="dialogVehicle" [width]="450" modal=true appendTo="body">
-  <form novalidate [formGroup]="vehicleForm" (ngSubmit)="onSubmit()">
     <label>N° of passengers</label>
-    <select class="form-control" [formControlName]="'passengers'">
+    <select class="form-control" [(ngModel)]="newVehicle.numberOfPassengers">
       <option>1</option>
       <option>2</option>
       <option>3</option>
@@ -22,19 +21,19 @@
     <hr/>
     <label>Type of vehicle</label>
     <br>
-    <select class="form-control" [formControlName]="'type'">
-      <option value="VehicleType.MOTORBIKE">Motorbike</option>
-      <option value="VehicleType.AUTO">Car</option>
-      <option value="VehicleType.PICKUP">Pick Up</option>
+    <select class="form-control" [(ngModel)]="newVehicle.type">
+      <option value="MOTORBIKE">Motorbike</option>
+      <option value="AUTO">Car</option>
+      <option value="PICKUP">Pick Up</option>
     </select>
       <hr/>
       <div>
         <label>License</label>
-        <input class="form-control" type="text" formControlName="license" placeholder="Add license">
+        <input class="form-control" type="text" [(ngModel)]="newVehicle.license" placeholder="Add license">
       </div>
       <div>
         <label>Description</label>
-        <textarea class="form-control" formControlName="description" rows="3"></textarea>
+        <textarea class="form-control" [(ngModel)]="newVehicle.description" rows="3"></textarea>
       </div>
       <hr/>
       <div>
@@ -51,9 +50,8 @@
       <hr/>
       <p-footer>
         <button type="button" class="btn btn-danger" (click)="toggleAddVehicleDialog()">Cancel</button>
-        <button type="submit" class="btn btn-primary" [disabled]="!vehicleForm.valid">Submit</button>
+        <button type="submit" class="btn btn-primary" (click)="addVehicleToUser()">Submit</button>
       </p-footer>
-  </form>
 </p-dialog>
 
-<button type="text" (click)="toggleAddVehicleDialog()" pButton icon="fa-car" label="Add Vehicle"></button>
+<button type="text" (click)="addVehicle()" pButton icon="fa-car" label="Add Vehicle"></button>

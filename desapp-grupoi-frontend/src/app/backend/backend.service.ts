@@ -40,6 +40,7 @@ export class BackendService {
   }
 
   updateUser(user: User): Observable<User> {
+    console.log(user);
     this.user = this.http.put<User>(this.updateUserUrl, user, {
       headers: this.headers()
     });

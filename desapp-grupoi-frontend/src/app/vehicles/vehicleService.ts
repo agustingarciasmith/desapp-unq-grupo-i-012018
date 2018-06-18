@@ -5,10 +5,14 @@ import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/catch';
 import {Vehicle} from './vehicle';
 import {Observable} from 'rxjs/Observable';
+import {User} from '../user';
 
 @Injectable()
 export class VehicleService {
-  constructor(private http: HttpClient) {
+  private http: HttpClient;
+
+  constructor(http: HttpClient) {
+    this.http = http;
   }
 
   private headers(): HttpHeaders {
@@ -16,12 +20,10 @@ export class VehicleService {
       .set('Authorization', `Bearer ${localStorage.getItem('access_token')}`);
   }
 
-  createAndAddVehicleToUser(id: number, vehicle: Vehicle): Observable<any> {
-      return this.http.put('http://localhost:9090/backend/users/' + id + '/vehicles', vehicle, {
+  addVehicleToUser(vehicle: Vehicle, id: number): Observable<Vehicle> {
+      return this.http.post<Vehicle>('http://localhost:9090/backend/users/90/vehicles', vehicle, {
         headers: this.headers()
-      })
-        .map(response => console.log(response))
-        .catch(error => Observable.throw('Error in user service'));
+      });
   }
 }
 
