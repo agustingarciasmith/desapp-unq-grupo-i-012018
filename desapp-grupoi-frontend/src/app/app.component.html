@@ -5,24 +5,15 @@
   <div [ngSwitch]="isAuthenticated()">
     <ul *ngSwitchCase="true" class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href="/">Home</a>
+        <a class="nav-link" href={{paths.home}}>Home</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/publication">Publications</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/publication/create">New Publication</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/users/update">My profile</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/users/create">Register</a>
+        <a class="nav-link" href={{paths.publication}}>Publications</a>
       </li>
     </ul>
 
     <ul *ngSwitchCase="false" class="navbar-nav mr-auto">
-      <li class="nav-item active"><a class="nav-link" href="/login">Login</a></li>
+      <li class="nav-item active"><a class="nav-link" href={{paths.login}}>Login</a></li>
     </ul>
   </div>
 </nav>

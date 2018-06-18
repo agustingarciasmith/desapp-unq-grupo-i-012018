@@ -5,7 +5,7 @@ import {environment} from '../../environments/environment';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
-import {User} from '../user';
+import {paths} from "../paths";
 
 export class UserInfo {
   constructor(
@@ -43,9 +43,9 @@ export class AuthService {
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult);
-        this.router.navigate(['/home']);
+        this.router.navigate([paths.home]);
       } else if (err) {
-        this.router.navigate(['/login']);
+        this.router.navigate([paths.login]);
         console.log(err);
         alert(`Error: ${err.error}. Check the console for further details.`);
       }

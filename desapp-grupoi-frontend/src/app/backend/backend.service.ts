@@ -4,10 +4,11 @@ import {Observable} from 'rxjs/Observable';
 import {mergeMap} from 'rxjs/operators';
 import {UserInfo} from '../auth/auth.service';
 import {User} from '../user';
+import {environment} from '../../environments/environment';
 
 @Injectable()
 export class BackendService {
-  private base = 'http://localhost:9090/backend/';
+  private base = environment.backendUrl;
   private loginUrl = this.base + 'users/login';
   private updateUserUrl = this.base + 'users/update';
 

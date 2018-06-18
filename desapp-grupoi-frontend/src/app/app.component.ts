@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {AuthService} from './auth/auth.service';
+import {paths} from "./paths";
 
 @Component({
   selector: 'app-root',
@@ -8,8 +9,10 @@ import {AuthService} from './auth/auth.service';
 })
 export class AppComponent {
   title = 'app';
+  private paths: { login: string; auth: string; home: string; publication: string; welcome: string };
 
   constructor(private auth: AuthService) {
+    this.paths = paths;
   }
 
   public isAuthenticated(): boolean {
