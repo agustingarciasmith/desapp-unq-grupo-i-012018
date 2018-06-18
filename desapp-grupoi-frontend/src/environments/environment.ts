@@ -9,6 +9,7 @@ export const environment = {
   authDomain: 'unq-desa-grupoi.auth0.com',
   authResponseType: 'token id_token',
   authAudience: 'http://localhost:9090',
-  authRedirectUri: 'http://localhost:4200/auth',
-  authScope: 'openid email profile'
+  authRedirectUri: 'http://localhost:4200/frontend/auth',
+  authScope: 'openid email profile',
+  backendUrl: 'http://localhost:9090/'
 };

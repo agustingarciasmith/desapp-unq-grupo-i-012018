@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../auth/auth.service';
 import {Router} from '@angular/router';
+import {paths} from "../paths";
 
 @Component({
   selector: 'app-welcome',
@@ -15,7 +16,7 @@ export class WelcomeComponent implements OnInit {
 
   ngOnInit() {
     if(this.auth.isAuthenticated()) {
-      this.router.navigate(["/home"])
+      this.router.navigate([paths.home])
     }
   }
 

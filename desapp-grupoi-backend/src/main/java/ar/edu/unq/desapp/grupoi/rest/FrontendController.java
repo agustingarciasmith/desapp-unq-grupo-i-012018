@@ -1,0 +1,13 @@
+package ar.edu.unq.desapp.grupoi.rest;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+
+public class FrontendController {
+
+    public String frontend() {
+        return "index";
+    }
+}

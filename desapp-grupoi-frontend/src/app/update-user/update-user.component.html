@@ -17,7 +17,7 @@
       <div *ngSwitchCase="false" [ngSwitch]="error">
         <div *ngSwitchCase="true">
           <p> Unexpecter error.</p>
-          <a href="/login">Go to login and try again</a>
+          <a href={{paths.login}}>Go to login and try again</a>
         </div>
         <div *ngSwitchCase="false" [ngSwitch]="userSwitch">
           <div class="row nav-item-margin">

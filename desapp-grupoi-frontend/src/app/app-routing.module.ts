@@ -7,15 +7,15 @@ import {AuthComponent} from './auth/auth.component';
 import {GuardService} from './auth/guard.service';
 import {PublicationListComponent} from './publication/publication-list/publication-list.component';
 import {WelcomeComponent} from './welcome/welcome.component';
-import {UpdateUserComponent} from './update-user/update-user.component';
+import {paths} from "./paths";
 
 const appRoutes: Routes = [
-  {path: '', redirectTo: '/welcome', pathMatch: 'full'},
-  {path: 'welcome', component: WelcomeComponent},
-  {path: 'login', component: LoginComponent},
-  {path: 'auth', component: AuthComponent},
-  {path: 'home', component: HomeComponent, canActivate: [GuardService]},
-  {path: 'publication', component: PublicationListComponent, canActivate: [GuardService]},
+  {path: '', redirectTo: paths.welcome, pathMatch: 'full'},
+  {path: paths.welcome, component: WelcomeComponent},
+  {path: paths.login, component: LoginComponent},
+  {path: paths.auth, component: AuthComponent},
+  {path: paths.home, component: HomeComponent, canActivate: [GuardService]},
+  {path: paths.publication, component: PublicationListComponent, canActivate: [GuardService]},
 ];
 
 @NgModule({

@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
 import {AuthService} from './auth.service';
 import {Observable} from 'rxjs/Observable';
+import {paths} from "../paths";
 
 @Injectable()
 export class GuardService implements CanActivate {
@@ -13,7 +14,7 @@ export class GuardService implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     if (!this.auth.isAuthenticated()) {
-      this.router.navigate(['/login'], {
+      this.router.navigate([paths.login], {
         queryParams: {
           return: state.url
         }

@@ -5,6 +5,7 @@ import {ToasterConfig, ToasterService} from 'angular5-toaster/dist';
 import {UserProfileErrors} from '../backend/error';
 import {User} from '../user';
 import {Vehicle} from 'app/vehicles/vehicle';
+import {paths} from "../paths";
 
 @Component({
   selector: 'app-update-user',
@@ -19,9 +20,11 @@ export class UpdateUserComponent implements OnInit {
   userSwitch = false;
   user: User;
   userUpdate: User;
+  private paths: { login: string; auth: string; home: string; publication: string; welcome: string };
 
   constructor(private service: BackendService, private toaster: ToasterService) {
     this.user = User.emptyUser();
+    this.paths = paths
   }
 
   ngOnInit() {
