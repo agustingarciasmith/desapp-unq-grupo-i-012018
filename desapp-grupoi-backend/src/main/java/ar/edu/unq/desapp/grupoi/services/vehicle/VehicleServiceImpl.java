@@ -36,9 +36,7 @@ public class VehicleServiceImpl implements VehicleService {
   @Override
   public List<Vehicle> getFromUser(Long userId) {
     validateUserIdPresence(userId);
-    User user = userRepository.get(userId);
-    System.out.println(user.getVehicles().size());
-    return user.getVehicles();
+    return userRepository.get(userId).getVehicles();
   }
 
   @Override
@@ -49,7 +47,6 @@ public class VehicleServiceImpl implements VehicleService {
     User user = userRepository.get(userId);
     vehicleRepository.create(vehicle);
     user.addVehicle(vehicle);
-
     }
 
   @Override
@@ -74,6 +71,7 @@ public class VehicleServiceImpl implements VehicleService {
       throw new InvalidRequestException(
         "Error fetching vehicle",
         Collections.singletonList(ErrorCode.Vehicle.ID_NOT_PRESENT));
+
     }
   }
 

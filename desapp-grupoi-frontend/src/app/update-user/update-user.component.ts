@@ -76,7 +76,7 @@ export class UpdateUserComponent implements OnInit {
   private handleUpdateError(error) {
     const errors = UserProfileErrors.from(error);
     if (errors.isInvalidRequest()) {
-      this.toaster.pop('error', 'Error changing profile', 'Details: ' + errors.formatErors());
+      alert('Error changing profile: ' + errors.formatErors());
     } else {
       this.error = true;
     }

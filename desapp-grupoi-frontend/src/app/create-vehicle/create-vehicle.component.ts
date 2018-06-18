@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {VehicleService} from '../vehicles/vehicleService';
 import {Vehicle} from '../vehicles/vehicle';
+import {BackendService} from "../backend/backend.service";
 
 
 @Component({
@@ -17,7 +18,7 @@ export class CreateVehicleComponent implements OnInit {
   vehicle: Vehicle;
   newVehicle: Vehicle;
 
-  constructor (private service: VehicleService) {
+  constructor (private service: BackendService) {
   }
 
   ngOnInit() {
@@ -36,7 +37,7 @@ export class CreateVehicleComponent implements OnInit {
   }
 
   addVehicleToUser() {
-    this.service.addVehicleToUser(this.newVehicle, this.userId).subscribe(data => {alert("Succesfully Added Product details")},Error => {alert("failed while adding product details")});
+    // this.service.addVehicleToUser(this.newVehicle, this.userId).subscribe(data => {alert("Succesfully Added Product details")},Error => {alert("failed while adding product details")});
     this.toggleAddVehicleDialog();
   }
 

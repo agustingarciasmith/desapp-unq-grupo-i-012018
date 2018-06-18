@@ -5,71 +5,69 @@
       <hr/>
     </div>
   </div>
-  <div class="row">
-    <div class="col-12">
-      <toaster-container [toasterconfig]="toasterconfig"></toaster-container>
+  <div [ngSwitch]="loading">
+    <div *ngSwitchCase="true">
+      Loading...
+    </div>
+    <div *ngSwitchCase="false" [ngSwitch]="error">
+      <div *ngSwitchCase="true">
+        <p> Unexpecter error.</p>
+        <a href={{paths.login}}>Go to login and try again</a>
+      </div>
+      <div *ngSwitchCase="false" [ngSwitch]="userSwitch">
+        <div class="row nav-item-margin">
+          <div class="card top-buffer" style="width: 16rem;">
+            <img class="card-img-top" src={{user.avatar}}>
+            <div class="card-body">
+              <h2 class="card-title" *ngSwitchCase="false">{{user.name}}</h2>
+              <input class="col-12 form-control form-control-sm" *ngSwitchCase="true" type="text"
+                     [(ngModel)]="userUpdate.name">
+              <h5 class="card-text top-buffer">My CUIL</h5>
+              <p class="card-text" *ngSwitchCase="false">{{user.cuil}}</p>
+              <input class="form-control form-control-sm" *ngSwitchCase="true" type="text"
+                     [(ngModel)]="userUpdate.cuil">
+              <h5 class="card-text top-buffer">My Email</h5>
+              <p class="card-text">{{user.email}}</p>
+              <h5 class="card-text top-buffer">My Address</h5>
+              <p class="card-text" *ngSwitchCase="false">{{user.address}}</p>
+              <input class="form-control form-control-sm" *ngSwitchCase="true" type="text"
+                     [(ngModel)]="userUpdate.address">
+              <h5 class="card-text top-buffer align-items-center">My Rating</h5>
+              <h3 class="strong">{{user.totalScore}}</h3>
+              <div class="top-buffer">
+                <button type="button" class="btn btn-primary" *ngSwitchCase="false" (click)="modifyProfile()">Modify
+                  Profile
+                </button>
+                <button type="button" class="btn btn-danger" *ngSwitchCase="true" (click)="cancelProfileUpdate()">
+                  Cancel
+                </button>
+                <button type="button" class="btn btn-info" *ngSwitchCase="true" (click)="updateUser()">Submit</button>
+              </div>
+            </div>
+          </div>
+          <div class="card top-buffer nav-item-margin" style="width: 16rem;">
+            <div class="card-body">
+              <h3 class="card-title">My vehicles</h3>
+              <ul>
+                <li *ngFor="let vehicle of user.vehicles">
+                  {{vehicle.license}}
+                </li>
+              </ul>
+              <app-create-vehicle userId={{user.id}}></app-create-vehicle>
+            </div>
+          </div>
+          <div class="card top-buffer nav-item-margin" style="width: 16rem;">
+            <div class="card-body">
+              <h3 class="card-title">My publications</h3>
+            </div>
+          </div>
+          <div class="card top-buffer nav-item-margin" style="width: 16rem;">
+            <div class="card-body">
+              <h3 class="card-title">My reservations</h3>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-    <div [ngSwitch]="loading">
-      <div *ngSwitchCase="true">
-        Loading...
-      </div>
-      <div *ngSwitchCase="false" [ngSwitch]="error">
-        <div *ngSwitchCase="true">
-          <p> Unexpecter error.</p>
-          <a href={{paths.login}}>Go to login and try again</a>
-        </div>
-        <div *ngSwitchCase="false" [ngSwitch]="userSwitch">
-          <div class="row nav-item-margin">
-              <div class="card top-buffer" style="width: 16rem;">
-                <img class="card-img-top" src={{user.avatar}}>
-                <div class="card-body">
-                  <h2 class="card-title" *ngSwitchCase="false">{{user.name}}</h2>
-                  <input class="col-12 form-control form-control-sm" *ngSwitchCase="true" type="text"
-                         [(ngModel)]="userUpdate.name">
-                  <h5 class="card-text top-buffer">My CUIL</h5>
-                  <p class="card-text" *ngSwitchCase="false">{{user.cuil}}</p>
-                  <input class="form-control form-control-sm" *ngSwitchCase="true" type="text"
-                         [(ngModel)]="userUpdate.cuil">
-                  <h5 class="card-text top-buffer">My Email</h5>
-                  <p class="card-text">{{user.email}}</p>
-                  <h5 class="card-text top-buffer">My Address</h5>
-                  <p class="card-text" *ngSwitchCase="false">{{user.address}}</p>
-                  <input class="form-control form-control-sm" *ngSwitchCase="true" type="text"
-                         [(ngModel)]="userUpdate.address">
-                  <h5 class="card-text top-buffer align-items-center">My Rating</h5>
-                  <h3 class="strong">{{user.totalScore}}</h3>
-                  <div class="top-buffer">
-                    <button type="button" class="btn btn-primary" *ngSwitchCase="false" (click)="modifyProfile()">Modify Profile</button>
-                    <button type="button" class="btn btn-danger" *ngSwitchCase="true" (click)="cancelProfileUpdate()">Cancel</button>
-                    <button type="button" class="btn btn-info" *ngSwitchCase="true" (click)="updateUser()">Submit</button>
-                  </div>
-                </div>
-              </div>
-            <div class="card top-buffer nav-item-margin" style="width: 16rem;">
-              <div class="card-body">
-                <h3 class="card-title">My vehicles</h3>
-                <ul>
-                  <li *ngFor="let vehicle of user.vehicles">
-                    {{vehicle.license}}
-                  </li>
-                </ul>
-                <app-create-vehicle userId={{user.id}}></app-create-vehicle>
-              </div>
-            </div>
-            <div class="card top-buffer nav-item-margin" style="width: 16rem;">
-              <div class="card-body">
-                <h3 class="card-title">My publications</h3>
-              </div>
-            </div>
-            <div class="card top-buffer nav-item-margin" style="width: 16rem;">
-              <div class="card-body">
-                <h3 class="card-title">My reservations</h3>
-              </div>
-            </div>
-            </div>
-        </div>
-
-      </div>
-    </div>
 </div>

@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
-import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 @RestController
 @RequestMapping(Endpoints.Users.BASE)
@@ -23,8 +22,8 @@ public class UsersController {
     this.service = service;
   }
 
-  @RequestMapping(method = PUT, path = "/update")
-  public void update(@RequestBody User user) {
+  @PutMapping("/update")
+  public void update(@RequestBody UserCustomizableData user) {
     service.update(user);
   }
 
