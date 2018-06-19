@@ -22,4 +22,12 @@ export class User {
       new User(this.id, this.cuil, this.name, this.address, this.email, this.vehicles, this.totalScore, this.avatar)
     );
   }
+
+  addVechicle(vehicle: Vehicle) {
+    this.vehicles.push(vehicle)
+  }
+
+  static from(user: User) {
+    return new User(user.id, user.cuil, user.name, user.address, user.email, user.vehicles, user.totalScore, user.avatar)
+  }
 }

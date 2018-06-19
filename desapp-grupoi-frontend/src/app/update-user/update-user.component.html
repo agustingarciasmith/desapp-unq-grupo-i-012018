@@ -53,7 +53,7 @@
                   {{vehicle.license}}
                 </li>
               </ul>
-              <app-create-vehicle userId={{user.id}}></app-create-vehicle>
+              <button type="text" (click)="addVehicle()" pButton icon="fa-car" label="Add Vehicle"></button>
             </div>
           </div>
           <div class="card top-buffer nav-item-margin" style="width: 16rem;">
@@ -71,3 +71,59 @@
     </div>
   </div>
 </div>
+
+<p-dialog header="New Vehicle" [(visible)]="dialogVehicle" [width]="450" modal=true appendTo="body">
+  <label>N° of passengers</label>
+  <select class="form-control" [(ngModel)]="newVehicle.numberOfPassengers">
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+    <option>4</option>
+    <option>5</option>
+    <option>6</option>
+    <option>7</option>
+    <option>8</option>
+    <option>9</option>
+    <option>10</option>
+    <option>11</option>
+    <option>12</option>
+    <option>13</option>
+    <option>14</option>
+    <option>15</option>
+    <option>16</option>
+  </select>
+  <hr/>
+  <label>Type of vehicle</label>
+  <br>
+  <select class="form-control" [(ngModel)]="newVehicle.type">
+    <option value="MOTORBIKE">Motorbike</option>
+    <option value="AUTO">Car</option>
+    <option value="PICKUP">Pick Up</option>
+  </select>
+  <hr/>
+  <div>
+    <label>License</label>
+    <input class="form-control" type="text" [(ngModel)]="newVehicle.license" placeholder="Add license">
+  </div>
+  <div>
+    <label>Description</label>
+    <textarea class="form-control" [(ngModel)]="newVehicle.description" rows="3"></textarea>
+  </div>
+  <hr/>
+  <div>
+    <label>InputPictureLink</label>
+    <input type="text" #inputPicture placeholder="Add link to picture">
+    <button type="button" class="btn btn-info" (click)="addPicture(inputPicture.value)">+</button>
+  </div>
+  <h4>Pictures</h4>
+  <ul>
+    <li *ngFor="let picture of pictures">
+      <img src="{{picture}}" class="img-fluid" alt="Responsive image">
+    </li>
+  </ul>
+  <hr/>
+  <p-footer>
+    <button type="button" class="btn btn-danger" (click)="toggleAddVehicleDialog()">Cancel</button>
+    <button type="submit" class="btn btn-primary" (click)="addVehicleToUser()">Submit</button>
+  </p-footer>
+</p-dialog>

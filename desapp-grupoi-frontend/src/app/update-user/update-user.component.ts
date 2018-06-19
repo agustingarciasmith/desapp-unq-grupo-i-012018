@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {UsersService} from '../users/users.service';
 import {BackendService} from '../backend/backend.service';
-import {ToasterConfig, ToasterService} from 'angular5-toaster/dist';
+import {ToasterService} from 'angular5-toaster/dist';
 import {UserProfileErrors} from '../backend/error';
 import {User} from '../user';
-import {Vehicle} from 'app/vehicles/vehicle';
 import {paths} from "../paths";
+import {Vehicle} from "../vehicles/vehicle";
 
 @Component({
   selector: 'app-update-user',
@@ -21,47 +21,32 @@ export class UpdateUserComponent implements OnInit {
   user: User;
   userUpdate: User;
   private paths: { login: string; auth: string; home: string; publication: string; welcome: string };
+  private newVehicle: Vehicle;
+  private dialogVehicle: boolean;
 
   constructor(private service: BackendService, private toaster: ToasterService) {
     this.user = User.emptyUser();
-    this.paths = paths
+    this.paths = paths;
+    this.newVehicle = Vehicle.emptyVehicle();
   }
 
   ngOnInit() {
-    this.service.getUser().subscribe(
+    this.service.subscribeToUser(
       (value: User) => {
-        this.user = new User(
-          value.id,
-          value.cuil,
-          value.name,
-          value.address,
-          value.email,
-          value.vehicles,
-          value.totalScore,
-          value.avatar
-        );
-        console.log(value);
+        this.user = User.from(value);
         this.loading = false;
+        this.dialogVehicle = false;
+        this.userSwitch = false;
+        this.newVehicle = Vehicle.emptyVehicle()
       },
       error => {
-        this.loading = false;
-        this.error = true;
-        console.log(error);
+        this.handleError(error);
       });
   }
 
   updateUser() {
     this.loading = true;
-    this.service.updateUser(this.userUpdate).subscribe(
-      value => {
-        this.loading = false;
-        this.userSwitch = false;
-        this.user = this.userUpdate;
-      },
-      error => {
-        this.loading = false;
-          this.handleUpdateError(error);
-      });
+    this.service.updateUser(this.userUpdate)
   }
 
   modifyProfile() {
@@ -73,19 +58,33 @@ export class UpdateUserComponent implements OnInit {
     this.userSwitch = false;
   }
 
-  private handleUpdateError(error) {
+  private handleError(error) {
+    console.log(error);
+    this.loading = false;
     const errors = UserProfileErrors.from(error);
-    if (errors.isInvalidRequest()) {
-      alert('Error changing profile: ' + errors.formatErors());
-    } else {
+    if (errors.isUnexpecterError()) {
       this.error = true;
+    }
+    if(errors.isInvalidRequest()) {
+      alert('Error: ' + errors.formatErors());
     }
   }
 
-  public toasterconfig: ToasterConfig =
-    new ToasterConfig({
-      showCloseButton: true,
-      tapToDismiss: false,
-      timeout: 0
-    });
+  toggleAddVehicleDialog() {
+    this.dialogVehicle = !this.dialogVehicle;
+  }
+
+  addPicture(picture: string) {
+      this.newVehicle.addPicture(picture);
+  }
+
+  addVehicleToUser() {
+    this.loading = true;
+    this.service.addVehicleToUser(this.newVehicle);
+    this.toggleAddVehicleDialog();
+  }
+
+  addVehicle() {
+    this.toggleAddVehicleDialog();
+  }
 }
