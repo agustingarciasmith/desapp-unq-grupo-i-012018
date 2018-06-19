@@ -13,6 +13,11 @@ export class UserProfileErrors {
     ['user.cuil.notPresent', 'complete cuil'],
     ['user.cuil.invalidFormat', 'invalid cuil format'],
     ['user.address.notPresent', 'complete address'],
+    ['vehicle.notPresent', 'complete vehicle data',],
+    ['vehicle.type.notPresent', 'select a type',],
+    ['vehicle.numberOfPassangers.invalid', 'the number of passangers must be between 1 and 10',],
+    ['vehicle.description.outOfBounds', 'the description lenght must be between 30 and 200',],
+    ['vehicle.license.notPresent', 'complete de license',],
   ]);
 
   private constructor(error: any) {
@@ -35,5 +40,9 @@ export class UserProfileErrors {
       accumulator = (accumulator + this.errors.get(value) + ', ');
       return accumulator;
     }, '');
+  }
+
+  isUnexpecterError() {
+    return Error.UNEXPECTER_ERROR === this.error.error.errorCode;
   }
 }

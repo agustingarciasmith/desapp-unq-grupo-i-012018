@@ -5,72 +5,127 @@
       <hr/>
     </div>
   </div>
-  <div class="row">
-    <div class="col-12">
-      <toaster-container [toasterconfig]="toasterconfig"></toaster-container>
+  <div [ngSwitch]="loading">
+    <div *ngSwitchCase="true">
+      Loading...
+    </div>
+    <div *ngSwitchCase="false" [ngSwitch]="error">
+      <div *ngSwitchCase="true">
+        <p> Unexpecter error.</p>
+        <a href={{paths.login}}>Go to login and try again</a>
+      </div>
+      <div *ngSwitchCase="false" [ngSwitch]="userSwitch">
+        <div class="row nav-item-margin">
+          <div class="card top-buffer" style="width: 16rem;">
+            <img class="card-img-top" src={{user.avatar}}>
+            <div class="card-body">
+              <h2 class="card-title" *ngSwitchCase="false">{{user.name}}</h2>
+              <input class="col-12 form-control form-control-sm" *ngSwitchCase="true" type="text"
+                     [(ngModel)]="userUpdate.name">
+              <h5 class="card-text top-buffer">My CUIL</h5>
+              <p class="card-text" *ngSwitchCase="false">{{user.cuil}}</p>
+              <input class="form-control form-control-sm" *ngSwitchCase="true" type="text"
+                     [(ngModel)]="userUpdate.cuil">
+              <h5 class="card-text top-buffer">My Email</h5>
+              <p class="card-text">{{user.email}}</p>
+              <h5 class="card-text top-buffer">My Address</h5>
+              <p class="card-text" *ngSwitchCase="false">{{user.address}}</p>
+              <input class="form-control form-control-sm" *ngSwitchCase="true" type="text"
+                     [(ngModel)]="userUpdate.address">
+              <h5 class="card-text top-buffer align-items-center">My Rating</h5>
+              <h3 class="strong">{{user.totalScore}}</h3>
+              <div class="top-buffer">
+                <button type="button" class="btn btn-primary" *ngSwitchCase="false" (click)="modifyProfile()">Modify
+                  Profile
+                </button>
+                <button type="button" class="btn btn-danger" *ngSwitchCase="true" (click)="cancelProfileUpdate()">
+                  Cancel
+                </button>
+                <button type="button" class="btn btn-info" *ngSwitchCase="true" (click)="updateUser()">Submit</button>
+              </div>
+            </div>
+          </div>
+          <div class="card top-buffer nav-item-margin" style="width: 16rem;">
+            <div class="card-body">
+              <h3 class="card-title">My vehicles</h3>
+              <ul>
+                <li *ngFor="let vehicle of user.vehicles">
+                  {{vehicle.license}}
+                </li>
+              </ul>
+              <button type="text" (click)="addVehicle()" pButton icon="fa-car" label="Add Vehicle"></button>
+            </div>
+          </div>
+          <div class="card top-buffer nav-item-margin" style="width: 16rem;">
+            <div class="card-body">
+              <h3 class="card-title">My publications</h3>
+              <button type="text" (click)="addPublication()" pButton icon="fa-bell" label="New Publication"></button>
+            </div>
+          </div>
+
+          <div class="card top-buffer nav-item-margin" style="width: 16rem;">
+            <div class="card-body">
+              <h3 class="card-title">My reservations</h3>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-    <div [ngSwitch]="loading">
-      <div *ngSwitchCase="true">
-        Loading...
-      </div>
-      <div *ngSwitchCase="false" [ngSwitch]="error">
-        <div *ngSwitchCase="true">
-          <p> Unexpecter error.</p>
-          <a href="/login">Go to login and try again</a>
-        </div>
-        <div *ngSwitchCase="false" [ngSwitch]="userSwitch">
-          <div class="row nav-item-margin">
-              <div class="card top-buffer" style="width: 16rem;">
-                <img class="card-img-top" src={{user.avatar}}>
-                <div class="card-body">
-                  <h2 class="card-title" *ngSwitchCase="false">{{user.name}}</h2>
-                  <input class="col-12 form-control form-control-sm" *ngSwitchCase="true" type="text"
-                         [(ngModel)]="userUpdate.name">
-                  <h5 class="card-text top-buffer">My CUIL</h5>
-                  <p class="card-text" *ngSwitchCase="false">{{user.cuil}}</p>
-                  <input class="form-control form-control-sm" *ngSwitchCase="true" type="text"
-                         [(ngModel)]="userUpdate.cuil">
-                  <h5 class="card-text top-buffer">My Email</h5>
-                  <p class="card-text">{{user.email}}</p>
-                  <h5 class="card-text top-buffer">My Address</h5>
-                  <p class="card-text" *ngSwitchCase="false">{{user.address}}</p>
-                  <input class="form-control form-control-sm" *ngSwitchCase="true" type="text"
-                         [(ngModel)]="userUpdate.address">
-                  <h5 class="card-text top-buffer align-items-center">My Rating</h5>
-                  <h3 class="strong">{{user.totalScore}}</h3>
-                  <div class="top-buffer">
-                    <button type="button" class="btn btn-primary" *ngSwitchCase="false" (click)="modifyProfile()">Modify Profile</button>
-                    <button type="button" class="btn btn-danger" *ngSwitchCase="true" (click)="cancelProfileUpdate()">Cancel</button>
-                    <button type="button" class="btn btn-info" *ngSwitchCase="true" (click)="updateUser()">Submit</button>
-                  </div>
-                </div>
-              </div>
-            <div class="card top-buffer nav-item-margin" style="width: 16rem;">
-              <div class="card-body">
-                <h3 class="card-title">My vehicles</h3>
-                <ul>
-                  <li *ngFor="let vehicle of user.vehicles">
-                    {{vehicle.license}}
-                  </li>
-                </ul>
-                <app-create-vehicle userId={{user.id}}></app-create-vehicle>
-              </div>
-            </div>
-            <div class="card top-buffer nav-item-margin" style="width: 16rem;">
-              <div class="card-body">
-                <h3 class="card-title">My publications</h3>
-                <button type="text" (click)="addPublication()" pButton icon="fa-bell" label="New Publication"></button>
-              </div>
-            </div>
-            <div class="card top-buffer nav-item-margin" style="width: 16rem;">
-              <div class="card-body">
-                <h3 class="card-title">My reservations</h3>
-              </div>
-            </div>
-            </div>
-        </div>
-
-      </div>
-    </div>
 </div>
+
+<p-dialog header="New Vehicle" [(visible)]="dialogVehicle" [width]="450" modal=true appendTo="body">
+  <label>N° of passengers</label>
+  <select class="form-control" [(ngModel)]="newVehicle.numberOfPassengers">
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+    <option>4</option>
+    <option>5</option>
+    <option>6</option>
+    <option>7</option>
+    <option>8</option>
+    <option>9</option>
+    <option>10</option>
+    <option>11</option>
+    <option>12</option>
+    <option>13</option>
+    <option>14</option>
+    <option>15</option>
+    <option>16</option>
+  </select>
+  <hr/>
+  <label>Type of vehicle</label>
+  <br>
+  <select class="form-control" [(ngModel)]="newVehicle.type">
+    <option value="MOTORBIKE">Motorbike</option>
+    <option value="AUTO">Car</option>
+    <option value="PICKUP">Pick Up</option>
+  </select>
+  <hr/>
+  <div>
+    <label>License</label>
+    <input class="form-control" type="text" [(ngModel)]="newVehicle.license" placeholder="Add license">
+  </div>
+  <div>
+    <label>Description</label>
+    <textarea class="form-control" [(ngModel)]="newVehicle.description" rows="3"></textarea>
+  </div>
+  <hr/>
+  <div>
+    <label>InputPictureLink</label>
+    <input type="text" #inputPicture placeholder="Add link to picture">
+    <button type="button" class="btn btn-info" (click)="addPicture(inputPicture.value)">+</button>
+  </div>
+  <h4>Pictures</h4>
+  <ul>
+    <li *ngFor="let picture of newVehicle.pictures">
+      <img src="{{picture}}" class="img-fluid" alt="Responsive image">
+    </li>
+  </ul>
+  <hr/>
+  <p-footer>
+    <button type="button" class="btn btn-danger" (click)="toggleAddVehicleDialog()">Cancel</button>
+    <button type="submit" class="btn btn-primary" (click)="addVehicleToUser()">Submit</button>
+  </p-footer>
+</p-dialog>

@@ -8,9 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
-import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @RestController
 @RequestMapping(Endpoints.Users.BASE)
@@ -24,9 +23,9 @@ public class UsersController {
     this.service = service;
   }
 
-  @RequestMapping(method = PUT, path = "/update")
-  public void update(@RequestBody User user) {
-    service.update(user);
+  @PutMapping("/update")
+  public User update(@RequestBody UserCustomizableData user) {
+    return service.update(user);
   }
 
   @RequestMapping(method = GET, path = "/{id}")

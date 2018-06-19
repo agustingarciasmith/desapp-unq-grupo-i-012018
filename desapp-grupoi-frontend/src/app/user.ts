@@ -23,4 +23,11 @@ export class User {
     );
   }
 
+  addVechicle(vehicle: Vehicle) {
+    this.vehicles.push(vehicle)
+  }
+
+  public static from(user: User) {
+    return new User(user.id, user.cuil, user.name, user.address, user.email, user.vehicles, user.totalScore, user.avatar)
+  }
 }
