@@ -51,7 +51,7 @@ public class VehicleServiceTests extends JavaSpec<TestContext> {
       this.existingVehicle = new Vehicle(1L, VehicleType.AUTO, 1, "description", "license");
       this.anotherExistingVehicle = new Vehicle(2L, VehicleType.AUTO, 1, "description", "license");
 
-      Mockito.when(this.userRepo.get(1)).thenReturn(existentUser);
+      Mockito.when(this.userRepo.get((long)1)).thenReturn(existentUser);
     });
 
     describe("create a vehicle", () -> {

@@ -9,7 +9,7 @@ import {Observable} from 'rxjs/Observable';
 @Injectable()
 export class PublicationService {
 
-  private apiUrl = 'http://localhost:9090/backend/publication';
+  private apiUrl = 'http://localhost:9090/publication';
 
   constructor(private http: HttpClient) {
   }
@@ -36,7 +36,7 @@ export class PublicationService {
   }
 
   savePublication(publication: Publication): Observable<Publication> {
-    return this.http.post(this.apiUrl, publication)
+    return this.http.post(this.apiUrl+ '/create', publication)
     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 

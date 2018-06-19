@@ -86,7 +86,7 @@ public class UserServiceTest extends JavaSpec<TestContext> {
                 "10-12345678-1",
                 "avatar");
 
-              Mockito.when(this.mockRepository.get(1)).thenReturn(this.existentUser);
+              Mockito.when(this.mockRepository.get((long)1)).thenReturn(this.existentUser);
             });
 
             /*it("update user data", () -> {

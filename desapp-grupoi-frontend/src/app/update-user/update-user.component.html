@@ -17,7 +17,7 @@
       <div *ngSwitchCase="false" [ngSwitch]="error">
         <div *ngSwitchCase="true">
           <p> Unexpecter error.</p>
-          <a href={{paths.login}}>Go to login and try again</a>
+          <a href="/login">Go to login and try again</a>
         </div>
         <div *ngSwitchCase="false" [ngSwitch]="userSwitch">
           <div class="row nav-item-margin">
@@ -60,6 +60,7 @@
             <div class="card top-buffer nav-item-margin" style="width: 16rem;">
               <div class="card-body">
                 <h3 class="card-title">My publications</h3>
+                <button type="text" (click)="addPublication()" pButton icon="fa-bell" label="New Publication"></button>
               </div>
             </div>
             <div class="card top-buffer nav-item-margin" style="width: 16rem;">

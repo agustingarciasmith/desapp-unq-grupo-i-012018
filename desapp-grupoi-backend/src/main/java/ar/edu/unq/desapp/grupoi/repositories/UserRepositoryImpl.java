@@ -21,7 +21,8 @@ public class UserRepositoryImpl extends CarpnbRepository<User, Long> implements 
   }
 
   @Override
-  public User get(long id) {
+  public User get(Long id) {
+
     return this.load(id);
   }
 

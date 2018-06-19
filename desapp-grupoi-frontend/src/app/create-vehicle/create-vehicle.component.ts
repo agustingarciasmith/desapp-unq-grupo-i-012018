@@ -18,11 +18,10 @@ export class CreateVehicleComponent implements OnInit {
   newVehicle: Vehicle;
 
   constructor (private service: VehicleService) {
+    this.newVehicle = Vehicle.emptyVehicle();
   }
 
   ngOnInit() {
-    this.vehicle = Vehicle.emptyVehicle();
-    this.newVehicle = Vehicle.emptyVehicle();
   }
 
   toggleAddVehicleDialog() {
@@ -36,12 +35,11 @@ export class CreateVehicleComponent implements OnInit {
   }
 
   addVehicleToUser() {
-    this.service.addVehicleToUser(this.newVehicle, this.userId).subscribe(data => {alert("Succesfully Added Product details")},Error => {alert("failed while adding product details")});
+    this.service.addVehicleToUser(this.newVehicle, this.userId);
     this.toggleAddVehicleDialog();
   }
 
   addVehicle() {
-    this.newVehicle = this.vehicle.copy();
     this.toggleAddVehicleDialog();
   }
 }

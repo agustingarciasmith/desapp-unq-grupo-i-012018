@@ -30,7 +30,7 @@ export class UsersService {
   }
 
   getUserById(id: number): Observable<any> {
-    return this.http.get('http://localhost:9090/backend/users/' + id, {
+    return this.http.get('http://localhost:9090/users/' + id, {
       headers: this.headers()
     })
       .map(response => response)
@@ -38,7 +38,7 @@ export class UsersService {
   }
 
   updateUser(user: User): Observable<any> {
-    return this.http.put('http://localhost:9090/backend/users/update/1', user)
+    return this.http.put('http://localhost:9090/users/update/1', user)
       .map(response => response)
       .catch(error => Observable.throw('Error in user service'));
   }

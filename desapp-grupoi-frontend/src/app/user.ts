@@ -22,4 +22,5 @@ export class User {
       new User(this.id, this.cuil, this.name, this.address, this.email, this.vehicles, this.totalScore, this.avatar)
     );
   }
+
 }

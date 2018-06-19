@@ -3,6 +3,7 @@ import {UsersService} from '../users/users.service';
 import {BackendService} from '../backend/backend.service';
 import {ToasterConfig, ToasterService} from 'angular5-toaster/dist';
 import {UserProfileErrors} from '../backend/error';
+import { Router } from '@angular/router';
 import {User} from '../user';
 import {Vehicle} from 'app/vehicles/vehicle';
 import {paths} from "../paths";
@@ -22,9 +23,9 @@ export class UpdateUserComponent implements OnInit {
   userUpdate: User;
   private paths: { login: string; auth: string; home: string; publication: string; welcome: string };
 
-  constructor(private service: BackendService, private toaster: ToasterService) {
+  constructor(private service: BackendService, private toaster: ToasterService, private router: Router) {
     this.user = User.emptyUser();
-    this.paths = paths
+    this.paths = paths;
   }
 
   ngOnInit() {
@@ -88,4 +89,8 @@ export class UpdateUserComponent implements OnInit {
       tapToDismiss: false,
       timeout: 0
     });
+
+  public addPublication() {
+    this.router.navigate(['publication/create'], { queryParams: { userId:  this.user.id} });
+  }
 }

@@ -1,25 +1,28 @@
 <div class="container">
-    <h1 class="display-3">Create Publication</h1>
-    <hr/>
+  <h1 class="display-3">Create Publication</h1>
+  <hr/>
   <div class="row top-buffer">
     <div class="col">
       <div class="accordion" id="accordionExample">
         <div class="card">
           <div class="card-header" id="availableDatesHeading">
             <h5 class="mb-0">
-              <button class="btn btn-light" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              <button class="btn btn-light" type="button" data-toggle="collapse" data-target="#collapseOne"
+                      aria-expanded="true" aria-controls="collapseOne">
                 Set Available Dates
               </button>
             </h5>
           </div>
-          <div id="collapseOne" class="collapse show" aria-labelledby="availableDatesHeading" data-parent="#accordionExample">
+          <div id="collapseOne" class="collapse show" aria-labelledby="availableDatesHeading"
+               data-parent="#accordionExample">
             <div class="card-body">
               <div class="row">
                 <div class="col">
-                  <p-calendar [(ngModel)]="availableDates" [inline]="true" selectionMode="multiple" dataType="string" dateFormat="dd/mm/yy"></p-calendar>
+                  <p-calendar [(ngModel)]="publication.availableDates" [inline]="true" selectionMode="multiple"
+                              dataType="string" dateFormat="dd/mm/yy"></p-calendar>
                 </div>
                 <div class="col">
-                  <div *ngFor="let date of availableDates">
+                  <div *ngFor="let date of publication.availableDates">
                     <span class="badge badge-info">{{date}}</span>
                   </div>
                 </div>
@@ -27,83 +30,90 @@
             </div>
           </div>
         </div>
-        <form novalidate [formGroup]="publicationForm" (ngSubmit)="onSubmit()">
-          <div class="card">
-            <div class="card-header" id="pickUpAddressHeading">
-              <h5 class="mb-0">
-                <button class="btn btn-light collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                  Set Pick Up Address
-                </button>
-              </h5>
-            </div>
-            <div id="collapseTwo" class="collapse show" aria-labelledby="pickUpAddressHeading" data-parent="#accordionExample">
-              <div class="card-body">
-                <app-geocoding name="Pick up Address" (address)='onNotifyPickUpAddress($event)'></app-geocoding>
-              </div>
+        <div class="card">
+          <div class="card-header" id="pickUpAddressHeading">
+            <h5 class="mb-0">
+              <button class="btn btn-light collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo"
+                      aria-expanded="false" aria-controls="collapseTwo">
+                Set Pick Up Address
+              </button>
+            </h5>
+          </div>
+          <div id="collapseTwo" class="collapse show" aria-labelledby="pickUpAddressHeading"
+               data-parent="#accordionExample">
+            <div class="card-body">
+              <app-geocoding name="Pick up Address" (address)='onNotifyPickUpAddress($event)'></app-geocoding>
             </div>
           </div>
-          <div class="card">
-            <div class="card-header" id="returnAddressHeading">
-              <h5 class="mb-0">
-                <button class="btn btn-light collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                  Set Return Address
-                </button>
-              </h5>
-            </div>
-            <div id="collapseThree" class="collapse show" aria-labelledby="returnAddressHeading" data-parent="#accordionExample">
-              <div class="card-body">
-                <app-geocoding name="Return Address" (address)='onNotifyReturnAddress($event)'></app-geocoding>
-              </div>
+        </div>
+        <div class="card">
+          <div class="card-header" id="returnAddressHeading">
+            <h5 class="mb-0">
+              <button class="btn btn-light collapsed" type="button" data-toggle="collapse" data-target="#collapseThree"
+                      aria-expanded="false" aria-controls="collapseThree">
+                Set Return Address
+              </button>
+            </h5>
+          </div>
+          <div id="collapseThree" class="collapse show" aria-labelledby="returnAddressHeading"
+               data-parent="#accordionExample">
+            <div class="card-body">
+              <app-geocoding name="Return Address" (address)='onNotifyReturnAddress($event)'></app-geocoding>
             </div>
           </div>
-          <div class="card">
-            <div class="card-header" id="contactPhoneHeading">
-              <h5 class="mb-0">
-                <button class="btn btn-light collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                  Set Contact Phone
-                </button>
-              </h5>
-            </div>
-            <div id="collapseFour" class="collapse show" aria-labelledby="contactPhoneHeading" data-parent="#accordionExample">
-              <div class="card-body">
-                <input type="text" class="form-control" formControlName="contactPhone">
-              </div>
+        </div>
+        <div class="card">
+          <div class="card-header" id="contactPhoneHeading">
+            <h5 class="mb-0">
+              <button class="btn btn-light collapsed" type="button" data-toggle="collapse" data-target="#collapseFour"
+                      aria-expanded="false" aria-controls="collapseFour">
+                Set Contact Phone
+              </button>
+            </h5>
+          </div>
+          <div id="collapseFour" class="collapse show" aria-labelledby="contactPhoneHeading"
+               data-parent="#accordionExample">
+            <div class="card-body">
+              <input type="text" class="form-control" [(ngModel)]="publication.contactPhone">
             </div>
           </div>
-          <div class="card">
-            <div class="card-header" id="costHeading">
-              <h5 class="mb-0">
-                <button class="btn btn-light collapsed" type="button" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-                  Set Cost X Hour
-                </button>
-              </h5>
-            </div>
-            <div id="collapseFive" class="collapse show" aria-labelledby="costHeading" data-parent="#accordionExample">
-              <div class="card-body">
-                <input type="text" class="form-control" formControlName="cost">
-              </div>
+        </div>
+        <div class="card">
+          <div class="card-header" id="costHeading">
+            <h5 class="mb-0">
+              <button class="btn btn-light collapsed" type="button" data-toggle="collapse" data-target="#collapseFive"
+                      aria-expanded="false" aria-controls="collapseFive">
+                Set Cost X Hour
+              </button>
+            </h5>
+          </div>
+          <div id="collapseFive" class="collapse show" aria-labelledby="costHeading" data-parent="#accordionExample">
+            <div class="card-body">
+              <input type="text" class="form-control" [(ngModel)]="publication.cost">
             </div>
           </div>
-          <div class="card">
-              <div class="card-header" id="vehicleHeading">
-                <h5 class="mb-0">
-                  <button class="btn btn-light collapsed" type="button" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
-                    Set Vehicle
-                  </button>
-                </h5>
-              </div>
-              <div id="collapseSix" class="collapse show" aria-labelledby="vehicleHeading" data-parent="#accordionExample">
-                <div class="card-body">
-                    <p-dropdown [options]="vehicles" [(ngModel)]="selectedVehicle"></p-dropdown>
-                </div>
-              </div>
-            </div>
-          <div class="top-buffer">
-            <button type="submit" class="btn btn-primary btn-lg btn-block" [disabled]="!publicationForm.valid">Submit</button>
-            <button type="button" class="btn btn-warning btn-lg btn-block" (click)="redirectPublicationPage()">Cancel</button>
+        </div>
+        <div class="card">
+          <div class="card-header" id="vehicleHeading">
+            <h5 class="mb-0">
+              <button class="btn btn-light collapsed" type="button" data-toggle="collapse" data-target="#collapseSix"
+                      aria-expanded="false" aria-controls="collapseSix">
+                Set Vehicle
+              </button>
+            </h5>
           </div>
-          <pre>{{publicationForm.value | json}}</pre>
-        </form>
+          <div id="collapseSix" class="collapse show" aria-labelledby="vehicleHeading" data-parent="#accordionExample">
+            <div class="card-body">
+              <p-dropdown [options]="vehicles" [(ngModel)]="selectedVehicle"></p-dropdown>
+            </div>
+          </div>
+        </div>
+        <div class="top-buffer">
+          <button type="submit" class="btn btn-primary btn-lg btn-block" (click)="publish()">Submit</button>
+          <button type="button" class="btn btn-warning btn-lg btn-block" (click)="redirectPublicationPage()">Cancel
+          </button>
+        </div>
       </div>
     </div>
   </div>
+</div>

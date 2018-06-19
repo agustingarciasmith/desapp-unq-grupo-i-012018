@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @RestController
 @RequestMapping(Endpoints.Users.BASE)
@@ -28,8 +29,8 @@ public class UsersController {
     service.update(user);
   }
 
-  @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-  public User getUser(@PathVariable("id") Long id) {
+  @RequestMapping(method = GET, path = "/{id}")
+  public User getUser(@PathVariable Long id) {
     return service.getById(id);
   }
 

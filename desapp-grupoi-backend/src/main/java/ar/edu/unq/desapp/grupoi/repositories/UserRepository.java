@@ -9,5 +9,5 @@ public interface UserRepository {
 
   User createIfNotExists(User user);
 
-  User get(long id);
+  User get(Long id);
 }
