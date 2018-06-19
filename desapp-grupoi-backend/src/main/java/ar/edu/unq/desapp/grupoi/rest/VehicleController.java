@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -34,5 +35,10 @@ public class VehicleController {
   public Vehicle addVehicleToUser(@PathVariable Long id, @RequestBody Vehicle vehicle) {
     logger.info(String.format("Agregando Vehiculo a usuario => %s %s %s", id, vehicle.getLicense(), vehicle.getNumberOfPassengers()));
     return service.create(id, vehicle);
+  }
+
+  @RequestMapping(method = RequestMethod.DELETE, path = "/{id}")
+  public void deleteVehicleFromUser(@PathVariable Long id, @RequestBody Vehicle vehicle) {
+    service.delete(id, vehicle);
   }
 }

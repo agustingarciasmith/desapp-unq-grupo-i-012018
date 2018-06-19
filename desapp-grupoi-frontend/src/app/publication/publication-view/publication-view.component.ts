@@ -10,8 +10,10 @@ import {Router} from '@angular/router';
 })
 export class PublicationViewComponent implements OnInit {
 
-  lat = 51.678418;
-  lng = 7.809007;
+  latpu = 51.678418;
+  lngpu = 7.809007;
+  latr = 51.678418;
+  lngr = 7.809007;
   public publication: any;
 
   ngOnInit(): void {
@@ -26,7 +28,8 @@ export class PublicationViewComponent implements OnInit {
     this.publicationService.findById(Number(window.location.pathname.slice(-1))).subscribe(
       publication => {
         this.publication = publication;
-        this.getCoordinates(publication.pickUpAddress);
+        this.getCoordinatesPickUp(publication.pickUpAddress);
+        this.getCoordinatesReturn(publication.returnAddress[0]);
       },
       err => {
         console.log(err);
@@ -35,15 +38,28 @@ export class PublicationViewComponent implements OnInit {
     console.log(this.publication);
   }
 
-  getCoordinates(address: string) {
-    // this.publicationService.getCoordinates(address).subscribe({
-    //   next: (response) => {
-    //     this.lat = response[0].geometry.location.lat;
-    //     this.lng = response[0].geometry.location.lng;
-    //   },
-    //   err: (err) => {
-    //     console.log(err);
-    //   }
-    // });
+  getCoordinatesPickUp(address: string) {
+    this.publicationService.getCoordinates(address).subscribe(
+      response => {
+        console.log(response);
+        this.latpu = response.results[0].geometry.location.lat;
+        this.lngpu = response.results[0].geometry.location.lng;
+      },
+      err => {
+        console.log(err);
+    });
+  }
+
+  getCoordinatesReturn(address: string) {
+    this.publicationService.getCoordinates(address).subscribe(
+      response => {
+        console.log(response);
+        this.latr = response.results[0].geometry.location.lat;
+        this.lngr = response.results[0].geometry.location.lng;
+      },
+      err => {
+        console.log(err);
+
+      });
   }
 }

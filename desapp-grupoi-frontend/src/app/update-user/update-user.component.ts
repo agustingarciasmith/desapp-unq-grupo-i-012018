@@ -24,11 +24,14 @@ export class UpdateUserComponent implements OnInit {
   paths: { login: string; auth: string; home: string; publication: string; welcome: string };
   newVehicle: Vehicle;
   dialogVehicle: boolean;
+  dialogViewVehicle: boolean;
+  actualVehicle: Vehicle;
 
   constructor(private service: BackendService, private toaster: ToasterService, private router: Router) {
     this.user = User.emptyUser();
     this.paths = paths;
       this.newVehicle = Vehicle.emptyVehicle();
+      this.actualVehicle = Vehicle.emptyVehicle();
   }
 
   ngOnInit() {
@@ -37,6 +40,7 @@ export class UpdateUserComponent implements OnInit {
         this.user = User.from(value);
         this.loading = false;
         this.dialogVehicle = false;
+        this.dialogViewVehicle = false;
         this.userSwitch = false;
         this.newVehicle = Vehicle.emptyVehicle()
       },
@@ -76,6 +80,10 @@ export class UpdateUserComponent implements OnInit {
   }
 
   toggleAddVehicleDialog() {
+    this.dialogViewVehicle = !this.dialogViewVehicle;
+  }
+
+  toggleViewVehicle() {
     this.dialogVehicle = !this.dialogVehicle;
   }
 
@@ -86,10 +94,15 @@ export class UpdateUserComponent implements OnInit {
   addVehicleToUser() {
     this.loading = true;
     this.service.addVehicleToUser(this.newVehicle);
+    this.toggleViewVehicle();
+  }
+
+  viewVehicle(vehicle: Vehicle){
+    this.actualVehicle = vehicle;
     this.toggleAddVehicleDialog();
   }
 
-  addVehicle() {
-    this.toggleAddVehicleDialog();
+  deleteVehicle(vehicle: Vehicle) {
+    this.service.deleteVehicleFromUser(vehicle);
   }
 }

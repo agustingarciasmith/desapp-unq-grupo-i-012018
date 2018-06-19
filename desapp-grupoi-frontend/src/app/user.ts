@@ -23,11 +23,20 @@ export class User {
     );
   }
 
-  addVechicle(vehicle: Vehicle) {
-    this.vehicles.push(vehicle)
+  addVehicle(vehicle: Vehicle) {
+    this.vehicles.push(vehicle);
+  }
+
+  removeVehicle(vehicle: Vehicle) {
+    for (let i = 0; i < this.vehicles.length; i++) {
+      if (this.vehicles[i].license === vehicle.license) {
+        this.vehicles.splice(i, 1);
+        break;
+      }
+    }
   }
 
   public static from(user: User) {
-    return new User(user.id, user.cuil, user.name, user.address, user.email, user.vehicles, user.totalScore, user.avatar)
+    return new User(user.id, user.cuil, user.name, user.address, user.email, user.vehicles, user.totalScore, user.avatar);
   }
 }
