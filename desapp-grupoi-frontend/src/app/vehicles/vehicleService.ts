@@ -20,10 +20,10 @@ export class VehicleService {
       .set('Authorization', `Bearer ${localStorage.getItem('access_token')}`);
   }
 
-  addVehicleToUser(vehicle: Vehicle, id: number): Observable<Vehicle> {
-      return this.http.post<Vehicle>('http://localhost:9090/backend/users/90/vehicles', vehicle, {
+  addVehicleToUser(vehicle: Vehicle, id: number) {
+      return this.http.post<Vehicle>('http://localhost:9090/users/' + id + '/vehicles', vehicle, {
         headers: this.headers()
-      });
+      }).map(res => console.log(res));
   }
 }
 

@@ -35,9 +35,10 @@ export class PublicationService {
       .catch((error: any) => Observable.throw(error.error || 'Error'));
   }
 
-  savePublication(publication: Publication): Observable<Publication> {
-    return this.http.post(this.apiUrl+ '/create', publication)
-    .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  savePublication(publication: Publication) {
+    return this.http.post<Publication>(this.apiUrl+ '/create', publication, {
+      headers: this.headers()
+    }).map(res => console.log(res));
   }
 
   deletePublicationById(id: number): Observable<boolean> {

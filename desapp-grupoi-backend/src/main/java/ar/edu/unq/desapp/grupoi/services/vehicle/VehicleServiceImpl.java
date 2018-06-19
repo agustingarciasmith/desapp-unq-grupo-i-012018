@@ -7,6 +7,8 @@ import ar.edu.unq.desapp.grupoi.model.errors.ErrorCode;
 import ar.edu.unq.desapp.grupoi.model.errors.InvalidRequestException;
 import ar.edu.unq.desapp.grupoi.repositories.UserRepository;
 import ar.edu.unq.desapp.grupoi.repositories.VehicleRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,13 +23,13 @@ public class VehicleServiceImpl implements VehicleService {
   private UserRepository userRepository;
   private VehicleRepository vehicleRepository;
   private Parameters parameters;
+  private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
   @Autowired
   public VehicleServiceImpl(
     UserRepository userRepository,
     VehicleRepository vehicleRepository,
     Parameters parameters) {
-
     this.userRepository = userRepository;
     this.vehicleRepository = vehicleRepository;
     this.parameters = parameters;
@@ -45,7 +47,7 @@ public class VehicleServiceImpl implements VehicleService {
   public void create(Long userId, Vehicle vehicle) {
     validateUserIdPresence(userId);
     validateVehicleCreation(vehicle);
-
+    logger.info(String.format("A Vehiculo a usuario => %s %s %s", userId, vehicle.getLicense(), vehicle.getNumberOfPassengers()));
     User user = userRepository.get(userId);
     vehicleRepository.create(vehicle);
     user.addVehicle(vehicle);

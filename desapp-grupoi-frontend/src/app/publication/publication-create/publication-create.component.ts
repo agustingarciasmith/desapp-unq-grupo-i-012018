@@ -62,7 +62,7 @@ export class PublicationCreateComponent implements OnInit, OnDestroy {
   publish() {
     this.userService.getUserById(this.userId).subscribe(user => this.publication.owner = user);
     console.log(this.publication);
-    this.publicationService.savePublication(this.publication);
+    this.publicationService.savePublication(this.publication).subscribe(data => {alert('Succesfully Added Product details'); }, Error => {alert('failed while adding product details'); });
   }
 
   redirectPublicationPage() {

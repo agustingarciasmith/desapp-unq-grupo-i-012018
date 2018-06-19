@@ -35,7 +35,7 @@ export class CreateVehicleComponent implements OnInit {
   }
 
   addVehicleToUser() {
-    this.service.addVehicleToUser(this.newVehicle, this.userId);
+    this.service.addVehicleToUser(this.newVehicle, this.userId).subscribe(data => {alert('Succesfully Added Product details'); }, Error => {alert('failed while adding product details'); });;
     this.toggleAddVehicleDialog();
   }
 
