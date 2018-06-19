@@ -17,13 +17,11 @@ import {AuthComponent} from './auth/auth.component';
 import {GuardService} from './auth/guard.service';
 import {BackendService} from './backend/backend.service';
 import {CalendarModule} from 'primeng/calendar';
-import {CreateVehicleComponent} from './create-vehicle/create-vehicle.component';
 import {DialogModule} from 'primeng/dialog';
 import {FileUploadModule} from 'primeng/fileupload';
 import {MyProfileComponent} from './components/my-profile/my-profile.component';
 import {PublicationModule} from './publication/publication.module';
 import {WelcomeComponent} from './welcome/welcome.component';
-import {User} from './user';
 
 @NgModule({
   declarations: [
@@ -32,7 +30,6 @@ import {User} from './user';
     UpdateUserComponent,
     LoginComponent,
     AuthComponent,
-    CreateVehicleComponent,
     MyProfileComponent,
     WelcomeComponent,
   ],

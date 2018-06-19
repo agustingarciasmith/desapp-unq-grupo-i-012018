@@ -1,5 +1,5 @@
 export class Vehicle {
-  public pictutres: string[];
+  public pictures: string[];
 
   public static emptyVehicle() {
     return new Vehicle(null, null, null, null);
@@ -11,7 +11,7 @@ export class Vehicle {
     public description: string,
     public license: string,
   ) {
-    this.pictutres = [];
+    this.pictures = [];
   }
 
   copy(): Vehicle {
@@ -21,6 +21,6 @@ export class Vehicle {
   }
 
   addPicture(picture: string) {
-    this.pictutres.push(picture);
+    this.pictures.push(picture);
   }
 }

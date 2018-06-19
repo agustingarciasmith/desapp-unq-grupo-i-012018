@@ -20,9 +20,9 @@ export class UpdateUserComponent implements OnInit {
   userSwitch = false;
   user: User;
   userUpdate: User;
-  private paths: { login: string; auth: string; home: string; publication: string; welcome: string };
-  private newVehicle: Vehicle;
-  private dialogVehicle: boolean;
+  paths: { login: string; auth: string; home: string; publication: string; welcome: string };
+  newVehicle: Vehicle;
+  dialogVehicle: boolean;
 
   constructor(private service: BackendService, private toaster: ToasterService) {
     this.user = User.emptyUser();
