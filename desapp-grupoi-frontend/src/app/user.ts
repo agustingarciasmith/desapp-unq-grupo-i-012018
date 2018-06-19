@@ -27,7 +27,7 @@ export class User {
     this.vehicles.push(vehicle)
   }
 
-  static from(user: User) {
+  public static from(user: User) {
     return new User(user.id, user.cuil, user.name, user.address, user.email, user.vehicles, user.totalScore, user.avatar)
   }
 }

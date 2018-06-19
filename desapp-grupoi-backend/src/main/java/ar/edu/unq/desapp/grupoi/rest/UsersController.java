@@ -23,8 +23,8 @@ public class UsersController {
   }
 
   @PutMapping("/update")
-  public void update(@RequestBody UserCustomizableData user) {
-    service.update(user);
+  public User update(@RequestBody UserCustomizableData user) {
+    return service.update(user);
   }
 
   @RequestMapping(value = "/{id}", method = RequestMethod.GET)

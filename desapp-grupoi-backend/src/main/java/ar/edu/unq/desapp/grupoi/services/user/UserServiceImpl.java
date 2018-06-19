@@ -31,11 +31,13 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public void update(UserCustomizableData userData) {
+  public User update(UserCustomizableData userData) {
     validate(userData);
     User user = repository.get(userData.getId());
     user.updateFrom(userData);
     repository.update(user);
+
+    return user;
   }
 
   @Override
