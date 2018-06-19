@@ -7,7 +7,8 @@
       <hr />
     </header>
   </div>
-
+  <div class="card">
+    <div class="card-body">
   <div class="row">
     <br>
     <div class="col-md-3">
@@ -43,11 +44,32 @@
       </table>
     </div>
   </div>
+      <hr>
+      <div class="row">
+        <div class="col">
   <div class="container">
-    <agm-map [latitude]="lat" [longitude]="lng" [zoom]="15">
-      <agm-marker [latitude]="lat" [longitude]="lng">
+    <h3>PickUp Address</h3>
+    <agm-map [latitude]="latpu" [longitude]="lngpu" [zoom]="15">
+      <agm-marker [latitude]="latpu" [longitude]="lngpu">
         <agm-info-window>{{publication.pickUpAddress}}</agm-info-window>
       </agm-marker>
     </agm-map>
+  </div>
+        </div>
+        <div class="col">
+      <div class="container">
+        <h3>Return Address</h3>
+        <agm-map [latitude]="latr" [longitude]="lngr" [zoom]="15">
+          <agm-marker [latitude]="latr" [longitude]="lngr">
+            <agm-info-window>{{publication.returnAddress[0]}}</agm-info-window>
+          </agm-marker>
+        </agm-map>
+      </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <button type="submit" class="btn btn-primary">Reserve</button>
+    </div>
   </div>
 </div>

@@ -5,15 +5,15 @@ import {map, mergeMap} from 'rxjs/operators';
 import {UserInfo} from '../auth/auth.service';
 import {User} from '../user';
 import {environment} from '../../environments/environment';
-import {Vehicle} from "../vehicles/vehicle";
-import {of} from "rxjs/observable/of";
+import {Vehicle} from '../vehicles/vehicle';
+import {of} from 'rxjs/observable/of';
 
 @Injectable()
 export class BackendService {
   private base = environment.backendUrl;
   private loginUrl = this.base + 'users/login';
   private updateUserUrl = this.base + 'users/update';
-  private addVehivleUrl = this.base + 'vehicles/';
+  private addVehicleUrl = this.base + 'vehicles/';
 
   private http: HttpClient;
   private user$: Observable<User>;
@@ -59,26 +59,46 @@ export class BackendService {
   addVehicleToUser(newVehicle: Vehicle) {
     this.user$ = this.user$.pipe(
       mergeMap((user: User) => {
-        return this.http.post<Vehicle>(this.addVehivleUrl + user.id, newVehicle, {
+        return this.http.post<Vehicle>(this.addVehicleUrl + user.id, newVehicle, {
           headers: this.headers()
         }).pipe(
           map(
             (vehicle: Vehicle) => {
-              let realUser = User.from(user);
-              realUser.addVechicle(vehicle);
+              const realUser = User.from(user);
+              realUser.addVehicle(vehicle);
               return realUser;
             }
           )
         );
       })
     );
+    this.notify();
+  }
 
+  deleteVehicleFromUser(vehicleToDelete: Vehicle) {
+    const httpOptions = {
+      headers: this.headers(), body: vehicleToDelete
+    };
+    this.user$ = this.user$.pipe(
+      mergeMap((user: User) => {
+        return this.http.delete<Vehicle>(this.addVehicleUrl + user.id, httpOptions
+        ).pipe(
+          map(
+            () => {
+              const realUser = User.from(user);
+              realUser.removeVehicle(vehicleToDelete);
+              return realUser;
+            }
+          )
+        );
+      })
+    );
     this.notify();
   }
 
   private notify() {
     this.userSubscriptions.map(subsciption => {
-      this.user$.subscribe(subsciption.next, subsciption.error)
-    })
+      this.user$.subscribe(subsciption.next, subsciption.error);
+    });
   }
 }

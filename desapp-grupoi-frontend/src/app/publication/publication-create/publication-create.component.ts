@@ -6,6 +6,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import 'rxjs/add/operator/filter';
 import {SelectItem} from 'primeng/api';
 import {UsersService} from '../../users/users.service';
+import {User} from '../../user';
 
 
 @Component({
@@ -25,6 +26,7 @@ export class PublicationCreateComponent implements OnInit, OnDestroy {
   returnAddres: string;
   vehicles: SelectItem[];
   selectedVehicle: string;
+  user: User;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
