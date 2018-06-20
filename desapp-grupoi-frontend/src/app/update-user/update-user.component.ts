@@ -7,6 +7,7 @@ import {Router} from '@angular/router';
 import {User} from '../user';
 import {paths} from "../paths";
 import {Vehicle} from "../vehicles/vehicle";
+import {Publication} from "../publication/publication";
 
 @Component({
   selector: 'app-update-user',
@@ -26,6 +27,7 @@ export class UpdateUserComponent implements OnInit {
   dialogVehicle: boolean;
   dialogViewVehicle: boolean;
   actualVehicle: Vehicle;
+ private publications: Publication[];
 
   constructor(private service: BackendService, private toaster: ToasterService, private router: Router) {
     this.user = User.emptyUser();
@@ -47,6 +49,12 @@ export class UpdateUserComponent implements OnInit {
       error => {
         this.handleError(error);
       });
+
+    this.service.subscribeToPublications(
+      (value: Publication[]) => {
+        this.publications = value;
+      }
+    )
   }
 
   updateUser() {

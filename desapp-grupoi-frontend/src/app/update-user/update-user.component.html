@@ -64,6 +64,12 @@
           <div class="card top-buffer nav-item-margin" style="width: 16rem;">
             <div class="card-body">
               <h3 class="card-title">My publications</h3>
+              <ul>
+                <li *ngFor="let publication of publications">
+                  city: {{publication.city}}
+                  car license: {{publication.vehicle.license}}
+                </li>
+              </ul>
               <button type="text" (click)="addPublication()" pButton icon="fa-bell" label="New Publication"></button>
             </div>
           </div>

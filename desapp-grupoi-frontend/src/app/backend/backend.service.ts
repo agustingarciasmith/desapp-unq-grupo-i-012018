@@ -7,6 +7,7 @@ import {User} from '../user';
 import {environment} from '../../environments/environment';
 import {Vehicle} from '../vehicles/vehicle';
 import {of} from 'rxjs/observable/of';
+import {Publication} from "../publication/publication";
 
 @Injectable()
 export class BackendService {
@@ -14,15 +15,22 @@ export class BackendService {
   private loginUrl = this.base + 'users/login';
   private updateUserUrl = this.base + 'users/update';
   private addVehicleUrl = this.base + 'vehicles/';
+  private publicationsUrl = this.base + "publication";
+  private createPublicationUrl = this.base + "publication/create";
+  private userPublicationsUrl = this.base + "publication/user/";
 
   private http: HttpClient;
   private user$: Observable<User>;
   private userSubscriptions: Array<{ next, error }>;
+  private publications$: Observable<Publication[]>;
+  private publicationsSubscriptions: Array<{ next, error }>;
 
   constructor(http: HttpClient) {
     this.http = http;
     this.user$ = of(User.emptyUser());
+    this.publications$ = of([]);
     this.userSubscriptions = [];
+    this.publicationsSubscriptions = [];
   }
 
   private headers(): HttpHeaders {
@@ -39,12 +47,27 @@ export class BackendService {
           });
         })
       );
-    this.notify();
+
+    this.publications$ = this.user$.pipe(
+      mergeMap((user: User) => {
+        return this.http.get<Publication[]>(this.userPublicationsUrl + user.id, {
+          headers: this.headers()
+        })
+      })
+    );
+
+    this.notifyUserSubscriptors();
+    this.notifyPublicationsSubscriptors();
+  }
+
+  subscribeToPublications(next, error?) {
+    this.publicationsSubscriptions.push({next, error});
+    this.notifyPublicationsSubscriptors();
   }
 
   subscribeToUser(next, error?) {
     this.userSubscriptions.push({next, error});
-    this.notify();
+    this.notifyUserSubscriptors();
   }
 
   updateUser(user: User): Observable<User> {
@@ -52,7 +75,7 @@ export class BackendService {
       headers: this.headers()
     });
 
-    this.notify();
+    this.notifyUserSubscriptors();
     return this.user$;
   }
 
@@ -72,7 +95,7 @@ export class BackendService {
         );
       })
     );
-    this.notify();
+    this.notifyUserSubscriptors();
   }
 
   deleteVehicleFromUser(vehicleToDelete: Vehicle) {
@@ -93,12 +116,45 @@ export class BackendService {
         );
       })
     );
-    this.notify();
+    this.notifyUserSubscriptors();
   }
 
-  private notify() {
+  private notifyUserSubscriptors() {
     this.userSubscriptions.map(subsciption => {
       this.user$.subscribe(subsciption.next, subsciption.error);
     });
+  }
+
+  getPublications(): Observable<Publication[]> {
+    return this.http.get<Publication[]>(this.publicationsUrl, {
+      headers: this.headers()
+    });
+  }
+
+  addPublicationToUser(publication: Publication) {
+    this.publications$ =
+      this.user$.pipe(
+        mergeMap((user: User) => {
+          publication.owner = user;
+
+          return this.http.post<Publication>(this.createPublicationUrl, publication, {
+              headers: this.headers()
+            }
+          )
+        })
+      ).pipe(
+        mergeMap((publication2: Publication) => {
+          return this.publications$.map((publications: Publication[]) => {
+            publications.push(publication2);
+            return publications;
+          })
+        })
+      );
+  }
+
+  private notifyPublicationsSubscriptors() {
+    this.publicationsSubscriptions.map(subsciption => {
+      this.publications$.subscribe(subsciption.next, subsciption.error)
+    })
   }
 }

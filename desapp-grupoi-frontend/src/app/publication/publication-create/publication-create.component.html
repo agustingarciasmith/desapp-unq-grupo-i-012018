@@ -104,12 +104,16 @@
           </div>
           <div id="collapseSix" class="collapse show" aria-labelledby="vehicleHeading" data-parent="#accordionExample">
             <div class="card-body">
-              <p-dropdown [options]="vehicles" [(ngModel)]="selectedVehicle"></p-dropdown>
+              <select #selectElem (change)="setSelectedVechicle(selectElem.value)">
+                <option *ngFor="let vehicle of vehicles" [value]="vehicle.license">
+                  {{vehicle.license}}
+                </option>
+              </select>
             </div>
           </div>
         </div>
         <div class="top-buffer">
-          <button type="submit" class="btn btn-primary btn-lg btn-block" (click)="publish()">Submit</button>
+          <button type="submit" class="btn btn-primary btn-lg btn-block" (click)="createPublication()">Submit</button>
           <button type="button" class="btn btn-warning btn-lg btn-block" (click)="redirectPublicationPage()">Cancel
           </button>
         </div>

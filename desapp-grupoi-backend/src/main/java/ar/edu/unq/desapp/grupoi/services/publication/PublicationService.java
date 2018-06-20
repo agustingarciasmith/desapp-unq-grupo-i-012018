@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface PublicationService {
     List<Publication> getAll();
 
-    Optional<Publication> getById(Long id);
+    Publication create(Publication publication);
 
-    void create(Publication publication);
+    List<Publication> getUserPublications(Long id);
 }

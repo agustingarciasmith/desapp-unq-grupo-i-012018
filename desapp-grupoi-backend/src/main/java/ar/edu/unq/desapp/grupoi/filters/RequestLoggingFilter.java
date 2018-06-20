@@ -94,7 +94,7 @@ public class RequestLoggingFilter extends OncePerRequestFilter {
       } catch (UnsupportedEncodingException e) {
         logger.warn("Failed to parse response payload", e);
       }
-      logger.debug(body.toString());
+      logger.info(body.toString());
     }
 
   }

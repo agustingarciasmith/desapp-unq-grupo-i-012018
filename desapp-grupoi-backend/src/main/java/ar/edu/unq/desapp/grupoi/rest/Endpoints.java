@@ -9,6 +9,7 @@ public class Endpoints {
     public class Publications {
         public static final String BASE = "/publication";
         public static final String CREATE = "/create";
+        public static final String USER_PUBLICATIONS = "/user";
     }
 
     public class Vehicles {

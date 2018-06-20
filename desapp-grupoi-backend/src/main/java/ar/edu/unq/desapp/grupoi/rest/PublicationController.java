@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @RestController
@@ -22,19 +23,19 @@ public class PublicationController {
         this.service = service;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(method = GET)
     public List<Publication> getPublications() {
         return service.getAll();
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Optional<Publication> getPublication(@PathVariable("id") Long id) {
-        return service.getById(id);
+    @RequestMapping(method = GET, path = Endpoints.Publications.USER_PUBLICATIONS + "/{id}")
+    public List<Publication> getUserPublications(@PathVariable("id") Long id) {
+        return this.service.getUserPublications(id);
     }
 
     @RequestMapping(method = POST, path = Endpoints.Publications.CREATE)
-    public void create(@RequestBody Publication publication) {
-        service.create(publication);
+    public Publication create(@RequestBody Publication publication) {
+        return service.create(publication);
     }
 }
 
