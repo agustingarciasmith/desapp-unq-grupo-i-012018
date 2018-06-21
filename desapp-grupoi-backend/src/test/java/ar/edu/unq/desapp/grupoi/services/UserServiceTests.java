@@ -1,4 +1,4 @@
-package ar.edu.unq.desapp.grupoi.services.user;
+package ar.edu.unq.desapp.grupoi.services;
 
 import ar.com.dgarcia.javaspec.api.JavaSpec;
 import ar.com.dgarcia.javaspec.api.JavaSpecRunner;
@@ -9,6 +9,9 @@ import ar.edu.unq.desapp.grupoi.model.errors.ErrorCode;
 import ar.edu.unq.desapp.grupoi.model.errors.InvalidRequestException;
 import ar.edu.unq.desapp.grupoi.repositories.UserRepository;
 import ar.edu.unq.desapp.grupoi.repositories.UserRepositoryImpl;
+import ar.edu.unq.desapp.grupoi.services.user.UserCustomizableData;
+import ar.edu.unq.desapp.grupoi.services.user.UserService;
+import ar.edu.unq.desapp.grupoi.services.user.UserServiceImpl;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 
@@ -17,7 +20,7 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.mockito.Mockito.*;
 
 @RunWith(JavaSpecRunner.class)
-public class UserServiceTest extends JavaSpec<TestContext> {
+public class UserServiceTests extends JavaSpec<TestContext> {
 
   private UserService service;
   private UserRepository mockRepository;

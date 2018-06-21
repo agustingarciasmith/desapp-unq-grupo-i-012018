@@ -23,15 +23,18 @@ public class Vehicle {
   @Column(name = "LICENSE", unique = true, nullable = false)
   private String license;
 
+  @OneToOne
+  private User owner;
+
   public Vehicle() {
   }
 
-  public Vehicle(Long id, VehicleType type, Integer numberOfPassengers, String description, String license) {
-    this.id = id;
+  public Vehicle(VehicleType type, Integer numberOfPassengers, String description, String license, User owner) {
     this.type = type;
     this.numberOfPassengers = numberOfPassengers;
     this.description = description;
     this.license = license;
+    this.owner = owner;
   }
 
   public VehicleType getType() {
@@ -52,5 +55,13 @@ public class Vehicle {
 
   public Long getId() {
     return this.id;
+  }
+
+  public User getOwner() {
+    return this.owner;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
   }
 }

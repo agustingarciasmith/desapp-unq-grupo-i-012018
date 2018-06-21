@@ -1,5 +1,6 @@
 package ar.edu.unq.desapp.grupoi.model.support;
 
+import ar.edu.unq.desapp.grupoi.model.User;
 import ar.edu.unq.desapp.grupoi.model.Vehicle;
 import ar.edu.unq.desapp.grupoi.model.VehicleType;
 
@@ -9,6 +10,7 @@ public class VehicleBuilder {
     private Integer passengers = 4;
     private String description = "This is an appropriate description";
     private String license = "AAA111";
+    private User user;
 
     public VehicleBuilder withType(VehicleType type) {
         this.type = type;
@@ -30,5 +32,10 @@ public class VehicleBuilder {
         return this;
     }
 
-    public Vehicle buildVehicle() { return new Vehicle(id, type, passengers, description, license); }
+    public VehicleBuilder withUser(User user) {
+        this.user = user;
+        return this;
+    }
+
+    public Vehicle buildVehicle() { return new Vehicle(type, passengers, description, license, user); }
 }

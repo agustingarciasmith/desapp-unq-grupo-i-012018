@@ -10,13 +10,17 @@ import java.time.temporal.ChronoUnit;
 public class Reservation {
 
     private Clock clock = Clock.systemUTC();
-    private final Publication publication;
+    private Publication publication;
     private User client;
     private ReservationState state;
     private Instant startTime;
     private int rentDurationInHours;
     private double finalCost;
     private Instant startWaitingTime;
+
+    public Reservation() {
+
+    }
 
     public Reservation(Publication publication, User client) {
         if (client.getCuil().equals(publication.getOwner().getCuil())) throw new InvalidReservation();

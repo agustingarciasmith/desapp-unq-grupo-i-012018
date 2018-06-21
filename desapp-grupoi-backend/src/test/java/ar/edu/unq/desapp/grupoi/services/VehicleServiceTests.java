@@ -1,4 +1,4 @@
-package ar.edu.unq.desapp.grupoi.services.user;
+package ar.edu.unq.desapp.grupoi.services;
 
 import ar.com.dgarcia.javaspec.api.JavaSpec;
 import ar.com.dgarcia.javaspec.api.JavaSpecRunner;
@@ -13,6 +13,7 @@ import ar.edu.unq.desapp.grupoi.repositories.UserRepository;
 import ar.edu.unq.desapp.grupoi.repositories.UserRepositoryImpl;
 import ar.edu.unq.desapp.grupoi.repositories.VehicleRepository;
 import ar.edu.unq.desapp.grupoi.repositories.VehicleRepositoryImpl;
+import ar.edu.unq.desapp.grupoi.rest.requests.VehicleDTO;
 import ar.edu.unq.desapp.grupoi.services.vehicle.VehicleService;
 import ar.edu.unq.desapp.grupoi.services.vehicle.VehicleServiceImpl;
 import org.junit.runner.RunWith;
@@ -48,36 +49,27 @@ public class VehicleServiceTests extends JavaSpec<TestContext> {
 
       this.service = new VehicleServiceImpl(userRepo, vehicleRepo, parameters);
       this.existentUser = new User(1L, "name", "address", "email", "cuil", "avatar");
-      this.existingVehicle = new Vehicle(1L, VehicleType.AUTO, 1, "description", "license");
-      this.anotherExistingVehicle = new Vehicle(2L, VehicleType.AUTO, 1, "description", "license");
+      this.existingVehicle = new Vehicle(VehicleType.AUTO, 1, "description", "license", existentUser);
+      this.existingVehicle.setId(1L);
+      this.anotherExistingVehicle = new Vehicle(VehicleType.AUTO, 1, "description", "license", this.existentUser);
+      this.anotherExistingVehicle.setId(2L);
 
       Mockito.when(this.userRepo.get((long)1)).thenReturn(existentUser);
     });
 
     describe("create a vehicle", () -> {
       it("successfully", () -> {
-        Vehicle vehicle = new Vehicle(Long.valueOf(1), VehicleType.AUTO, 2, "description", "license");
-        service.create(existentUser.getId(), vehicle);
+        Vehicle vehicle = new Vehicle(VehicleType.AUTO, 2, "description", "license", this.existentUser);
+        service.create(dtoFrom(vehicle));
 
-        verify(vehicleRepo, times(1)).create(vehicle);
-        assertThat(existentUser.getVehicles()).contains(vehicle);
+        verify(vehicleRepo, times(1)).create(any(Vehicle.class));
       });
     });
 
     describe("can't create vehicle", () -> {
-      it("without a user id", () -> {
+      it("without a vehicle data", () -> {
         try {
-          service.create(null, null);
-          failBecauseExceptionWasNotThrown(InvalidRequestException.class);
-        } catch (InvalidRequestException e) {
-          assertThat(e.errors()).contains(ErrorCode.User.ID_NOT_PRESENT);
-          verify(vehicleRepo, times(0)).create(any(Vehicle.class));
-        }
-      });
-
-      it("without a vehicle", () -> {
-        try {
-          service.create(Long.valueOf(1), null);
+          service.create(null);
           failBecauseExceptionWasNotThrown(InvalidRequestException.class);
         } catch (InvalidRequestException e) {
           assertThat(e.errors()).contains(ErrorCode.Vehicle.NOT_PRESENT);
@@ -86,9 +78,9 @@ public class VehicleServiceTests extends JavaSpec<TestContext> {
       });
 
       it("without a type", () -> {
-        Vehicle vehicle = new Vehicle(Long.valueOf(1), null, 2, "description", "license");
+        Vehicle vehicle = new Vehicle(null, 2, "description", "license", existentUser);
         try {
-          service.create(Long.valueOf(1), vehicle);
+          service.create(dtoFrom(vehicle));
           failBecauseExceptionWasNotThrown(InvalidRequestException.class);
         } catch (InvalidRequestException e) {
           assertThat(e.errors()).contains(ErrorCode.Vehicle.TYPE_NOT_PRESENT);
@@ -98,9 +90,9 @@ public class VehicleServiceTests extends JavaSpec<TestContext> {
 
       describe("with invalid number of passangers", () -> {
         Consumer<Integer> assertInvalidNumberOfPassangers = (numberOfPassangers) -> {
-          Vehicle vehicle = new Vehicle(Long.valueOf(1), VehicleType.AUTO, numberOfPassangers, "description", "license");
+          Vehicle vehicle = new Vehicle(VehicleType.AUTO, numberOfPassangers, "description", "license", existentUser);
           try {
-            service.create(Long.valueOf(1), vehicle);
+            service.create(dtoFrom(vehicle));
             failBecauseExceptionWasNotThrown(InvalidRequestException.class);
           } catch (InvalidRequestException e) {
             assertThat(e.errors()).contains(ErrorCode.Vehicle.NUMBER_OF_PASSANGERS_INVALID);
@@ -123,9 +115,9 @@ public class VehicleServiceTests extends JavaSpec<TestContext> {
 
       describe("with invalid description", () -> {
         Consumer<String> assertInvalidDescription = (description) -> {
-          Vehicle vehicle = new Vehicle(Long.valueOf(1), VehicleType.AUTO, 1, description, "license");
+          Vehicle vehicle = new Vehicle(VehicleType.AUTO, 1, description, "license", existentUser);
           try {
-            service.create(Long.valueOf(1), vehicle);
+            service.create(dtoFrom(vehicle));
             failBecauseExceptionWasNotThrown(InvalidRequestException.class);
           } catch (InvalidRequestException e) {
             assertThat(e.errors()).contains(ErrorCode.Vehicle.DESCRIPTION_OUT_OF_BOUNDS);
@@ -149,9 +141,9 @@ public class VehicleServiceTests extends JavaSpec<TestContext> {
       });
 
       it("without a license", () -> {
-        Vehicle vehicle = new Vehicle(Long.valueOf(1), VehicleType.AUTO, 2, "description", null);
+        Vehicle vehicle = new Vehicle(VehicleType.AUTO, 2, "description", null, existentUser);
         try {
-          service.create(Long.valueOf(1), vehicle);
+          service.create(dtoFrom(vehicle));
           failBecauseExceptionWasNotThrown(InvalidRequestException.class);
         } catch (InvalidRequestException e) {
           assertThat(e.errors()).contains(ErrorCode.Vehicle.LICENSE_NOT_PRESENT);
@@ -162,68 +154,54 @@ public class VehicleServiceTests extends JavaSpec<TestContext> {
 
     describe("delete a vehicle", () -> {
       beforeEach(() -> {
-        service.create(existentUser.getId(), existingVehicle);
+        service.create(dtoFrom(existingVehicle));
       });
 
       it("succesfully", () -> {
-        service.delete(existentUser.getId(), existingVehicle);
-        assertThat(existentUser.getVehicles()).isEmpty();
+        service.delete(1L);
+        verify(vehicleRepo, times(1)).delete(any(Long.class));
       });
     });
 
     describe("can't delete a vehicle", () -> {
       beforeEach(() -> {
-        service.create(existentUser.getId(), existingVehicle);
-      });
-
-      it("without user id", () -> {
-        try {
-          service.delete(null, existingVehicle);
-          failBecauseExceptionWasNotThrown(InvalidRequestException.class);
-        } catch (InvalidRequestException e) {
-          assertThat(e.errors()).contains(ErrorCode.User.ID_NOT_PRESENT);
-          assertThat(existentUser.getVehicles()).contains(existingVehicle);
-          verify(vehicleRepo, times(0)).delete(existingVehicle);
-        }
+        service.create(dtoFrom(existingVehicle));
       });
 
       it("without vehicle", () -> {
         try {
-          service.delete(Long.valueOf(1), null);
+          service.delete(null);
           failBecauseExceptionWasNotThrown(InvalidRequestException.class);
         } catch (InvalidRequestException e) {
           assertThat(e.errors()).contains(ErrorCode.Vehicle.NOT_PRESENT);
-          assertThat(existentUser.getVehicles()).contains(existingVehicle);
-          verify(vehicleRepo, times(0)).delete(existingVehicle);
+          verify(vehicleRepo, times(0)).delete(any(Long.class));
         }
       });
 
       it( "without vehicle id", () -> {
-        Vehicle vehicle = new Vehicle(null, null, null, null, null);
+        VehicleDTO dto = dtoFrom(existingVehicle);
+        dto.setVehicleId(null);
 
         try {
-          service.delete(1L, vehicle);
+          service.delete(null);
           failBecauseExceptionWasNotThrown(InvalidRequestException.class);
         } catch (InvalidRequestException e) {
           assertThat(e.errors()).contains(ErrorCode.Vehicle.ID_NOT_PRESENT);
-          assertThat(existentUser.getVehicles()).contains(existingVehicle);
-          verify(vehicleRepo, times(0)).delete(existingVehicle);
+          verify(vehicleRepo, times(0)).delete(any(Long.class));
         }
       });
     });
 
     describe("get vehicles from user", () -> {
       beforeEach(() -> {
-         service.create(existentUser.getId(), existingVehicle);
-         service.create(existentUser.getId(), anotherExistingVehicle);
+         service.create(dtoFrom(existingVehicle));
+         service.create(dtoFrom(anotherExistingVehicle));
       });
 
       it("succesfully", () -> {
-        List<Vehicle> vehicles = service.getFromUser(existentUser.getId());
+        service.getFromUser(existentUser.getId());
 
-        assertThat(vehicles).hasSize(2);
-        assertThat(vehicles).contains(existingVehicle);
-        assertThat(vehicles).contains(anotherExistingVehicle);
+        verify(vehicleRepo, times(1)).getUserVehicles(existentUser);
       });
     });
 
@@ -237,5 +215,17 @@ public class VehicleServiceTests extends JavaSpec<TestContext> {
         }
       });
     });
+  }
+
+  private VehicleDTO dtoFrom(Vehicle vehicle) {
+    VehicleDTO dto = new VehicleDTO();
+    dto.setVehicleId(vehicle.getId());
+    dto.setUserId(vehicle.getOwner().getId());
+    dto.setDescription(vehicle.getDescription());
+    dto.setLicense(vehicle.getLicense());
+    dto.setType(vehicle.getType());
+    dto.setNumberOfPassengers(vehicle.getNumberOfPassengers());
+
+    return dto;
   }
 }

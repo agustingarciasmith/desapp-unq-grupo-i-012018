@@ -30,10 +30,6 @@ public class User {
   @Column(name = "AVATAR")
   private String avatar;
 
-  @OneToMany
-  @JoinColumn(name = "VEHICLE_ID")
-  private List<Vehicle> vehicles;
-
   @Column(name = "TOTAL_SCORE", nullable = false, columnDefinition = "int default 0")
   private Integer totalScore;
 
@@ -41,7 +37,6 @@ public class User {
   private Integer votesNumber;
 
   public User() {
-    this.vehicles = new ArrayList<>();
   }
 
   public User(Long id, String name, String address, String email, String cuil, String avatar) {
@@ -51,13 +46,8 @@ public class User {
     this.email = email;
     this.cuil = cuil;
     this.avatar = avatar;
-    this.vehicles = new ArrayList<>();
     this.totalScore = 0;
     this.votesNumber = 0;
-  }
-
-  public void addVehicle(Vehicle vehicle) {
-    this.vehicles.add(vehicle);
   }
 
   public String getCuil() {
@@ -84,10 +74,6 @@ public class User {
     return avatar;
   }
 
-  public List<Vehicle> getVehicles() {
-    return vehicles;
-  }
-
   public Integer getTotalScore() {
     if (votesNumber > 0) {
       return this.totalScore / this.votesNumber;
@@ -101,9 +87,5 @@ public class User {
     this.cuil = userData.getCuil();
     this.address = userData.getAddress();
     this.avatar = userData.getAvatar();
-  }
-
-  public void removeVehicle(Vehicle vehicle) {
-    this.vehicles.remove(vehicle);
   }
 }
