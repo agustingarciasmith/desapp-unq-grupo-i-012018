@@ -11,4 +11,6 @@ public interface ReservationRepository {
     List<Reservation> getAllAsOwner(Long id);
 
     List<Reservation> getAllAsClient(Long id);
+
+    Reservation load(Long id);
 }

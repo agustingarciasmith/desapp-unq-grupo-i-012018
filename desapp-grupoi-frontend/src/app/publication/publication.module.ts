@@ -6,12 +6,14 @@ import { PublicationRoutingModule } from './publication-routing.module';
 import { PublicationListComponent } from './publication-list/publication-list.component';
 import { PublicationCreateComponent } from './publication-create/publication-create.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { GeocodingComponent } from '../components/geocoding/geocoding.component'
+import { GeocodingComponent } from '../components/geocoding/geocoding.component';
 import { PublicationViewComponent } from './publication-view/publication-view.component';
 import { AgmCoreModule } from '@agm/core';
 import {CalendarModule} from 'primeng/calendar';
 import {ChipsModule} from 'primeng/chips';
 import {DropdownModule} from 'primeng/dropdown';
+import { BarRatingModule } from 'ngx-bar-rating';
+import { OrderModule } from 'ngx-order-pipe';
 
 @NgModule({
   imports: [
@@ -26,7 +28,9 @@ import {DropdownModule} from 'primeng/dropdown';
     CalendarModule,
     ChipsModule,
     DropdownModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    BarRatingModule,
+    OrderModule
   ],
   declarations: [PublicationListComponent, PublicationCreateComponent, PublicationViewComponent, GeocodingComponent]
 })

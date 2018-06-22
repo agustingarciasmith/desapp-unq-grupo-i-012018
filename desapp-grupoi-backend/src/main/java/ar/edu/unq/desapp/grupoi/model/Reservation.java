@@ -2,6 +2,7 @@ package ar.edu.unq.desapp.grupoi.model;
 
 import ar.edu.unq.desapp.grupoi.model.errors.model.InvalidReservation;
 import ar.edu.unq.desapp.grupoi.model.reservationStates.PendingState;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.time.Clock;
@@ -14,6 +15,7 @@ import java.util.*;
 @Table(name = "RESERVATIONS")
 public class Reservation {
 
+    @Transient
     private Clock clock = Clock.systemUTC();
 
     @Id
@@ -30,7 +32,7 @@ public class Reservation {
     @OneToOne
     private User client;
 
-    @OneToOne
+    @OneToOne(targetEntity = ReservationState.class)
     private ReservationState state;
 
     @Column(name = "START_TIME")

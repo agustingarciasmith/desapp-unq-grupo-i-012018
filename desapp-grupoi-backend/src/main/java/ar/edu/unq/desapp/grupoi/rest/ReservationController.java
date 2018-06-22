@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -32,5 +33,10 @@ public class ReservationController {
     @RequestMapping(method = RequestMethod.GET, value = "/client/{id}")
     public List<Reservation> getReservationsAsClient(@PathVariable Long id) {
         return service.getAllAsClient(id);
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public Optional<Reservation> getReservation(@PathVariable("id") Long id) {
+        return Optional.ofNullable(service.getById(id));
     }
 }

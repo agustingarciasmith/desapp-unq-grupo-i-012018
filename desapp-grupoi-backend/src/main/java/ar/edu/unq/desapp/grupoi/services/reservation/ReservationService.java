@@ -10,4 +10,6 @@ public interface ReservationService {
     List<Reservation> getAllAsOwner(Long ownerId);
 
     List<Reservation> getAllAsClient(Long clientId);
+
+    Reservation getById(Long id);
 }

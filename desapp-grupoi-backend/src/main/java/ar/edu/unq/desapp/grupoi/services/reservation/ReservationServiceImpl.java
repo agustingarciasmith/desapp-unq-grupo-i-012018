@@ -30,4 +30,6 @@ public class ReservationServiceImpl implements ReservationService {
         return repository.getAllAsClient(clientId);
     }
 
+    @Override
+    public Reservation getById(Long id) { return repository.load(id); }
 }
