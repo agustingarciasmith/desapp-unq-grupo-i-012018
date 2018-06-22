@@ -16,9 +16,7 @@ public class PublicationServiceImpl implements PublicationService {
     @Autowired
     public PublicationRepository repository;
 
-    public PublicationServiceImpl() {
-    }
-
+    public PublicationServiceImpl() {}
 
     @Override
     public List<Publication> getAll() {

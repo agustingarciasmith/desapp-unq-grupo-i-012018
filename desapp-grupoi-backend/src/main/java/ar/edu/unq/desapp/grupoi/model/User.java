@@ -56,6 +56,10 @@ public class User {
     this.votesNumber = 0;
   }
 
+  public void addScore(int score){
+    this.totalScore += score;
+  }
+
   public void addVehicle(Vehicle vehicle) {
     this.vehicles.add(vehicle);
   }
