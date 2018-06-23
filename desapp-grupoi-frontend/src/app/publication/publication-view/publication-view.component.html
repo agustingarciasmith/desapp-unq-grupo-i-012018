@@ -48,8 +48,7 @@
       <div class="card top-buffer border border-dark shadow-sm">
         <div class="card-body">
           <p class="card-title"><strong>Select Renting Dates</strong></p>
-          <p-calendar [inline]="true" selectionMode="multiple" dataType="string" dateFormat="dd/mm/yy"
-                      [disabledDates]=unavailableDates [ngStyle]="{contentBgColor: '#f2f5f7'}"></p-calendar>
+          <p-calendar [(ngModel)]="selectedDates" [inline]="true" selectionMode="multiple" dataType="string" [disabledDates]=unavailableDates [ngStyle]="{contentBgColor: '#f2f5f7'}"></p-calendar>
         </div>
       </div>
       <div class="card top-buffer border border-dark shadow-sm">
@@ -65,6 +64,6 @@
     </div>
   </div>
   <div class="row">
-  <button type="button" class="btn btn-light btn-lg btn-block top-buffer border border-dark shadow-sm">Reserve</button>
+  <button type="button" class="btn btn-light btn-lg btn-block top-buffer border border-dark shadow-sm" [disabled]="selectedDates.length === 0" (click)="submitReservation()">Reserve</button>
   </div>
 </div>

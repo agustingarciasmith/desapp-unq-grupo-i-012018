@@ -13,7 +13,7 @@ public class ReservationRepositoryImpl extends CarpnbRepository<Reservation, Lon
     @Override
     public List<Reservation> getAllAsOwner(Long id) {
         TypedQuery<Reservation> query = entityManager.createQuery(
-                "SELECT r FROM Reservation r WHERE r.owner_id = :id",
+                "SELECT r FROM Reservation r WHERE r.owner.id = :id",
                 Reservation.class)
                 .setParameter("id", id);
         return query.getResultList();
@@ -22,7 +22,7 @@ public class ReservationRepositoryImpl extends CarpnbRepository<Reservation, Lon
     @Override
     public List<Reservation> getAllAsClient(Long id) {
         TypedQuery<Reservation> query = entityManager.createQuery(
-                "SELECT r FROM Reservation r WHERE r.client_id = :id",
+                "SELECT r FROM Reservation r WHERE r.client.id = :id",
                 Reservation.class)
                 .setParameter("id", id);
         return query.getResultList();

@@ -7,6 +7,7 @@ import {User} from '../user';
 import {environment} from '../../environments/environment';
 import {Vehicle} from '../vehicles/vehicle';
 import {of} from 'rxjs/observable/of';
+import {Reservation} from '../reservation';
 
 @Injectable()
 export class BackendService {
@@ -14,9 +15,10 @@ export class BackendService {
   private loginUrl = this.base + 'users/login';
   private updateUserUrl = this.base + 'users/update';
   private addVehicleUrl = this.base + 'vehicles/';
+  private createReservationUrl = this.base + 'reservation/create';
 
   private http: HttpClient;
-  private user$: Observable<User>;
+  public user$: Observable<User>;
   private userSubscriptions: Array<{ next, error }>;
 
   constructor(http: HttpClient) {
@@ -99,6 +101,14 @@ export class BackendService {
   private notify() {
     this.userSubscriptions.map(subsciption => {
       this.user$.subscribe(subsciption.next, subsciption.error);
+      this.user$.subscribe(value => console.log(value));
     });
+  }
+
+  submitReservation(reservation: Reservation): any {
+    console.log(reservation);
+    return this.http.post<Reservation>(this.createReservationUrl, reservation, {
+      headers: this.headers()
+    }).map(res => console.log(res));
   }
 }

@@ -13,7 +13,7 @@ public class ReservationBuilder {
     private User client = userBuilder.withCuil("1111111111").build();
     private User owner = userBuilder.withCuil("2222222222").build();
     private Publication publication = new PublicationBuilder().withOwner(owner).build();
-    private List<LocalDate> selectedDates = publication.getAvailableDates();
+    private ArrayList<LocalDate> selectedDates = (ArrayList<LocalDate>) publication.getAvailableDates();
 
     public Reservation newReservation() {
         return this.build();

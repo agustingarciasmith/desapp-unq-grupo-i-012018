@@ -15,7 +15,6 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @RequestMapping(Endpoints.Users.BASE)
 @CrossOrigin(origins = "http://localhost:4200")
 public class UsersController {
-  private final Logger logger = LoggerFactory.getLogger(this.getClass());
   private UserService service;
 
   @Autowired

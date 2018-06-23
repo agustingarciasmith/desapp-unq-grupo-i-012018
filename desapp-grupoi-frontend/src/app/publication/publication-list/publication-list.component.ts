@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { PublicationService } from '../publication.service';
-import { Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {PublicationService} from '../publication.service';
+import {Router} from '@angular/router';
 import {OrderPipe} from 'ngx-order-pipe';
 
 @Component({
@@ -14,6 +14,7 @@ export class PublicationListComponent implements OnInit {
   reverse = false;
   public publications: any[];
   public sortedPublications: any[];
+  public p = 1;
 
   constructor(private router: Router, private publicationService: PublicationService, private orderPipe: OrderPipe) {
     this.sortedPublications = orderPipe.transform(this.publications, 'owner.totalScore');
@@ -31,7 +32,6 @@ export class PublicationListComponent implements OnInit {
       err => {
         console.log(err);
       }
-
     );
   }
 

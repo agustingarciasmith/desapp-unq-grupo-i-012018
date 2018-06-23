@@ -48,25 +48,28 @@ public class Reservation {
     private Instant startWaitingTime;
 
     @Column
-    @ElementCollection(targetClass=String.class)
-    private List<LocalDate> selectedDates = new ArrayList<>();
+    @ElementCollection(targetClass=LocalDate.class)
+    private List<LocalDate> selectedDates;
 
     public Reservation(){}
 
-    public Reservation(Publication publication, User client, List<LocalDate> selectedDates) {
+    public Reservation(Publication publication, User client, ArrayList<LocalDate> selectedDates) {
         if (client.getCuil().equals(publication.getOwner().getCuil())) throw new InvalidReservation();
         this.client = client;
         this.publication = publication;
         this.state = new PendingState();
         this.selectedDates = selectedDates;
-        this.owner = publication.getOwner();
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public User getClient() {
         return client;
     }
 
-    public User getOwner() { return owner; }
+    public User getOwner() { return this.publication.getOwner(); }
 
     public Publication getPublication() {
         return publication;
@@ -74,6 +77,10 @@ public class Reservation {
 
     public ReservationState getState() {
         return state;
+    }
+
+    public List<LocalDate> getSelectedDates(){
+        return selectedDates;
     }
 
     public void setState(ReservationState state) {

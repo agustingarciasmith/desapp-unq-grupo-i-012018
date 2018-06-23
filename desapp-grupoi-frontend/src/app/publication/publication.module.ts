@@ -14,6 +14,7 @@ import {ChipsModule} from 'primeng/chips';
 import {DropdownModule} from 'primeng/dropdown';
 import { BarRatingModule } from 'ngx-bar-rating';
 import { OrderModule } from 'ngx-order-pipe';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 @NgModule({
   imports: [
@@ -30,7 +31,8 @@ import { OrderModule } from 'ngx-order-pipe';
     DropdownModule,
     BrowserAnimationsModule,
     BarRatingModule,
-    OrderModule
+    OrderModule,
+    NgxPaginationModule
   ],
   declarations: [PublicationListComponent, PublicationCreateComponent, PublicationViewComponent, GeocodingComponent]
 })
