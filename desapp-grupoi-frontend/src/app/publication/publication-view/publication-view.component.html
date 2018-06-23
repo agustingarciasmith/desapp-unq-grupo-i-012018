@@ -1,75 +1,70 @@
-<div class="container">
+<div class="container-fluid container-90">
+  <h1 class="display-4">Publication #00{{publication.id}}</h1>
   <div class="row">
-    <header class="header">
-      <div class="row">
-        <h1>Publication</h1>
+    <div class="card top-buffer border border-dark shadow-sm" style="width: 16rem;">
+      <img class="card-img-top" src={{publication.owner.avatar}}>
+      <div class="card-body">
+        <h4 class="card-title">{{publication.owner.name}}</h4>
+        <p class="card-text">{{publication.owner.cuil}}</p>
+        <p class="card-text">{{publication.owner.email}}</p>
+        <p class="card-text">{{publication.owner.address}}</p>
+        <bar-rating [readOnly]="true" [(rate)]="publication.owner.totalScore" [max]="5"
+                    [theme]="'stars'"></bar-rating>
       </div>
-      <hr />
-    </header>
-  </div>
-  <div class="card">
-    <div class="card-body">
-  <div class="row">
-    <br>
-    <div class="col-md-3">
-      <h3>Owner</h3>
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Score</th>
-          </tr>
-          <tbody>
-            <tr>
-              <td>{{publication.owner.name}}</td>
-              <td>{{publication.owner.score}}</td>
-            </tr>
-          </tbody>
-      </table>
     </div>
-    <div class="col-md-7">
-      <h3>Vehicle</h3>
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th scope="col">Type</th>
-            <th scope="col"># passengers</th>
-          </tr>
-          <tbody>
-            <tr>
-              <td>{{publication.vehicle.description}}</td>
-              <td>{{publication.vehicle.numberOfPassengers}}</td>
-            </tr>
-          </tbody>
-      </table>
+    <div class="card top-buffer nav-item-margin border border-dark shadow-sm" style="width: 16rem;">
+      <img class="card-img-top"
+           src="https://www.coches.com/fotos_historicas/fiat/500L/high_377ff73887f5cc0b91e57e4e07475ef9.jpg">
+      <div class="card-body">
+        <h4 class="card-title">{{publication.vehicle.license}}</h4>
+        <p class="card-text"><strong>Type:</strong> {{publication.vehicle.type}}</p>
+        <p class="card-text"><strong>Description:</strong> {{publication.vehicle.description}}</p>
+        <p class="card-text"><strong>Number of Passengers:</strong> {{publication.vehicle.numberOfPassengers}}</p>
+      </div>
     </div>
-  </div>
-      <hr>
-      <div class="row">
-        <div class="col">
-  <div class="container">
-    <h3>PickUp Address</h3>
-    <agm-map [latitude]="latpu" [longitude]="lngpu" [zoom]="15">
-      <agm-marker [latitude]="latpu" [longitude]="lngpu">
-        <agm-info-window>{{publication.pickUpAddress}}</agm-info-window>
-      </agm-marker>
-    </agm-map>
-  </div>
+    <div class="col">
+      <div class="card top-buffer border border-dark shadow-sm">
+        <div class="card-body">
+          <p class="card-title"><strong>PickUp Address: </strong>{{publication.pickUpAddress}}</p>
+          <agm-map [latitude]="latpu" [longitude]="lngpu" [zoom]="15">
+            <agm-marker [latitude]="latpu" [longitude]="lngpu">
+              <agm-info-window>{{publication.pickUpAddress}}</agm-info-window>
+            </agm-marker>
+          </agm-map>
         </div>
-        <div class="col">
-      <div class="container">
-        <h3>Return Address</h3>
-        <agm-map [latitude]="latr" [longitude]="lngr" [zoom]="15">
-          <agm-marker [latitude]="latr" [longitude]="lngr">
-            <agm-info-window>{{publication.returnAddress[0]}}</agm-info-window>
-          </agm-marker>
-        </agm-map>
       </div>
+      <div class="card top-buffer border border-dark shadow-sm">
+        <div class="card-body">
+          <p class="card-title"><strong>Return Address: </strong>{{publication.returnAddress[0]}}</p>
+          <agm-map [latitude]="latr" [longitude]="lngr" [zoom]="15">
+            <agm-marker [latitude]="latr" [longitude]="lngr">
+              <agm-info-window>{{publication.returnAddress[0]}}</agm-info-window>
+            </agm-marker>
+          </agm-map>
         </div>
       </div>
     </div>
-    <div class="card-footer">
-      <button type="submit" class="btn btn-primary">Reserve</button>
+    <div class="col">
+      <div class="card top-buffer border border-dark shadow-sm">
+        <div class="card-body">
+          <p class="card-title"><strong>Select Renting Dates</strong></p>
+          <p-calendar [inline]="true" selectionMode="multiple" dataType="string" dateFormat="dd/mm/yy"
+                      [disabledDates]=unavailableDates [ngStyle]="{contentBgColor: '#f2f5f7'}"></p-calendar>
+        </div>
+      </div>
+      <div class="card top-buffer border border-dark shadow-sm">
+        <div class="card-body">
+          <p class="card-title"><strong>Conditions:</strong></p>
+          <ul>
+            <li>Selected dates should be consecutive</li>
+            <li>Images are only for illustration purposes</li>
+            <li>Every reservation must be approved by the owner</li>
+          </ul>
+        </div>
+      </div>
     </div>
+  </div>
+  <div class="row">
+  <button type="button" class="btn btn-light btn-lg btn-block top-buffer border border-dark shadow-sm">Reserve</button>
   </div>
 </div>

@@ -1,6 +1,5 @@
 <div class="container-fluid">
   <h1 class="display-4">Publications</h1>
-
 <div class="card top-buffer">
   <div class="row">
     <div class="col">
@@ -14,8 +13,7 @@
               <span [hidden]="!reverse">▲</span></th>
             <th>Description</th>
             <th>Pickup address</th>
-            <th>City</th>
-            <th [class.active]="order === 'cost'" (click)="setOrder('cost')">Hourly rate
+            <th [class.active]="order === 'cost'" (click)="setOrder('cost')">Rate
               <span [hidden]="reverse">▼</span>
               <span [hidden]="!reverse">▲</span></th>
           </tr>
@@ -23,10 +21,9 @@
           <tbody>
           <tr *ngFor="let publication of publications | orderBy: order:reverse:'case-insensitive'">
             <td><img src={{publication.owner.avatar}} class="img-thumbnail"> {{publication.owner.name}}</td>
-            <td><bar-rating [readOnly]="true" [(rate)]="publication.owner.totalScore" [max]="5" [theme]="'horizontal'"></bar-rating></td>
+            <td><bar-rating [readOnly]="true" [(rate)]="publication.owner.totalScore" [max]="5" [theme]="'stars'"></bar-rating></td>
             <td>{{publication.vehicle.description}}</td>
             <td>{{publication.pickUpAddress}}</td>
-            <td>{{publication.city}}</td>
             <td>{{publication.cost}}</td>
             <td>
               <button type="button" class="btn btn-danger" (click)="viewPublicationPage(publication)">View</button>

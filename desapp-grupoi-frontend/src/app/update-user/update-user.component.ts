@@ -5,8 +5,8 @@ import {ToasterService} from 'angular5-toaster/dist';
 import {UserProfileErrors} from '../backend/error';
 import {Router} from '@angular/router';
 import {User} from '../user';
-import {paths} from "../paths";
-import {Vehicle} from "../vehicles/vehicle";
+import {paths} from '../paths';
+import {Vehicle} from '../vehicles/vehicle';
 
 @Component({
   selector: 'app-update-user',
@@ -42,7 +42,7 @@ export class UpdateUserComponent implements OnInit {
         this.dialogVehicle = false;
         this.dialogViewVehicle = false;
         this.userSwitch = false;
-        this.newVehicle = Vehicle.emptyVehicle()
+        this.newVehicle = Vehicle.emptyVehicle();
       },
       error => {
         this.handleError(error);
@@ -51,7 +51,7 @@ export class UpdateUserComponent implements OnInit {
 
   updateUser() {
     this.loading = true;
-    this.service.updateUser(this.userUpdate)
+    this.service.updateUser(this.userUpdate);
   }
 
   modifyProfile() {
@@ -97,7 +97,7 @@ export class UpdateUserComponent implements OnInit {
     this.toggleViewVehicle();
   }
 
-  viewVehicle(vehicle: Vehicle){
+  viewVehicle(vehicle: Vehicle) {
     this.actualVehicle = vehicle;
     this.toggleAddVehicleDialog();
   }

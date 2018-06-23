@@ -1,4 +1,15 @@
 agm-map {
-    height: 300px;
-    width: 300px;
+    height: 230px;
+    width: 400px;
   }
+
+.card { background-color: rgba(247, 252, 255, 0.92); }
+
+body, html{
+  height: 100%;
+}
+
+.container-90 {
+  width: 80%;
+}
+

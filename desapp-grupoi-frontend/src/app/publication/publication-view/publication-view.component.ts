@@ -15,6 +15,7 @@ export class PublicationViewComponent implements OnInit {
   latr = 51.678418;
   lngr = 7.809007;
   public publication: any;
+  public unavailableDates: Date[];
 
   ngOnInit(): void {
     this.getPublication();
@@ -30,6 +31,7 @@ export class PublicationViewComponent implements OnInit {
         this.publication = publication;
         this.getCoordinatesPickUp(publication.pickUpAddress);
         this.getCoordinatesReturn(publication.returnAddress[0]);
+        this.setAvailableDates();
       },
       err => {
         console.log(err);
@@ -61,5 +63,14 @@ export class PublicationViewComponent implements OnInit {
         console.log(err);
 
       });
+  }
+
+  private setAvailableDates() {
+    const monthDates = Array.from(Array(32).keys()).map((v, i) => `2018-07-${i}`);
+    const stringDates = monthDates.filter(item => this.publication.availableDates.indexOf(item) < 0).slice(1);
+    this.unavailableDates = stringDates.map(function(date) {
+      return new Date(date);
+    });
+    console.log(this.unavailableDates.toString());
   }
 }
