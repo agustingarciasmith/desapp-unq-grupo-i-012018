@@ -1,28 +1,32 @@
 <div class="container-fluid">
   <h1 class="display-4">Publications</h1>
-
+  <pagination-controls (pageChange)="p = $event"></pagination-controls>
 <div class="card top-buffer">
   <div class="row">
     <div class="col">
       <section class="main">
-        <table class="table">
+        <table class="table-responsive">
           <thead>
           <tr>
-            <th>#</th>
+            <th></th>
             <th>Owner</th>
+            <th [class.active]="order === 'owner.totalScore'" (click)="setOrder('owner.totalScore')">Score
+              <span [hidden]="reverse">▼</span>
+              <span [hidden]="!reverse">▲</span></th>
             <th>Description</th>
             <th>Pickup address</th>
-            <th>City</th>
-            <th>Hourly Rate</th>
+            <th [class.active]="order === 'cost'" (click)="setOrder('cost')">Rate
+              <span [hidden]="reverse">▼</span>
+              <span [hidden]="!reverse">▲</span></th>
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let publication of publications">
-            <th scope="row">{{publication.id}}</th>
+          <tr *ngFor="let publication of publications | paginate: { itemsPerPage: 10, currentPage: p } | orderBy: order:reverse:'case-insensitive'">
+            <td><img src={{publication.owner.avatar}} class="img-thumbnail"></td>
             <td>{{publication.owner.name}}</td>
+            <td><bar-rating [readOnly]="true" [(rate)]="publication.owner.totalScore" [max]="5" [theme]="'stars'"></bar-rating></td>
             <td>{{publication.vehicle.description}}</td>
             <td>{{publication.pickUpAddress}}</td>
-            <td>{{publication.city}}</td>
             <td>{{publication.cost}}</td>
             <td>
               <button type="button" class="btn btn-danger" (click)="viewPublicationPage(publication)">View</button>
@@ -36,3 +40,4 @@
   </div>
 </div>
 </div>
+

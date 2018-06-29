@@ -5,6 +5,8 @@ import ar.edu.unq.desapp.grupoi.services.user.UserCustomizableData;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Entity
 @Table(name = "USERS")
@@ -56,6 +58,10 @@ public class User {
     this.votesNumber = 0;
   }
 
+  public void addScore(int score){
+    this.totalScore += score;
+  }
+
   public void addVehicle(Vehicle vehicle) {
     this.vehicles.add(vehicle);
   }
@@ -105,5 +111,10 @@ public class User {
 
   public void removeVehicle(Vehicle vehicle) {
     this.vehicles.remove(vehicle);
+  }
+
+  public void setTestingScore(){
+    this.votesNumber = 1;
+    this.totalScore = ThreadLocalRandom.current().nextInt(1, 5 + 1);
   }
 }

@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {AuthService} from './auth/auth.service';
-import {paths} from "./paths";
+import {paths} from './paths';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +16,6 @@ export class AppComponent {
   }
 
   public isAuthenticated(): boolean {
-    return this.auth.isAuthenticated()
+    return this.auth.isAuthenticated();
   }
 }
