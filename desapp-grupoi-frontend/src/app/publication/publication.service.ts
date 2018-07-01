@@ -5,11 +5,13 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import {Observable} from 'rxjs/Observable';
+import {User} from '../user';
 
 @Injectable()
 export class PublicationService {
 
   private apiUrl = 'http://localhost:9090/publication';
+  public loggedUserId: string;
 
   constructor(private http: HttpClient) {
   }
@@ -36,7 +38,7 @@ export class PublicationService {
   }
 
   savePublication(publication: Publication) {
-    return this.http.post<Publication>(this.apiUrl+ '/create', publication, {
+    return this.http.post<Publication>(this.apiUrl + '/create', publication, {
       headers: this.headers()
     }).map(res => console.log(res));
   }

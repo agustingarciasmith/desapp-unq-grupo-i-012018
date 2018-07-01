@@ -8,6 +8,7 @@ import {environment} from '../../environments/environment';
 import {Vehicle} from '../vehicles/vehicle';
 import {of} from 'rxjs/observable/of';
 import {Publication} from "../publication/publication";
+import {Reservation} from '../reservation';
 
 @Injectable()
 export class BackendService {
@@ -18,9 +19,10 @@ export class BackendService {
   private publicationsUrl = this.base + "publication";
   private createPublicationUrl = this.base + "publication/create";
   private userPublicationsUrl = this.base + "publication/user/";
+  private createReservationUrl = this.base + 'reservation/create';
 
   private http: HttpClient;
-  private user$: Observable<User>;
+  public user$: Observable<User>;
   private userSubscriptions: Array<{ next, error }>;
   private publications$: Observable<Publication[]>;
   private publicationsSubscriptions: Array<{ next, error }>;
@@ -122,6 +124,7 @@ export class BackendService {
   private notifyUserSubscriptors() {
     this.userSubscriptions.map(subsciption => {
       this.user$.subscribe(subsciption.next, subsciption.error);
+      this.user$.subscribe(value => console.log(value));
     });
   }
 
@@ -155,6 +158,13 @@ export class BackendService {
   private notifyPublicationsSubscriptors() {
     this.publicationsSubscriptions.map(subsciption => {
       this.publications$.subscribe(subsciption.next, subsciption.error)
-    })
+    });
+  }
+
+  submitReservation(reservation: Reservation): any {
+    console.log(reservation);
+    return this.http.post<Reservation>(this.createReservationUrl, reservation, {
+      headers: this.headers()
+    }).map(res => console.log(res));
   }
 }

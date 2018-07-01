@@ -5,6 +5,7 @@ import ar.edu.unq.desapp.grupoi.model.User;
 import ar.edu.unq.desapp.grupoi.model.Vehicle;
 import ar.edu.unq.desapp.grupoi.model.errors.ErrorCode;
 import ar.edu.unq.desapp.grupoi.model.errors.InvalidRequestException;
+import ar.edu.unq.desapp.grupoi.repositories.PublicationRepository;
 import ar.edu.unq.desapp.grupoi.repositories.UserRepository;
 import ar.edu.unq.desapp.grupoi.repositories.VehicleRepository;
 import ar.edu.unq.desapp.grupoi.rest.requests.VehicleDTO;
@@ -23,16 +24,19 @@ public class VehicleServiceImpl implements VehicleService {
   private UserRepository userRepository;
   private VehicleRepository vehicleRepository;
   private Parameters parameters;
+  private PublicationRepository publicationRepository;
 
   @Autowired
   public VehicleServiceImpl(
       UserRepository userRepository,
       VehicleRepository vehicleRepository,
-      Parameters parameters) {
+      Parameters parameters,
+      PublicationRepository publicationRepository) {
 
     this.userRepository = userRepository;
     this.vehicleRepository = vehicleRepository;
     this.parameters = parameters;
+    this.publicationRepository = publicationRepository;
   }
 
   @Override
@@ -71,7 +75,19 @@ public class VehicleServiceImpl implements VehicleService {
   public void delete(Long vehicleId) {
     validateVehicleIdPresence(vehicleId);
 
-    this.vehicleRepository.delete(vehicleId);
+    Vehicle vehicle = this.vehicleRepository.load(vehicleId);
+
+    validateExistentPublication(vehicle);
+
+    this.vehicleRepository.delete(vehicle);
+  }
+
+  private void validateExistentPublication(Vehicle vehicle) {
+    this.publicationRepository.findByVehicle(vehicle).ifPresent(publication -> {
+      throw new InvalidRequestException(
+          "Error deleting vehicle",
+          Collections.singletonList(ErrorCode.Vehicle.CANT_DELETE_PUBLICATION_ASOCIATED));
+    });
   }
 
   private void validateVehicleIdPresence(Long vehicleId) {

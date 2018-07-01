@@ -8,7 +8,9 @@ import java.util.List;
 public interface VehicleRepository {
   void create(Vehicle vehicle);
 
-  void delete(Long vehicleId);
-
   List<Vehicle> getUserVehicles(User user);
+
+  Vehicle load(Long vehicleId);
+
+  void delete(Vehicle vehicle);
 }

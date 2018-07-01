@@ -5,6 +5,8 @@ import ar.edu.unq.desapp.grupoi.services.user.UserCustomizableData;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Entity
 @Table(name = "USERS")
@@ -74,7 +76,7 @@ public class User {
     return avatar;
   }
 
-  public Integer getTotalScore() {
+  public Integer getScore() {
     if (votesNumber > 0) {
       return this.totalScore / this.votesNumber;
     } else {
@@ -87,5 +89,10 @@ public class User {
     this.cuil = userData.getCuil();
     this.address = userData.getAddress();
     this.avatar = userData.getAvatar();
+  }
+
+  public void reciveScore(Integer score) {
+    this.totalScore += score;
+    this.votesNumber ++;
   }
 }

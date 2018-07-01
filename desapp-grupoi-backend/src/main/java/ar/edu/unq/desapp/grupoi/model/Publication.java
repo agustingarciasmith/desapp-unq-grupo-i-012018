@@ -1,6 +1,7 @@
 package ar.edu.unq.desapp.grupoi.model;
 
 import ar.edu.unq.desapp.grupoi.model.errors.model.FieldMissing;
+import ar.edu.unq.desapp.grupoi.rest.requests.PublicationDTO;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -47,7 +48,7 @@ public class Publication {
   public Publication() {
   }
 
-  public Publication(User owner, Vehicle vehicle, String city, String pickUpAddress, ArrayList<String> returnAddress, String contactPhone, ArrayList<LocalDate> availableDates, Integer cost) {
+  public Publication(User owner, Vehicle vehicle, String city, String pickUpAddress, List<String> returnAddress, String contactPhone, List<LocalDate> availableDates, Integer cost) {
     if (cost == null) throw new FieldMissing(COST);
     this.owner = owner;
     this.vehicle = vehicle;
@@ -57,6 +58,19 @@ public class Publication {
     this.contactPhone = contactPhone;
     this.availableDates = availableDates;
     this.cost = cost;
+  }
+
+  public static Publication from(User user, Vehicle vehicle, PublicationDTO publicationDTO) {
+    return new Publication(
+        user,
+        vehicle,
+        publicationDTO.getCity(),
+        publicationDTO.getPickUpAddress(),
+        publicationDTO.getReturnAddress(),
+        publicationDTO.getContactPhone(),
+        publicationDTO.getAvailableDates(),
+        publicationDTO.getCost()
+    );
   }
 
   public Vehicle getVehicle() {

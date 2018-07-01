@@ -16,11 +16,6 @@ public class VehicleRepositoryImpl extends CarpnbRepository<Vehicle, Long> imple
   }
 
   @Override
-  public void delete(Long vehicleId) {
-    this.delete(this.load(vehicleId));
-  }
-
-  @Override
   public List<Vehicle> getUserVehicles(User user) {
     Query query = entityManager.createQuery(
         "SELECT u FROM Vehicle u WHERE u.owner = :owner")

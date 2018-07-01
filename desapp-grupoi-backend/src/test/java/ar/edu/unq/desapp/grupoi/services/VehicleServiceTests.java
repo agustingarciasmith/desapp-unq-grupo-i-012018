@@ -9,17 +9,13 @@ import ar.edu.unq.desapp.grupoi.model.Vehicle;
 import ar.edu.unq.desapp.grupoi.model.VehicleType;
 import ar.edu.unq.desapp.grupoi.model.errors.ErrorCode;
 import ar.edu.unq.desapp.grupoi.model.errors.InvalidRequestException;
-import ar.edu.unq.desapp.grupoi.repositories.UserRepository;
-import ar.edu.unq.desapp.grupoi.repositories.UserRepositoryImpl;
-import ar.edu.unq.desapp.grupoi.repositories.VehicleRepository;
-import ar.edu.unq.desapp.grupoi.repositories.VehicleRepositoryImpl;
+import ar.edu.unq.desapp.grupoi.repositories.*;
 import ar.edu.unq.desapp.grupoi.rest.requests.VehicleDTO;
 import ar.edu.unq.desapp.grupoi.services.vehicle.VehicleService;
 import ar.edu.unq.desapp.grupoi.services.vehicle.VehicleServiceImpl;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 
-import java.util.List;
 import java.util.function.Consumer;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -36,18 +32,19 @@ public class VehicleServiceTests extends JavaSpec<TestContext> {
   private User existentUser;
   private Vehicle existingVehicle;
   private Vehicle anotherExistingVehicle;
+  private PublicationRepository publicationRepository;
 
   @Override
   public void define() {
     beforeEach(() -> {
       this.userRepo = mock(UserRepositoryImpl.class);
       this.vehicleRepo = mock(VehicleRepositoryImpl.class);
-
+      this.publicationRepository = mock(PublicationRepositoryImpl.class);
       this.parameters = new Parameters();
       this.parameters.setMinVehicleDescriptionLength(1);
       this.parameters.setMaxVehicleDescriptionLength(1000);
 
-      this.service = new VehicleServiceImpl(userRepo, vehicleRepo, parameters);
+      this.service = new VehicleServiceImpl(userRepo, vehicleRepo, parameters, publicationRepository);
       this.existentUser = new User(1L, "name", "address", "email", "cuil", "avatar");
       this.existingVehicle = new Vehicle(VehicleType.AUTO, 1, "description", "license", existentUser);
       this.existingVehicle.setId(1L);
@@ -159,7 +156,7 @@ public class VehicleServiceTests extends JavaSpec<TestContext> {
 
       it("succesfully", () -> {
         service.delete(1L);
-        verify(vehicleRepo, times(1)).delete(any(Long.class));
+        verify(vehicleRepo, times(1)).delete(any(Vehicle.class));
       });
     });
 
@@ -174,7 +171,7 @@ public class VehicleServiceTests extends JavaSpec<TestContext> {
           failBecauseExceptionWasNotThrown(InvalidRequestException.class);
         } catch (InvalidRequestException e) {
           assertThat(e.errors()).contains(ErrorCode.Vehicle.NOT_PRESENT);
-          verify(vehicleRepo, times(0)).delete(any(Long.class));
+          verify(vehicleRepo, times(0)).delete(any(Vehicle.class));
         }
       });
 
@@ -187,7 +184,7 @@ public class VehicleServiceTests extends JavaSpec<TestContext> {
           failBecauseExceptionWasNotThrown(InvalidRequestException.class);
         } catch (InvalidRequestException e) {
           assertThat(e.errors()).contains(ErrorCode.Vehicle.ID_NOT_PRESENT);
-          verify(vehicleRepo, times(0)).delete(any(Long.class));
+          verify(vehicleRepo, times(0)).delete(any(Vehicle.class));
         }
       });
     });

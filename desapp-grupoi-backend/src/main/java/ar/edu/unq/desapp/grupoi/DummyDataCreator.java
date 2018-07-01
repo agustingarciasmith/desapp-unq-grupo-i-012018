@@ -69,8 +69,8 @@ public class DummyDataCreator {
 
   private ArrayList<LocalDate> datesArray() {
     ArrayList<LocalDate> dates = new ArrayList<>();
-    for (int i = 0; i < 7; i++) {
-      LocalDate randomDate = createRandomDate(2018, 2019);
+    for (int i = 0; i < 21; i++) {
+      LocalDate randomDate = createRandomDate(2018, 2018);
       dates.add(randomDate);
     }
     return dates;
@@ -81,8 +81,8 @@ public class DummyDataCreator {
   }
 
   private LocalDate createRandomDate(int startYear, int endYear) {
-    int day = createRandomIntBetween(1, 28);
-    int month = createRandomIntBetween(1, 12);
+    int day = createRandomIntBetween(1, 31);
+    int month = 7;
     int year = createRandomIntBetween(startYear, endYear);
     return LocalDate.of(year, month, day);
   }

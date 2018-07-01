@@ -60,7 +60,7 @@ public class ReservationTimeTests {
 //    public void testWhenTheReservationIsFinishedTheAmountOfHoursGetsCalculated() {
 //        reservationStarted.setClock(mockClock);
 //        when(mockClock.instant()).thenReturn(tenHoursLater);
-//        reservationStarted.vehicleDeliveredByClient();
+//        reservationStarted.clientReturnVehicle();
 //
 //        assertThat(reservationStarted.getRentDurationInHours()).isEqualTo(10);
 //        assertThat(reservationStarted.getFinalCost()).isEqualTo(reservationStarted.getPublication().getCost() * 10);

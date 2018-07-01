@@ -17,4 +17,9 @@ public class Endpoints {
   public class Vehicles {
     public static final String BASE = Endpoints.BASE + "/vehicles";
   }
+
+  public class Reservation {
+    public static final String BASE = Endpoints.BASE + "/reservation";
+    public static final String CREATE = "/create";
+  }
 }
