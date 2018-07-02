@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
-import {map, mergeMap} from 'rxjs/operators';
+import {flatMap} from 'rxjs/operators';
 import {UserInfo} from '../auth/auth.service';
 import {User} from '../user';
 import {environment} from '../../environments/environment';
@@ -15,10 +15,15 @@ export class BackendService {
   private base = environment.backendUrl;
   private loginUrl = this.base + 'users/login';
   private updateUserUrl = this.base + 'users/update';
+
   private addVehicleUrl = this.base + 'vehicles/';
+  private userVehiclesUrl = this.base + "vehicles/user/";
+  private deleteVehicleUrl = this.base + "vehicles/delete/";
+
   private publicationsUrl = this.base + "publication";
   private createPublicationUrl = this.base + "publication/create";
   private userPublicationsUrl = this.base + "publication/user/";
+
   private createReservationUrl = this.base + 'reservation/create';
 
   private http: HttpClient;
@@ -26,6 +31,7 @@ export class BackendService {
   private userSubscriptions: Array<{ next, error }>;
   private publications$: Observable<Publication[]>;
   private publicationsSubscriptions: Array<{ next, error }>;
+  private vehicles$: Observable<Vehicle[]>;
 
   constructor(http: HttpClient) {
     this.http = http;
@@ -41,35 +47,35 @@ export class BackendService {
   }
 
   login(userInfoObservable: Observable<UserInfo>) {
-    this.user$ = userInfoObservable
-      .pipe(
-        mergeMap((userInfo: UserInfo) => {
-          return this.http.post<User>(this.loginUrl, userInfo, {
-            headers: this.headers()
-          });
-        })
-      );
+    this.user$ = flatMap((userInfo: UserInfo) => {
+      return this.http.post<User>(this.loginUrl, userInfo, {
+        headers: this.headers()
+      });
+    })(userInfoObservable);
+  }
 
-    this.publications$ = this.user$.pipe(
-      mergeMap((user: User) => {
-        return this.http.get<Publication[]>(this.userPublicationsUrl + user.id, {
-          headers: this.headers()
-        })
+  getUser() {
+    return this.user$;
+  }
+
+  getPublications(): Observable<Publication[]> {
+    this.publications$ = flatMap((user: User) => {
+      return this.http.get<Publication[]>(this.userPublicationsUrl + user.id, {
+        headers: this.headers()
       })
-    );
+    })(this.user$);
 
-    this.notifyUserSubscriptors();
-    this.notifyPublicationsSubscriptors();
+    return this.publications$;
   }
 
-  subscribeToPublications(next, error?) {
-    this.publicationsSubscriptions.push({next, error});
-    this.notifyPublicationsSubscriptors();
-  }
+  getVehicles(): Observable<Vehicle[]> {
+    this.vehicles$ = flatMap((user: User) => {
+      return this.http.get<Vehicle[]>(this.userVehiclesUrl + user.id, {
+        headers: this.headers()
+      })
+    })(this.user$);
 
-  subscribeToUser(next, error?) {
-    this.userSubscriptions.push({next, error});
-    this.notifyUserSubscriptors();
+    return this.vehicles$;
   }
 
   updateUser(user: User): Observable<User> {
@@ -77,88 +83,35 @@ export class BackendService {
       headers: this.headers()
     });
 
-    this.notifyUserSubscriptors();
     return this.user$;
   }
 
   addVehicleToUser(newVehicle: Vehicle) {
-    this.user$ = this.user$.pipe(
-      mergeMap((user: User) => {
+    return flatMap((user: User) => {
         return this.http.post<Vehicle>(this.addVehicleUrl + user.id, newVehicle, {
           headers: this.headers()
-        }).pipe(
-          map(
-            (vehicle: Vehicle) => {
-              const realUser = User.from(user);
-              realUser.addVehicle(vehicle);
-              return realUser;
-            }
-          )
-        );
-      })
-    );
-    this.notifyUserSubscriptors();
+        })
+      }
+    )(this.user$);
   }
 
   deleteVehicleFromUser(vehicleToDelete: Vehicle) {
-    const httpOptions = {
-      headers: this.headers(), body: vehicleToDelete
-    };
-    this.user$ = this.user$.pipe(
-      mergeMap((user: User) => {
-        return this.http.delete<Vehicle>(this.addVehicleUrl + user.id, httpOptions
-        ).pipe(
-          map(
-            () => {
-              const realUser = User.from(user);
-              realUser.removeVehicle(vehicleToDelete);
-              return realUser;
-            }
-          )
-        );
-      })
-    );
-    this.notifyUserSubscriptors();
-  }
-
-  private notifyUserSubscriptors() {
-    this.userSubscriptions.map(subsciption => {
-      this.user$.subscribe(subsciption.next, subsciption.error);
-      this.user$.subscribe(value => console.log(value));
-    });
-  }
-
-  getPublications(): Observable<Publication[]> {
-    return this.http.get<Publication[]>(this.publicationsUrl, {
-      headers: this.headers()
-    });
+    return flatMap((user: User) => {
+        return this.http.delete<Vehicle>(this.deleteVehicleUrl + vehicleToDelete.id, {
+          headers: this.headers()
+        })
+      }
+    )(this.user$);
   }
 
   addPublicationToUser(publication: Publication) {
-    this.publications$ =
-      this.user$.pipe(
-        mergeMap((user: User) => {
-          publication.owner = user;
-
-          return this.http.post<Publication>(this.createPublicationUrl, publication, {
-              headers: this.headers()
-            }
-          )
-        })
-      ).pipe(
-        mergeMap((publication2: Publication) => {
-          return this.publications$.map((publications: Publication[]) => {
-            publications.push(publication2);
-            return publications;
-          })
-        })
-      );
-  }
-
-  private notifyPublicationsSubscriptors() {
-    this.publicationsSubscriptions.map(subsciption => {
-      this.publications$.subscribe(subsciption.next, subsciption.error)
-    });
+    return flatMap((user: User) => {
+        return this.http.post<Publication>(this.createPublicationUrl, publication, {
+            headers: this.headers()
+          }
+        )
+      }
+    )(this.user$);
   }
 
   submitReservation(reservation: Reservation): any {

@@ -32,9 +32,9 @@ export class PublicationCreateComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.service.subscribeToUser((user: User) => {
-      this.vehicles = user.vehicles;
-    });
+    this.service.getVehicles().subscribe((vehicles: Vehicle[]) => {
+      this.vehicles = vehicles;
+    })
   }
 
   ngOnDestroy(): void {

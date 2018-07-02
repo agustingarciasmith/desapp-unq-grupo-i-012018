@@ -27,18 +27,18 @@ export class UpdateUserComponent implements OnInit {
   dialogVehicle: boolean;
   dialogViewVehicle: boolean;
   actualVehicle: Vehicle;
- private publications: Publication[];
+  private publications: Publication[];
+  private vehicles: Vehicle[];
 
   constructor(private service: BackendService, private toaster: ToasterService, private router: Router) {
     this.user = User.emptyUser();
     this.paths = paths;
-      this.newVehicle = Vehicle.emptyVehicle();
-      this.actualVehicle = Vehicle.emptyVehicle();
+    this.newVehicle = Vehicle.emptyVehicle();
+    this.actualVehicle = Vehicle.emptyVehicle();
   }
 
   ngOnInit() {
-    this.service.subscribeToUser(
-      (value: User) => {
+    this.service.getUser().subscribe((value: User) => {
         this.user = User.from(value);
         this.loading = false;
         this.dialogVehicle = false;
@@ -50,11 +50,9 @@ export class UpdateUserComponent implements OnInit {
         this.handleError(error);
       });
 
-    this.service.subscribeToPublications(
-      (value: Publication[]) => {
-        this.publications = value;
-      }
-    )
+    this.service.getVehicles().subscribe((vehicles: Vehicle[]) => {
+      this.vehicles = vehicles
+    })
   }
 
   updateUser() {

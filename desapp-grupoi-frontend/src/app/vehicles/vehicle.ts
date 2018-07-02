@@ -2,10 +2,11 @@ export class Vehicle {
   public pictures: string[];
 
   public static emptyVehicle() {
-    return new Vehicle(null, null, null, null);
+    return new Vehicle(null, null, null, null, null);
   }
 
   constructor(
+    public id: number,
     public numberOfPassengers: number,
     public type: string,
     public description: string,
@@ -16,7 +17,7 @@ export class Vehicle {
 
   copy(): Vehicle {
     return (
-      new Vehicle(this.numberOfPassengers, this.type, this.description, this.license)
+      new Vehicle(this.id, this.numberOfPassengers, this.type, this.description, this.license)
     );
   }
 
