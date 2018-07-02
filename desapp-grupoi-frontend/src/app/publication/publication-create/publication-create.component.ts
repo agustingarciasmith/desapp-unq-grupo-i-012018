@@ -4,10 +4,10 @@ import {Publication} from '../publication';
 import {Router} from '@angular/router';
 import 'rxjs/add/operator/filter';
 import {UsersService} from '../../users/users.service';
-import {User} from '../../user';
 import {BackendService} from "../../backend/backend.service";
 import {Vehicle} from "../../vehicles/vehicle";
 import {paths} from "../../paths";
+import {User} from "../../user";
 
 
 @Component({
@@ -21,8 +21,9 @@ export class PublicationCreateComponent implements OnInit, OnDestroy {
 
   publication: Publication;
   vehicles: Vehicle[];
-  selectedVehicle: Vehicle;
+  selectedVehicleLicense: string;
   private loading: boolean;
+  private user: User;
 
   constructor(private router: Router,
               private service: BackendService) {
@@ -34,6 +35,10 @@ export class PublicationCreateComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.service.getVehicles().subscribe((vehicles: Vehicle[]) => {
       this.vehicles = vehicles;
+    });
+
+    this.service.getUser().subscribe((user: User) => {
+      this.user = user;
     })
   }
 
@@ -50,18 +55,27 @@ export class PublicationCreateComponent implements OnInit, OnDestroy {
 
   public createPublication() {
     this.loading = true;
-    this.publication.vehicle = this.selectedVehicle;
-    this.service.addPublicationToUser(this.publication);
-    this.router.navigate([paths.home]);
+    this.publication.vehicleId = this.getSelectedVehicle().vehicleId;
+    this.publication.userId = this.user.id;
+    this.service.addPublicationToUser(this.publication).subscribe(
+      (publication: Publication) => {
+        this.loading = false;
+        this.router.navigate([paths.home]);
+      },
+      error => {
+        this.loading = false;
+        alert(error);
+      }
+    );
   }
 
   redirectPublicationPage() {
     this.router.navigate(['/publication']);
   }
 
-  setSelectedVechicle(value: string) {
-    this.selectedVehicle = this.vehicles.find((vehicle: Vehicle) => {
-      return vehicle.license == value;
+  getSelectedVehicle() {
+    return this.vehicles.find((vehicle: Vehicle) => {
+      return vehicle.license == this.selectedVehicleLicense;
     })
   }
 }

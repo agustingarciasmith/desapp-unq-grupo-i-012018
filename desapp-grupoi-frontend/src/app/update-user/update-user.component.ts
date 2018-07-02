@@ -17,18 +17,19 @@ import {Publication} from "../publication/publication";
 })
 export class UpdateUserComponent implements OnInit {
 
+  user: User;
+  userUpdate: User;
+  vehicles: Vehicle[];
+  newVehicle: Vehicle;
+  actualVehicle: Vehicle;
+  publications: Publication[];
+
   loading = true;
   error = false;
   userSwitch = false;
-  user: User;
-  userUpdate: User;
   paths: { login: string; auth: string; home: string; publication: string; welcome: string };
-  newVehicle: Vehicle;
   dialogVehicle: boolean;
   dialogViewVehicle: boolean;
-  actualVehicle: Vehicle;
-  private publications: Publication[];
-  private vehicles: Vehicle[];
 
   constructor(private service: BackendService, private toaster: ToasterService, private router: Router) {
     this.user = User.emptyUser();
@@ -52,12 +53,25 @@ export class UpdateUserComponent implements OnInit {
 
     this.service.getVehicles().subscribe((vehicles: Vehicle[]) => {
       this.vehicles = vehicles
+    });
+
+    this.service.getPublications().subscribe((publications: Publication[]) => {
+      this.publications = publications;
     })
   }
 
   updateUser() {
     this.loading = true;
-    this.service.updateUser(this.userUpdate);
+    this.service.updateUser(this.userUpdate).subscribe(
+      (user: User) => {
+        this.user = User.from(user);
+        this.loading = false;
+        this.userSwitch = false
+      },
+      error => {
+        this.handleError(error)
+      }
+    );
   }
 
   modifyProfile() {
@@ -86,11 +100,11 @@ export class UpdateUserComponent implements OnInit {
   }
 
   toggleAddVehicleDialog() {
-    this.dialogViewVehicle = !this.dialogViewVehicle;
+    this.dialogVehicle = !this.dialogVehicle;
   }
 
   toggleViewVehicle() {
-    this.dialogVehicle = !this.dialogVehicle;
+    this.dialogViewVehicle = !this.dialogViewVehicle;
   }
 
   addPicture(picture: string) {
@@ -99,16 +113,37 @@ export class UpdateUserComponent implements OnInit {
 
   addVehicleToUser() {
     this.loading = true;
-    this.service.addVehicleToUser(this.newVehicle);
-    this.toggleViewVehicle();
+    this.service.addVehicleToUser(this.newVehicle).subscribe(
+      (vehicle: Vehicle) => {
+        this.vehicles.push(vehicle);
+        this.toggleAddVehicleDialog();
+        this.loading = false;
+      },
+      error => {
+        this.handleError(error)
+      }
+    );
   }
 
   viewVehicle(vehicle: Vehicle) {
     this.actualVehicle = vehicle;
-    this.toggleAddVehicleDialog();
+    this.toggleViewVehicle();
   }
 
-  deleteVehicle(vehicle: Vehicle) {
-    this.service.deleteVehicleFromUser(vehicle);
+  deleteVehicle(deletedVehicle: Vehicle) {
+    this.service.deleteVehicleFromUser(deletedVehicle).subscribe(
+      () => {
+        this.vehicles = this.vehicles.filter(vehicle => vehicle.vehicleId != deletedVehicle.vehicleId);
+      },
+      error => {
+        this.handleError(error)
+      }
+    );
+  }
+
+  vehicleOf(vehicleId: number) {
+    return this.vehicles.find((vehicle: Vehicle) => {
+      return vehicle.vehicleId === vehicleId;
+    })
   }
 }

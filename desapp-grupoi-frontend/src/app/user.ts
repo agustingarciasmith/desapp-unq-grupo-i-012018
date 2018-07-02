@@ -6,7 +6,7 @@ export class User {
   }
 
   constructor(
-    public id: string,
+    public id: number,
     public cuil: string,
     public name: string,
     public address: string,

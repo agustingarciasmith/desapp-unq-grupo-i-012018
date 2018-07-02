@@ -49,28 +49,33 @@
           <div class="card top-buffer nav-item-margin" style="width: 16rem;">
             <div class="card-body">
               <h3 class="card-title">My vehicles</h3>
-                <ng-container *ngFor="let vehicle of vehicles">
-                  <div class="card border-secondary mb-3" style="max-width: 18rem;">
-                    <div class="card-header">{{vehicle.type}}</div>
-                    <div class="card-body text-secondary">
-                      <p class="card-text">{{vehicle.description}}</p>
-                      <button type="text" (click)="viewVehicle(vehicle)" pButton label="View"></button>
-                      <button type="text" (click)="deleteVehicle(vehicle)" pButton label="Delete" class="ui-button-danger"></button>
-                    </div>
+              <ng-container *ngFor="let vehicle of vehicles">
+                <div class="card border-secondary mb-3" style="max-width: 18rem;">
+                  <div class="card-header">{{vehicle.type}}</div>
+                  <div class="card-body text-secondary">
+                    <p class="card-text">{{vehicle.description}}</p>
+                    <button type="text" (click)="viewVehicle(vehicle)" pButton label="View"></button>
+                    <button type="text" (click)="deleteVehicle(vehicle)" pButton label="Delete"
+                            class="ui-button-danger"></button>
                   </div>
-                </ng-container>
-              <button type="text" (click)="toggleViewVehicle()" pButton icon="fa-car" label="Add Vehicle"></button>
+                </div>
+              </ng-container>
+              <button type="text" (click)="toggleAddVehicleDialog()" pButton icon="fa-car" label="Add Vehicle"></button>
             </div>
           </div>
           <div class="card top-buffer nav-item-margin" style="width: 16rem;">
             <div class="card-body">
               <h3 class="card-title">My publications</h3>
-              <ul>
-                <li *ngFor="let publication of publications">
-                  city: {{publication.city}}
-                  car license: {{publication.vehicle.license}}
-                </li>
-              </ul>
+
+              <ng-container *ngFor="let publication of publications">
+                <div class="card border-secondary mb-3" style="max-width: 18rem;">
+                  <div class="card-header">{{vehicleOf(publication.vehicleId).license}}</div>
+                  <div class="card-body text-secondary">
+                    <p class="card-text">Pick Up Address - {{publication.pickUpAddress}}</p>
+                    <p class="card-text">Cost - {{publication.cost}}</p>
+                  </div>
+                </div>
+              </ng-container>
               <button type="text" (click)="addPublication()" pButton icon="fa-bell" label="New Publication"></button>
             </div>
           </div>
@@ -144,10 +149,10 @@
 
 <p-dialog [(visible)]="dialogViewVehicle" [width]="450" modal=true appendTo="body">
   <p-header>{{actualVehicle.type}}</p-header>
-    <div class="card-body text-secondary">
-      <p class="card-text">Number of passengers: {{actualVehicle.numberOfPassengers}}</p>
-      <p class="card-text">Description: {{actualVehicle.description}}</p>
-      <p class="card-text">License: {{actualVehicle.license}}</p>
-      <button type="text" (click)="toggleAddVehicleDialog()" pButton label="Close"></button>
-    </div>
+  <div class="card-body text-secondary">
+    <p class="card-text">Number of passengers: {{actualVehicle.numberOfPassengers}}</p>
+    <p class="card-text">Description: {{actualVehicle.description}}</p>
+    <p class="card-text">License: {{actualVehicle.license}}</p>
+    <button type="text" (click)="toggleAddVehicleDialog()" pButton label="Close"></button>
+  </div>
 </p-dialog>

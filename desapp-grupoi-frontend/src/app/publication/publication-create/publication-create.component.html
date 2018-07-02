@@ -104,7 +104,7 @@
           </div>
           <div id="collapseSix" class="collapse show" aria-labelledby="vehicleHeading" data-parent="#accordionExample">
             <div class="card-body">
-              <select #selectElem (change)="setSelectedVechicle(selectElem.value)">
+              <select [(ngModel)]="selectedVehicleLicense">
                 <option *ngFor="let vehicle of vehicles" [value]="vehicle.license">
                   {{vehicle.license}}
                 </option>

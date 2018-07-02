@@ -16,7 +16,7 @@ export class BackendService {
   private loginUrl = this.base + 'users/login';
   private updateUserUrl = this.base + 'users/update';
 
-  private addVehicleUrl = this.base + 'vehicles/';
+  private addVehicleUrl = this.base + 'vehicles/create';
   private userVehiclesUrl = this.base + "vehicles/user/";
   private deleteVehicleUrl = this.base + "vehicles/delete/";
 
@@ -88,7 +88,8 @@ export class BackendService {
 
   addVehicleToUser(newVehicle: Vehicle) {
     return flatMap((user: User) => {
-        return this.http.post<Vehicle>(this.addVehicleUrl + user.id, newVehicle, {
+        newVehicle.userId = user.id;
+        return this.http.post<Vehicle>(this.addVehicleUrl , newVehicle, {
           headers: this.headers()
         })
       }
@@ -97,7 +98,7 @@ export class BackendService {
 
   deleteVehicleFromUser(vehicleToDelete: Vehicle) {
     return flatMap((user: User) => {
-        return this.http.delete<Vehicle>(this.deleteVehicleUrl + vehicleToDelete.id, {
+        return this.http.delete(this.deleteVehicleUrl + vehicleToDelete.vehicleId, {
           headers: this.headers()
         })
       }
