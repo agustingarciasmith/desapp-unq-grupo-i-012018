@@ -6,5 +6,5 @@ export const environment = {
   authAudience: 'http://localhost:9090',
   authRedirectUri: 'https://desap.herokuapp.com/frontend/auth',
   authScope: 'openid email profile',
-  backendUrl: 'https://desap.herokuapp.com/'
+  backendUrl: 'https://desap.herokuapp.com/backend/'
 };
