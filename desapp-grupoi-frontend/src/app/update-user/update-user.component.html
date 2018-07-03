@@ -69,9 +69,9 @@
 
               <ng-container *ngFor="let publication of publications">
                 <div class="card border-secondary mb-3" style="max-width: 18rem;">
-                  <div class="card-header">{{vehicleOf(publication.vehicleId).license}}</div>
+                  <div class="card-header">{{vehicleLicenseOf(publication.vehicleId)}}</div>
                   <div class="card-body text-secondary">
-                    <p class="card-text">Pick Up Address - {{publication.pickUpAddress}}</p>
+                    <p class="card-text">{{publication.pickUpAddress}}</p>
                     <p class="card-text">Cost - {{publication.cost}}</p>
                   </div>
                 </div>

@@ -8,10 +8,11 @@ export class Publication {
     public returnAddress: [string],
     public contactPhone: string,
     public availableDates: [string],
-    public cost: number) {
+    public cost: number,
+    public ownerScore: number) {
   }
 
   public static emptyPublication() {
-    return new Publication( null, null, null, "CUALQUIERA", null, [null], null, null, null);
+    return new Publication( null, null, null, "CUALQUIERA", null, [null], null, null, null, null);
   }
 }

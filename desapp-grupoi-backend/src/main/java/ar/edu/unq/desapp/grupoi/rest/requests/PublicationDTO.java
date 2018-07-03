@@ -1,6 +1,7 @@
 package ar.edu.unq.desapp.grupoi.rest.requests;
 
 import ar.edu.unq.desapp.grupoi.model.Publication;
+import ar.edu.unq.desapp.grupoi.model.User;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.LocalDate;
@@ -13,12 +14,14 @@ public class PublicationDTO {
   private List<LocalDate> availableDates;
 
   private Long vehicleId;
+  private VehicleDTO vehicle;
   private String city;
   private String pickUpAddress;
   private List<String> returnAddress;
   private String contactPhone;
   private Integer cost;
   private Long userId;
+  private User owner;
 
   public static PublicationDTO from(Publication publication) {
     PublicationDTO dto = new PublicationDTO();
@@ -31,6 +34,8 @@ public class PublicationDTO {
     dto.setContactPhone(publication.getContactPhone());
     dto.setCost(publication.getCost());
     dto.setUserId(publication.getOwner().getId());
+    dto.setOwner(publication.getOwner());
+    dto.setVehicle(VehicleDTO.from(publication.getVehicle()));
 
     return dto;
   }
@@ -105,5 +110,21 @@ public class PublicationDTO {
 
   public Long getUserId() {
     return userId;
+  }
+
+  public User getOwner() {
+    return owner;
+  }
+
+  public void setOwner(User owner) {
+    this.owner = owner;
+  }
+
+  public VehicleDTO getVehicle() {
+    return vehicle;
+  }
+
+  public void setVehicle(VehicleDTO vehicle) {
+    this.vehicle = vehicle;
   }
 }

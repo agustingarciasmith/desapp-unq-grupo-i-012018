@@ -23,22 +23,20 @@ export class BackendService {
   private publicationsUrl = this.base + "publication";
   private createPublicationUrl = this.base + "publication/create";
   private userPublicationsUrl = this.base + "publication/user/";
+  private allPublicationsUrl = this.base + "publication/all";
 
   private createReservationUrl = this.base + 'reservation/create';
 
   private http: HttpClient;
   public user$: Observable<User>;
-  private userSubscriptions: Array<{ next, error }>;
-  private publications$: Observable<Publication[]>;
-  private publicationsSubscriptions: Array<{ next, error }>;
+  private userPublications$: Observable<Publication[]>;
   private vehicles$: Observable<Vehicle[]>;
+  private publications$: Observable<Publication[]>;
 
   constructor(http: HttpClient) {
     this.http = http;
     this.user$ = of(User.emptyUser());
-    this.publications$ = of([]);
-    this.userSubscriptions = [];
-    this.publicationsSubscriptions = [];
+    this.userPublications$ = of([]);
   }
 
   private headers(): HttpHeaders {
@@ -59,13 +57,13 @@ export class BackendService {
   }
 
   getPublications(): Observable<Publication[]> {
-    this.publications$ = flatMap((user: User) => {
+    this.userPublications$ = flatMap((user: User) => {
       return this.http.get<Publication[]>(this.userPublicationsUrl + user.id, {
         headers: this.headers()
       })
     })(this.user$);
 
-    return this.publications$;
+    return this.userPublications$;
   }
 
   getVehicles(): Observable<Vehicle[]> {
@@ -89,7 +87,7 @@ export class BackendService {
   addVehicleToUser(newVehicle: Vehicle) {
     return flatMap((user: User) => {
         newVehicle.userId = user.id;
-        return this.http.post<Vehicle>(this.addVehicleUrl , newVehicle, {
+        return this.http.post<Vehicle>(this.addVehicleUrl, newVehicle, {
           headers: this.headers()
         })
       }
@@ -120,5 +118,13 @@ export class BackendService {
     return this.http.post<Reservation>(this.createReservationUrl, reservation, {
       headers: this.headers()
     }).map(res => console.log(res));
+  }
+
+  getAllPublications(): Observable<Publication[]> {
+    this.publications$ = this.http.get<Publication[]>(this.allPublicationsUrl, {
+        headers: this.headers()
+    });
+
+    return this.publications$;
   }
 }

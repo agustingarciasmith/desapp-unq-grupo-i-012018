@@ -141,9 +141,11 @@ export class UpdateUserComponent implements OnInit {
     );
   }
 
-  vehicleOf(vehicleId: number) {
-    return this.vehicles.find((vehicle: Vehicle) => {
-      return vehicle.vehicleId === vehicleId;
-    })
+  vehicleLicenseOf(vehicleId: number) {
+    if(this.vehicles){
+      return this.vehicles.find((vehicle: Vehicle) => {
+        return vehicle.vehicleId === vehicleId;
+      }).license;
+    }
   }
 }

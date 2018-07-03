@@ -1,5 +1,6 @@
 package ar.edu.unq.desapp.grupoi.rest.requests;
 
+import ar.edu.unq.desapp.grupoi.model.Vehicle;
 import ar.edu.unq.desapp.grupoi.model.VehicleType;
 
 public class VehicleDTO {
@@ -9,6 +10,17 @@ public class VehicleDTO {
   private Integer numberOfPassangers;
   private String description;
   private String license;
+
+  public static VehicleDTO from(Vehicle vehicle) {
+    VehicleDTO dto = new VehicleDTO();
+    dto.setType(vehicle.getType());
+    dto.setUserId(vehicle.getOwner().getId());
+    dto.setLicense(vehicle.getLicense());
+    dto.setDescription(vehicle.getDescription());
+    dto.setVehicleId(vehicle.getId());
+
+    return dto;
+  }
 
   public Long getUserId() {
     return this.userId;

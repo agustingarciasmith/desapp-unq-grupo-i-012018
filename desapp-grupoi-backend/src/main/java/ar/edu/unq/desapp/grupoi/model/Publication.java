@@ -42,7 +42,7 @@ public class Publication {
   @Column(name = "COST_X_HOUR", nullable = false)
   private Integer cost;
 
-  @OneToOne(optional = false)
+  @ManyToOne(optional = false)
   private User owner;
 
   public Publication() {
