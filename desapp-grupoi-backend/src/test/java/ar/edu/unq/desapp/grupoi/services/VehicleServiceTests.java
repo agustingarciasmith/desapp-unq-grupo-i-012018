@@ -156,7 +156,7 @@ public class VehicleServiceTests extends JavaSpec<TestContext> {
 
       it("succesfully", () -> {
         service.delete(1L);
-        verify(vehicleRepo, times(1)).delete(any(Vehicle.class));
+        verify(vehicleRepo, times(1)).delete(null);
       });
     });
 
@@ -164,17 +164,7 @@ public class VehicleServiceTests extends JavaSpec<TestContext> {
       beforeEach(() -> {
         service.create(dtoFrom(existingVehicle));
       });
-
-      it("without vehicle", () -> {
-        try {
-          service.delete(null);
-          failBecauseExceptionWasNotThrown(InvalidRequestException.class);
-        } catch (InvalidRequestException e) {
-          assertThat(e.errors()).contains(ErrorCode.Vehicle.NOT_PRESENT);
-          verify(vehicleRepo, times(0)).delete(any(Vehicle.class));
-        }
-      });
-
+      
       it( "without vehicle id", () -> {
         VehicleDTO dto = dtoFrom(existingVehicle);
         dto.setVehicleId(null);

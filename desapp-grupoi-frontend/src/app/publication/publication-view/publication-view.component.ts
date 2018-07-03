@@ -4,7 +4,6 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {User} from '../../user';
 import {BackendService} from '../../backend/backend.service';
 import {UsersService} from '../../users/users.service';
-import {Reservation} from '../../reservation';
 import {Publication} from "../publication";
 import {Vehicle} from "../../vehicles/vehicle";
 import {paths} from "../../paths";
