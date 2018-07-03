@@ -64,7 +64,7 @@ public enum ErrorCode {
     public static final String INVALID_STATE = BASE + ".state" + INVALID + ".transition";
     public static final String USER_IS_NOT_CLIENT = BASE + ".client" + INVALID;
     public static final String CLIENT_DUPLICATED_RESERVATION = BASE + ".client.duplicated";
-    public static final String CLIENT_ID_NOT_PRESENT = BASE + "client.id" + ErrorCode.NOT_PRESENT;
+    public static final String CLIENT_ID_NOT_PRESENT = BASE + ".client.id" + ErrorCode.NOT_PRESENT;
     public static final String USER_IS_NOT_OWNER = BASE + ".owner" + INVALID;
     public static final String ID_NOT_PRESENT = BASE + ".id" + ErrorCode.NOT_PRESENT;
     public static final String USER_ID_NOT_PRESENT = BASE + ".user.id" + ErrorCode.NOT_PRESENT;

@@ -11,4 +11,9 @@ public class ConfirmedState extends ReservationState {
     public void clientObtainVehicle(Reservation reservation) {
         reservation.setState(new ClientReceivedState());
     }
+
+    @Override
+    public String getDescription() {
+        return "CONFIRMED_BY_OWNER";
+    }
 }

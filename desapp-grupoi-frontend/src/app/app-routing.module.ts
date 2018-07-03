@@ -9,6 +9,7 @@ import {PublicationListComponent} from './publication/publication-list/publicati
 import {WelcomeComponent} from './welcome/welcome.component';
 import {paths} from "./paths";
 import {PublicationViewComponent} from "./publication/publication-view/publication-view.component";
+import {ClientReservationComponent} from "./client-reservation/client-reservation.component";
 
 const appRoutes: Routes = [
   {path: '', redirectTo: paths.welcome, pathMatch: 'full'},
@@ -18,6 +19,7 @@ const appRoutes: Routes = [
   {path: paths.home, component: HomeComponent, canActivate: [GuardService]},
   {path: paths.publication, component: PublicationListComponent, canActivate: [GuardService]},
   {path: paths.publicationView, component: PublicationViewComponent, canActivate: [GuardService]},
+  {path: paths.clientReservations, component: ClientReservationComponent, canActivate: [GuardService]},
 ];
 
 @NgModule({

@@ -6,6 +6,8 @@ import {BackendService} from '../../backend/backend.service';
 import {UsersService} from '../../users/users.service';
 import {Reservation} from '../../reservation';
 import {Publication} from "../publication";
+import {Vehicle} from "../../vehicles/vehicle";
+import {paths} from "../../paths";
 
 
 @Component({
@@ -20,11 +22,12 @@ export class PublicationViewComponent implements OnInit {
   lngpu = 7.809007;
   latr = 51.678418;
   lngr = 7.809007;
-  public publication: any;
-  public unavailableDates: Date[];
-  public selectedDates: Date[] = [];
-  public userId = 88;
-  public user: User;
+
+  public selectedDate: string = "";
+
+  public publication: Publication = Publication.emptyPublication();
+  private owner: User = User.emptyUser();
+  private vehicle: Vehicle = Vehicle.emptyVehicle();
 
   ngOnInit(): void {
   }
@@ -35,11 +38,12 @@ export class PublicationViewComponent implements OnInit {
               private publicationService: PublicationService) {
 
     this.route.params.subscribe(params => {
-      this.service.getPublication(params[0]).subscribe((publication: Publication) => {
+      this.service.getPublication(params.id).subscribe((publication: Publication) => {
         this.publication = publication;
+        this.owner = publication.owner;
+        this.vehicle = publication.vehicle;
         this.getCoordinatesPickUp(publication.pickUpAddress);
         this.getCoordinatesReturn(publication.returnAddress[0]);
-        this.setAvailableDates();
       })
     })
   }
@@ -67,25 +71,14 @@ export class PublicationViewComponent implements OnInit {
       });
   }
 
-  private setAvailableDates() {
-    const monthDates = Array.from(Array(32).keys()).map((v, i) => `2018-07-${i}`);
-    const stringDates = monthDates.filter(item => this.publication.availableDates.indexOf(item) < 0).slice(1);
-    this.unavailableDates = stringDates.map(function (date) {
-      return new Date(date);
-    });
-    console.log(this.unavailableDates.toString());
-  }
-
   submitReservation() {
-    // this.usersService.getUserById(this.userId).subscribe(user => {
-    //   this.service.submitReservation(new Reservation(this.publication, user, this.selectedDates)).subscribe(
-    //     response => {
-    //       console.log(response);
-    //     },
-    //     err => {
-    //       console.log(err);
-    //     }
-    //   );
-    // });
+    this.service.makeReservation(this.publication, [this.selectedDate]).subscribe(
+      (_) => {
+        this.router.navigate([paths.clientReservations]);
+      },
+      error => {
+        alert(error);
+      }
+    );
   }
 }

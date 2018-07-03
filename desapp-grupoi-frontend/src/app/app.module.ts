@@ -22,6 +22,8 @@ import {FileUploadModule} from 'primeng/fileupload';
 import {MyProfileComponent} from './components/my-profile/my-profile.component';
 import {PublicationModule} from './publication/publication.module';
 import {WelcomeComponent} from './welcome/welcome.component';
+import {MomentModule} from "angular2-moment";
+import { ClientReservationComponent } from './client-reservation/client-reservation.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,7 @@ import {WelcomeComponent} from './welcome/welcome.component';
     AuthComponent,
     MyProfileComponent,
     WelcomeComponent,
+    ClientReservationComponent,
   ],
   imports: [
     AgmCoreModule.forRoot({
@@ -48,7 +51,8 @@ import {WelcomeComponent} from './welcome/welcome.component';
     CalendarModule,
     DialogModule,
     FileUploadModule,
-    PublicationModule
+    PublicationModule,
+    MomentModule
   ],
   providers: [
     AuthService,

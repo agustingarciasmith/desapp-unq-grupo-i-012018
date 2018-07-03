@@ -4,5 +4,6 @@ export const paths = {
   home: 'frontend/home',
   publication: 'frontend/publication',
   publicationView: 'frontend/publication/:id',
-  welcome: 'frontend/welcome'
+  welcome: 'frontend/welcome',
+  clientReservations: 'frontend/clientReservation'
 };

@@ -11,4 +11,9 @@ public class ClientDeliveredState extends ReservationState {
     public void ownerReciveVehicle(Reservation reservation) {
         reservation.setState(new RentFinishedState());
     }
+
+    @Override
+    public String getDescription() {
+        return "CLIENT_RETURN_VEHICLE";
+    }
 }

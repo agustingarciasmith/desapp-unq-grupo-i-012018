@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {flatMap} from 'rxjs/operators';
-import {UserInfo} from '../auth/auth.service';
+import {AuthService, UserInfo} from '../auth/auth.service';
 import {User} from '../user';
 import {environment} from '../../environments/environment';
 import {Vehicle} from '../vehicles/vehicle';
@@ -26,16 +26,20 @@ export class BackendService {
   private publicationUrl = this.base + "publication/";
 
   private createReservationUrl = this.base + 'reservation/create';
+  private clientReservationsUrl = this.base + 'reservation/client/';
+
   private http: HttpClient;
   public user$: Observable<User>;
   private userPublications$: Observable<Publication[]>;
   private vehicles$: Observable<Vehicle[]>;
   private publications$: Observable<Publication[]>;
+  private auth: AuthService;
 
-  constructor(http: HttpClient) {
+  constructor(http: HttpClient, auth: AuthService) {
     this.http = http;
     this.user$ = of(User.emptyUser());
     this.userPublications$ = of([]);
+    this.auth = auth;
   }
 
   private headers(): HttpHeaders {
@@ -112,13 +116,6 @@ export class BackendService {
     )(this.user$);
   }
 
-  submitReservation(reservation: Reservation): any {
-    console.log(reservation);
-    return this.http.post<Reservation>(this.createReservationUrl, reservation, {
-      headers: this.headers()
-    }).map(res => console.log(res));
-  }
-
   getAllPublications(): Observable<Publication[]> {
     this.publications$ = this.http.get<Publication[]>(this.allPublicationsUrl, {
       headers: this.headers()
@@ -128,8 +125,28 @@ export class BackendService {
   }
 
   getPublication(id: number) {
-    return this.http.get<Publication>(this.publicationUrl, {
+    return this.http.get<Publication>(this.publicationUrl + id, {
       headers: this.headers()
     })
+  }
+
+  makeReservation(publication: Publication, selectedDates: string[]) {
+    this.login(this.auth.getUserInfo());
+    return flatMap((user: User) => {
+      let reservation = new Reservation(publication, user, selectedDates);
+      reservation.publication = Publication.emptyPublication();
+      return this.http.post(this.createReservationUrl, reservation, {
+        headers: this.headers()
+      })
+    })(this.user$);
+  }
+
+  getClientReservations() {
+    this.login(this.auth.getUserInfo());
+    return flatMap((user: User) => {
+      return this.http.get<Reservation[]>(this.clientReservationsUrl + user.id,{
+        headers: this.headers()
+      })
+    })(this.user$);
   }
 }

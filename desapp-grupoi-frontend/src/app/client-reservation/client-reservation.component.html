@@ -1,0 +1,24 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <h1 class="display-4">My Reservations</h1>
+      <hr/>
+      <br>
+    </div>
+  </div>
+  <div class="row">
+    <ng-container *ngFor="let reservation of reservations">
+      <div class="card top-buffer nav-item-margin" style="width: 16rem;">
+        <div class="card-body">
+          <h3 class="card-title">{{reservation.reservationState}}</h3>
+          <div class="card border-secondary mb-3" style="max-width: 18rem;">
+            <div class="card-body text-secondary">
+              <p class="card-text">Selected date: {{reservation.selectedDates[0]}}</p>
+              <p class="card-text">Cost per hour: {{reservation.publication.cost}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

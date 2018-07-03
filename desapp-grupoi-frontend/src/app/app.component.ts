@@ -9,7 +9,7 @@ import {paths} from './paths';
 })
 export class AppComponent {
   title = 'app';
-  private paths: { login: string; auth: string; home: string; publication: string; welcome: string };
+  private paths: any;
 
   constructor(private auth: AuthService) {
     this.paths = paths;

@@ -1,6 +1,8 @@
 package ar.edu.unq.desapp.grupoi.rest.requests;
 
+import ar.edu.unq.desapp.grupoi.model.Publication;
 import ar.edu.unq.desapp.grupoi.model.Reservation;
+import ar.edu.unq.desapp.grupoi.model.User;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.LocalDate;
@@ -15,6 +17,9 @@ public class ReservationDTO {
   private List<LocalDate> selectedDates;
 
   private Long id;
+  private User client;
+  private Publication publication;
+  private String reservationState;
 
   public static ReservationDTO from(Reservation reservation) {
     ReservationDTO dto = new ReservationDTO();
@@ -22,7 +27,9 @@ public class ReservationDTO {
     dto.setClientId(reservation.getClient().getId());
     dto.setPublicationId(reservation.getPublication().getId());
     dto.setSelectedDates(reservation.getSelectedDates());
-
+    dto.setClient(reservation.getClient());
+    dto.setPublication(reservation.getPublication());
+    dto.setReservationState(reservation.getState().getDescription());
     return dto;
   }
 
@@ -56,5 +63,29 @@ public class ReservationDTO {
 
   public Long getId() {
     return id;
+  }
+
+  public void setClient(User client) {
+    this.client = client;
+  }
+
+  public User getClient() {
+    return client;
+  }
+
+  public void setPublication(Publication publication) {
+    this.publication = publication;
+  }
+
+  public Publication getPublication() {
+    return publication;
+  }
+
+  public void setReservationState(String reservationState) {
+    this.reservationState = reservationState;
+  }
+
+  public String getReservationState() {
+    return reservationState;
   }
 }

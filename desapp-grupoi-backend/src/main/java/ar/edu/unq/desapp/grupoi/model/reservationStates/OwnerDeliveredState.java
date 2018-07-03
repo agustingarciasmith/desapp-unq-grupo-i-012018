@@ -8,12 +8,12 @@ import javax.persistence.Entity;
 @Entity(name = "OwnerDelivered")
 public class OwnerDeliveredState extends ReservationState {
 
-    public void clientObtainVehicle(Reservation reservation) {
-        reservation.setState(new RentStartedState());
-        reservation.setStartTime();
-    }
-
     public void checkStartConfirmation(Reservation reservation) {
         if (reservation.waitingTimeOver()) reservation.setState(new RentStartedState());
+    }
+
+    @Override
+    public String getDescription() {
+        return "OWNER CONFIRM ";
     }
 }

@@ -1,3 +1,6 @@
+import {Vehicle} from "../vehicles/vehicle";
+import {User} from "../user";
+
 export class Publication {
   constructor(
     public publicationId: number,
@@ -9,10 +12,22 @@ export class Publication {
     public contactPhone: string,
     public availableDates: [string],
     public cost: number,
-    public ownerScore: number) {
+    public vehicle: Vehicle,
+    public owner: User) {
   }
 
   public static emptyPublication() {
-    return new Publication( null, null, null, "CUALQUIERA", null, [null], null, null, null, null);
+    return new Publication(
+      null,
+      null,
+      null,
+      "CUALQUIERA",
+      null,
+      [null],
+      null,
+      null,
+      null,
+      null,
+      null);
   }
 }

@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {PublicationService} from '../publication.service';
 import {Router} from '@angular/router';
-import {OrderPipe} from 'ngx-order-pipe';
 import {BackendService} from "../../backend/backend.service";
 import {Publication} from "../publication";
 import {paths} from "../../paths";
