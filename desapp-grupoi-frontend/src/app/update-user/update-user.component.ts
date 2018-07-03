@@ -161,13 +161,33 @@ export class UpdateUserComponent implements OnInit {
   confirmReservation(reservationId) {
     this.service.confirmReservation(reservationId).subscribe(
       (_) => {
-        this.service.getOwnerReservations().subscribe(
-          (reservations: Reservation[]) => {
-            this.reservations = reservations;
-          }
-        )
+        this.getReservations();
       }
     )
 
+  }
+
+  confirmVehicleDeliver(id: number) {
+    this.service.confirmVehicleDeliver(id).subscribe(
+      (_) => {
+        this.getReservations();
+      }
+    )
+  }
+
+  private getReservations() {
+    this.service.getOwnerReservations().subscribe(
+      (reservations: Reservation[]) => {
+        this.reservations = reservations;
+      }
+    )
+  }
+
+  ownerFinishReserve(id: number) {
+    this.service.ownerFinishReserve(id, this.clientScore).subscribe(
+      (_) => {
+        this.getReservations();
+      }
+    )
   }
 }

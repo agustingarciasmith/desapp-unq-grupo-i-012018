@@ -180,4 +180,36 @@ export class BackendService {
       })
     })(this.getUser());
   }
+
+  clientGetVehicle(id: number) {
+    return flatMap((user: User) => {
+      return this.http.put((this.base + "reservation/client/" + user.id + "/getVehicle/" + id), {}, {
+        headers: this.headers()
+      })
+    })(this.getUser());
+  }
+
+  confirmVehicleDeliver(id: number) {
+    return flatMap((user: User) => {
+      return this.http.put((this.base + "reservation/owner/" + user.id + "/confirmVehicleDelivery/" + id), {}, {
+        headers: this.headers()
+      })
+    })(this.getUser());
+  }
+
+  clientReturnVehicle(id: number, clientScore: number) {
+    return flatMap((user: User) => {
+      return this.http.put((this.base + "reservation/client/" + user.id + "/returnVehicle/" + id), {score:clientScore}, {
+        headers: this.headers()
+      })
+    })(this.getUser());
+  }
+
+  ownerFinishReserve(id: number, clientScore: number) {
+    return flatMap((user: User) => {
+      return this.http.put((this.base + "reservation/owner/" + user.id + "/reciveVehicle/" + id), {score:clientScore}, {
+        headers: this.headers()
+      })
+    })(this.getUser());
+  }
 }

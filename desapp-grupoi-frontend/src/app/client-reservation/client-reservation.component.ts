@@ -9,6 +9,7 @@ import {Reservation} from "../reservation";
 })
 export class ClientReservationComponent implements OnInit {
   reservations: Reservation[] = [];
+  clientScore = 0;
 
   constructor(private service: BackendService) {
     this.service.getClientReservations().subscribe(
@@ -21,4 +22,27 @@ export class ClientReservationComponent implements OnInit {
   ngOnInit() {
   }
 
+  clientGetVehicle(id: number) {
+    this.service.clientGetVehicle(id).subscribe(
+      (_) => {
+        this.getReservations();
+      }
+    )
+  }
+
+  private getReservations() {
+    this.service.getClientReservations().subscribe(
+      (reservations: Reservation[]) => {
+        this.reservations = reservations;
+      }
+    )
+  }
+
+  returnVehicle(id: number) {
+    this.service.clientReturnVehicle(id, this.clientScore).subscribe(
+      (_) => {
+        this.getReservations();
+      }
+    )
+  }
 }

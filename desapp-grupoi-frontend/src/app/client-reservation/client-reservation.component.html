@@ -22,15 +22,17 @@
               <p class="card-text">Waiting owner confirm the reserve</p>
             </div>
             <div *ngSwitchCase="'CONFIRMED_BY_OWNER'">
-              <button type="text" label="I've got the vhicle"></button>
+              <button type="text" (click)="clientGetVehicle(reservation.id)" pButton label="I've got the vehicle"></button>
             </div>
             <div *ngSwitchCase="'CLIENT_GET_VEHICLE'">
               <p class="card-text">Waiting owner confirm the vehicle deliver</p>
             </div>
             <div *ngSwitchCase="'CLIENT_USING_VEHICLE'">
+              <p class="card-text">Punctuate the owner</p>
               <input label="Punctuate the owner" class="form-control form-control-sm" type="text"
                      [(ngModel)]="clientScore">
-              <button type="text" label="Vehicle returned"></button>
+              <br/>
+              <button type="text" (click)="returnVehicle(reservation.id)" pButton label="Vehicle returned"></button>
             </div>
             <div *ngSwitchCase="'CLIENT_RETURN_VEHICLE'">
               <p class="card-text">Waiting owner finish the reserve</p>
