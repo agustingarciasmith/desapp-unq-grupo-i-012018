@@ -15,19 +15,21 @@ export class BackendService {
   private base = environment.backendUrl;
   private loginUrl = this.base + 'users/login';
   private updateUserUrl = this.base + 'users/update';
+  private getUserUrl = this.base + 'users/';
 
   private addVehicleUrl = this.base + 'vehicles/create';
   private userVehiclesUrl = this.base + "vehicles/user/";
-  private deleteVehicleUrl = this.base + "vehicles/delete/";
 
+  private deleteVehicleUrl = this.base + "vehicles/delete/";
   private createPublicationUrl = this.base + "publication/create";
   private userPublicationsUrl = this.base + "publication/user/";
   private allPublicationsUrl = this.base + "publication/all";
-  private publicationUrl = this.base + "publication/";
 
+  private publicationUrl = this.base + "publication/";
   private createReservationUrl = this.base + 'reservation/create';
   private clientReservationsUrl = this.base + 'reservation/client/';
 
+  private owmerReservationsUrl = this.base + 'reservation/owner/';
   private http: HttpClient;
   public user$: Observable<User>;
   private userPublications$: Observable<Publication[]>;
@@ -53,9 +55,24 @@ export class BackendService {
         headers: this.headers()
       });
     })(userInfoObservable);
+
+    this.user$.subscribe(
+      (user: User) => {
+        localStorage.setItem('userId', user.id.toString());
+        this.user$ = this.getUser();
+      }
+    )
   }
 
   getUser() {
+    let userId = localStorage.getItem("userId");
+    if(userId){
+      this.user$ = this.http.get<User>(this.getUserUrl + userId, {
+        headers:this.headers()
+      });
+    }else{
+      this.login(this.auth.getUserInfo());
+    }
     return this.user$;
   }
 
@@ -131,22 +148,36 @@ export class BackendService {
   }
 
   makeReservation(publication: Publication, selectedDates: string[]) {
-    this.login(this.auth.getUserInfo());
     return flatMap((user: User) => {
-      let reservation = new Reservation(publication, user, selectedDates);
+      let reservation = new Reservation(publication, user, selectedDates, null);
       reservation.publication = Publication.emptyPublication();
       return this.http.post(this.createReservationUrl, reservation, {
         headers: this.headers()
       })
-    })(this.user$);
+    })(this.getUser());
   }
 
   getClientReservations() {
-    this.login(this.auth.getUserInfo());
     return flatMap((user: User) => {
       return this.http.get<Reservation[]>(this.clientReservationsUrl + user.id,{
         headers: this.headers()
       })
-    })(this.user$);
+    })(this.getUser());
+  }
+
+  getOwnerReservations() {
+    return flatMap((user: User) => {
+      return this.http.get<Reservation[]>(this.owmerReservationsUrl + user.id,{
+        headers: this.headers()
+      })
+    })(this.getUser());
+  }
+
+  confirmReservation(reservationId: number) {
+    return flatMap((user: User) => {
+      return this.http.put((this.base + "reservation/owner/" + user.id + "/confirm/" + reservationId), {}, {
+        headers: this.headers()
+      })
+    })(this.getUser());
   }
 }

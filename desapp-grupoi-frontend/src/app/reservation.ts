@@ -10,6 +10,7 @@ export class Reservation {
     public publication: Publication,
     public client: User,
     public selectedDates: string[],
+    public id: number
   ) {
     this.publicationId = publication.publicationId;
     this.clientId = client.id;

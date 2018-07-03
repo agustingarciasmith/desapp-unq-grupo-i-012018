@@ -8,6 +8,7 @@ import {User} from '../user';
 import {paths} from "../paths";
 import {Vehicle} from "../vehicles/vehicle";
 import {Publication} from "../publication/publication";
+import {Reservation} from "../reservation";
 
 @Component({
   selector: 'app-update-user',
@@ -30,6 +31,8 @@ export class UpdateUserComponent implements OnInit {
   paths: { login: string; auth: string; home: string; publication: string; welcome: string };
   dialogVehicle: boolean;
   dialogViewVehicle: boolean;
+  reservations: Reservation[];
+  clientScore: number;
 
   constructor(private service: BackendService, private toaster: ToasterService, private router: Router) {
     this.user = User.emptyUser();
@@ -57,7 +60,13 @@ export class UpdateUserComponent implements OnInit {
 
     this.service.getPublications().subscribe((publications: Publication[]) => {
       this.publications = publications;
-    })
+    });
+
+    this.service.getOwnerReservations().subscribe(
+      (reservations: Reservation[]) => {
+        this.reservations = reservations;
+      }
+    )
   }
 
   updateUser() {
@@ -147,5 +156,18 @@ export class UpdateUserComponent implements OnInit {
         return vehicle.vehicleId === vehicleId;
       }).license;
     }
+  }
+
+  confirmReservation(reservationId) {
+    this.service.confirmReservation(reservationId).subscribe(
+      (_) => {
+        this.service.getOwnerReservations().subscribe(
+          (reservations: Reservation[]) => {
+            this.reservations = reservations;
+          }
+        )
+      }
+    )
+
   }
 }
