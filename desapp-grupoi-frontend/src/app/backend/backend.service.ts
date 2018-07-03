@@ -20,13 +20,12 @@ export class BackendService {
   private userVehiclesUrl = this.base + "vehicles/user/";
   private deleteVehicleUrl = this.base + "vehicles/delete/";
 
-  private publicationsUrl = this.base + "publication";
   private createPublicationUrl = this.base + "publication/create";
   private userPublicationsUrl = this.base + "publication/user/";
   private allPublicationsUrl = this.base + "publication/all";
+  private publicationUrl = this.base + "publication/";
 
   private createReservationUrl = this.base + 'reservation/create';
-
   private http: HttpClient;
   public user$: Observable<User>;
   private userPublications$: Observable<Publication[]>;
@@ -122,9 +121,15 @@ export class BackendService {
 
   getAllPublications(): Observable<Publication[]> {
     this.publications$ = this.http.get<Publication[]>(this.allPublicationsUrl, {
-        headers: this.headers()
+      headers: this.headers()
     });
 
     return this.publications$;
+  }
+
+  getPublication(id: number) {
+    return this.http.get<Publication>(this.publicationUrl, {
+      headers: this.headers()
+    })
   }
 }

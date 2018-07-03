@@ -8,6 +8,7 @@ import {GuardService} from './auth/guard.service';
 import {PublicationListComponent} from './publication/publication-list/publication-list.component';
 import {WelcomeComponent} from './welcome/welcome.component';
 import {paths} from "./paths";
+import {PublicationViewComponent} from "./publication/publication-view/publication-view.component";
 
 const appRoutes: Routes = [
   {path: '', redirectTo: paths.welcome, pathMatch: 'full'},
@@ -16,6 +17,7 @@ const appRoutes: Routes = [
   {path: paths.auth, component: AuthComponent},
   {path: paths.home, component: HomeComponent, canActivate: [GuardService]},
   {path: paths.publication, component: PublicationListComponent, canActivate: [GuardService]},
+  {path: paths.publicationView, component: PublicationViewComponent, canActivate: [GuardService]},
 ];
 
 @NgModule({

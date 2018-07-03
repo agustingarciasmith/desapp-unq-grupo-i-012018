@@ -10,47 +10,7 @@ import {User} from '../user';
 @Injectable()
 export class PublicationService {
 
-  private apiUrl = 'http://localhost:9090/publication';
-  public loggedUserId: string;
-
   constructor(private http: HttpClient) {
-  }
-
-  private headers(): HttpHeaders {
-    return new HttpHeaders()
-      .set('Authorization', `Bearer ${localStorage.getItem('access_token')}`);
-  }
-
-  findAll(): Observable<Publication[]>  {
-    return this.http.get(this.apiUrl, {
-      headers: this.headers()
-    })
-      .map((res: Response) => res)
-      .catch((error: any) => Observable.throw(error.error || 'Server error'));
-  }
-
-  findById(id: number): Observable<any> {
-    return this.http.get(this.apiUrl + '/' + id , {
-      headers: this.headers()
-    })
-      .map((res: Response) => res)
-      .catch((error: any) => Observable.throw(error.error || 'Error'));
-  }
-
-  savePublication(publication: Publication) {
-    return this.http.post<Publication>(this.apiUrl + '/create', publication, {
-      headers: this.headers()
-    }).map(res => console.log(res));
-  }
-
-  deletePublicationById(id: number): Observable<boolean> {
-    return this.http.delete(this.apiUrl + '/' + id)
-      .map((res: Response) => res.json())
-      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
-  }
-
-  updatePublication(publication: Publication): Observable<Publication> {
-    return null;
   }
 
   getCoordinates(address: string): Observable<any> {

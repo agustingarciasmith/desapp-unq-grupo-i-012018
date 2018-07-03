@@ -16,26 +16,31 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @RequestMapping(Endpoints.Publications.BASE)
 @CrossOrigin(origins = "http://localhost:4200")
 public class PublicationController {
-    private PublicationService service;
+  private PublicationService service;
 
-    @Autowired
-    PublicationController(PublicationService service) {
-        this.service = service;
-    }
+  @Autowired
+  PublicationController(PublicationService service) {
+    this.service = service;
+  }
 
-    @RequestMapping(method = GET, path = "/all")
-    public List<PublicationDTO> getPublications() {
-        return service.getAll();
-    }
+  @RequestMapping(method = GET, path = "/all")
+  public List<PublicationDTO> getPublications() {
+    return service.getAll();
+  }
 
-    @RequestMapping(method = GET, path = USER_PUBLICATIONS + "/{id}")
-    public List<PublicationDTO> getUserPublications(@PathVariable("id") Long id) {
-        return this.service.getUserPublications(id);
-    }
+  @RequestMapping(method = GET, path = USER_PUBLICATIONS + "/{id}")
+  public List<PublicationDTO> getUserPublications(@PathVariable("id") Long id) {
+    return this.service.getUserPublications(id);
+  }
 
-    @RequestMapping(method = POST, path = CREATE)
-    public PublicationDTO create(@RequestBody PublicationDTO publication) {
-        return service.create(publication);
-    }
+  @RequestMapping(method = GET, path = "/{id}")
+  public PublicationDTO getPublication(@PathVariable("id") Long id) {
+    return this.service.getPublication(id);
+  }
+
+  @RequestMapping(method = POST, path = CREATE)
+  public PublicationDTO create(@RequestBody PublicationDTO publication) {
+    return service.create(publication);
+  }
 }
 

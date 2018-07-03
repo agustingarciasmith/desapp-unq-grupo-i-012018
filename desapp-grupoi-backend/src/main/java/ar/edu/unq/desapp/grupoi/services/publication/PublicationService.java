@@ -5,9 +5,11 @@ import ar.edu.unq.desapp.grupoi.rest.requests.PublicationDTO;
 import java.util.List;
 
 public interface PublicationService {
-    List<PublicationDTO> getAll();
+  List<PublicationDTO> getAll();
 
-    PublicationDTO create(PublicationDTO publication);
+  PublicationDTO create(PublicationDTO publication);
 
-    List<PublicationDTO> getUserPublications(Long id);
+  List<PublicationDTO> getUserPublications(Long id);
+
+  PublicationDTO getPublication(Long id);
 }

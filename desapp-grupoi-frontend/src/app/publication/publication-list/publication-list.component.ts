@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {OrderPipe} from 'ngx-order-pipe';
 import {BackendService} from "../../backend/backend.service";
 import {Publication} from "../publication";
+import {paths} from "../../paths";
 
 @Component({
   selector: 'app-publication-list',
@@ -31,9 +32,9 @@ export class PublicationListComponent implements OnInit {
     this.router.navigate(['/publication/create']);
   }
 
-  viewPublicationPage(publication: any) {
+  viewPublicationPage(publication: Publication) {
     if (publication) {
-      this.router.navigate(['/publication', publication.id]);
+      this.router.navigate([paths.publication, publication.publicationId]);
     }
   }
 

@@ -60,6 +60,18 @@ public class PublicationServiceImpl implements PublicationService {
     return mapToPublicationDTO(repository.getUserPublications(userRepository.get(id)));
   }
 
+  @Override
+  public PublicationDTO getPublication(Long id) {
+    return findPublication(id);
+  }
+
+  private PublicationDTO findPublication(Long id) {
+    if(id == null) {
+      throw new InvalidRequestException("Error getting publication", Collections.singletonList(ErrorCode.Publication.ID_NOT_PRESENT));
+    }
+    return PublicationDTO.from(this.repository.load(id));
+  }
+
   private void validate(PublicationDTO publicationDTO) {
     List<String> errors = new ArrayList<>();
 

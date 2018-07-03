@@ -55,9 +55,10 @@ public enum ErrorCode {
     public static final String PICK_UP_ADDRESS_NOT_PRESENT = BASE + ".pickUpAddress" + ErrorCode.NOT_PRESENT;
     public static final String RETURN_ADDRESS_NOT_PRESENT = BASE + ".returnAddress" + ErrorCode.NOT_PRESENT;
     public static final String AVAILABLE_DATES_NOT_PRESENT = BASE + ".avaliableDates" + ErrorCode.NOT_PRESENT;
+    public static final String ID_NOT_PRESENT = BASE + ".id" + ErrorCode.NOT_PRESENT;
   }
-
   public class Reservation {
+
     private static final String BASE = "reservation";
     private static final String INVALID = ".invalid";
     public static final String INVALID_STATE = BASE + ".state" + INVALID + ".transition";

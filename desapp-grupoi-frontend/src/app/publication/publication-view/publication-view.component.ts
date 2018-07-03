@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {PublicationService} from '../publication.service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {User} from '../../user';
 import {BackendService} from '../../backend/backend.service';
 import {UsersService} from '../../users/users.service';
 import {Reservation} from '../../reservation';
+import {Publication} from "../publication";
 
 
 @Component({
@@ -26,28 +27,21 @@ export class PublicationViewComponent implements OnInit {
   public user: User;
 
   ngOnInit(): void {
-    this.getPublication();
   }
 
   constructor(private router: Router,
-              private publicationService: PublicationService,
+              private route: ActivatedRoute,
               private service: BackendService,
-              private usersService: UsersService) {
-  }
+              private publicationService: PublicationService) {
 
-  getPublication() {
-    this.publicationService.findById(Number(window.location.pathname.slice(-1))).subscribe(
-      publication => {
+    this.route.params.subscribe(params => {
+      this.service.getPublication(params[0]).subscribe((publication: Publication) => {
         this.publication = publication;
         this.getCoordinatesPickUp(publication.pickUpAddress);
         this.getCoordinatesReturn(publication.returnAddress[0]);
         this.setAvailableDates();
-      },
-      err => {
-        console.log(err);
-      }
-    );
-    console.log(this.publication);
+      })
+    })
   }
 
   getCoordinatesPickUp(address: string) {
@@ -83,15 +77,15 @@ export class PublicationViewComponent implements OnInit {
   }
 
   submitReservation() {
-    this.usersService.getUserById(this.userId).subscribe(user => {
-      this.service.submitReservation(new Reservation(this.publication, user, this.selectedDates)).subscribe(
-        response => {
-          console.log(response);
-        },
-        err => {
-          console.log(err);
-        }
-      );
-    });
+    // this.usersService.getUserById(this.userId).subscribe(user => {
+    //   this.service.submitReservation(new Reservation(this.publication, user, this.selectedDates)).subscribe(
+    //     response => {
+    //       console.log(response);
+    //     },
+    //     err => {
+    //       console.log(err);
+    //     }
+    //   );
+    // });
   }
 }
