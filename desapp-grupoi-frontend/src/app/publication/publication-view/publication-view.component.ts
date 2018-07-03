@@ -23,11 +23,11 @@ export class PublicationViewComponent implements OnInit {
   latr = 51.678418;
   lngr = 7.809007;
 
-  public selectedDate: string = "";
+  public selectedDate: string = null;
 
-  public publication: Publication = Publication.emptyPublication();
-  private owner: User = User.emptyUser();
-  private vehicle: Vehicle = Vehicle.emptyVehicle();
+  publication: Publication = Publication.emptyPublication();
+  owner: User = User.emptyUser();
+  vehicle: Vehicle = Vehicle.emptyVehicle();
 
   ngOnInit(): void {
   }
