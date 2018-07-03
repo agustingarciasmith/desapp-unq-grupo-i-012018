@@ -34,7 +34,7 @@
               <input class="form-control form-control-sm" *ngSwitchCase="true" type="text"
                      [(ngModel)]="userUpdate.address">
               <h5 class="card-text top-buffer align-items-center">My Rating</h5>
-              <h3 class="strong">{{user.totalScore}}</h3>
+              <h3 class="strong">{{user.score}}</h3>
               <div class="top-buffer">
                 <button type="button" class="btn btn-primary" *ngSwitchCase="false" (click)="modifyProfile()">Modify
                   Profile

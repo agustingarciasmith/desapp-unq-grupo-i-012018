@@ -10,7 +10,7 @@
           <tr>
             <th></th>
             <th>Owner</th>
-            <th [class.active]="order === 'owner.totalScore'" (click)="setOrder('owner.totalScore')">Score
+            <th [class.active]="order === 'owner.score'" (click)="setOrder('owner.score')">Score
               <span [hidden]="reverse">▼</span>
               <span [hidden]="!reverse">▲</span></th>
             <th>Description</th>
@@ -24,7 +24,7 @@
           <tr *ngFor="let publication of publications | paginate: { itemsPerPage: 10, currentPage: p } | orderBy: order:reverse:'case-insensitive'">
             <td><img src={{publication.owner.avatar}} class="img-thumbnail"></td>
             <td>{{publication.owner.name}}</td>
-            <td><bar-rating [readOnly]="true" [(rate)]="publication.owner.totalScore" [max]="5" [theme]="'stars'"></bar-rating></td>
+            <td><bar-rating [readOnly]="true" [(rate)]="publication.owner.score" [max]="5" [theme]="'stars'"></bar-rating></td>
             <td>{{publication.vehicle.description}}</td>
             <td>{{publication.pickUpAddress}}</td>
             <td>{{publication.cost}}</td>

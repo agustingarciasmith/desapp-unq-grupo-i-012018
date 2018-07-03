@@ -26,14 +26,13 @@ export class PublicationViewComponent implements OnInit {
   public selectedDates: Date[] = [];
   public userId = 88;
   public user: User;
-  public selectedDate: string = null;
 */
   publication: Publication = Publication.emptyPublication();
   owner: User = User.emptyUser();
   vehicle: Vehicle = Vehicle.emptyVehicle();
+  selectedDate: string = null;
 
   ngOnInit(): void {
-    this.getPublication();
   }
 
   constructor(private router: Router,
