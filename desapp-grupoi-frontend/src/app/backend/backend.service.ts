@@ -181,6 +181,14 @@ export class BackendService {
     })(this.getUser());
   }
 
+  cancelReservation(id: number) {
+    return flatMap((user: User) => {
+      return this.http.put((this.base + "reservation/owner/" + user.id + "/cancel/" + id), {}, {
+        headers: this.headers()
+      })
+    })(this.getUser());
+  }
+
   clientGetVehicle(id: number) {
     return flatMap((user: User) => {
       return this.http.put((this.base + "reservation/client/" + user.id + "/getVehicle/" + id), {}, {

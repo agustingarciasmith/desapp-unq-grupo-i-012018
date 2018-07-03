@@ -36,6 +36,11 @@ public class ReservationController {
     service.confirmReservation(reservationId, ownerId);
   }
 
+  @RequestMapping(value = "/owner/{ownerId}/cancel/{reservationId}", method = RequestMethod.PUT)
+  public void ownerCancelReservation(@PathVariable("ownerId") Long ownerId, @PathVariable("reservationId") Long reservationId) {
+    service.ownerCancelReservation(reservationId, ownerId);
+  }
+
   @RequestMapping(value = "/owner/{ownerId}/confirmVehicleDelivery/{reservationId}", method = RequestMethod.PUT)
   public void ownerConfirmVehicleDelivery(@PathVariable("ownerId") Long ownerId, @PathVariable("reservationId") Long reservationId) {
     service.ownerConfirmVehicleDelivery(reservationId, ownerId);

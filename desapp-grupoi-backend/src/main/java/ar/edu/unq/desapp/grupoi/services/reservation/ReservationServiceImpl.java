@@ -110,6 +110,16 @@ public class ReservationServiceImpl implements ReservationService {
   }
 
   @Override
+  public void ownerCancelReservation(Long reservationId, Long ownerId) {
+    Reservation reservation = findReservation(reservationId);
+    User owner = findUser(ownerId);
+
+    validateOwnerOfReservationIs(reservation, owner);
+
+    reservation.ownerCancelReservation();
+  }
+
+  @Override
   public List<ReservationDTO> getAllAsOwner(Long ownerId) {
     User owner = findUser(ownerId);
     return reservationRepository.getAllAsOwner(owner).stream().map(ReservationDTO::from).collect(Collectors.toList());

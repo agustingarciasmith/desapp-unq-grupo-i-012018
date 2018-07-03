@@ -22,7 +22,8 @@
               <p class="card-text">Waiting owner confirm the reserve</p>
             </div>
             <div *ngSwitchCase="'CONFIRMED_BY_OWNER'">
-              <button type="text" (click)="clientGetVehicle(reservation.id)" pButton label="I've got the vehicle"></button>
+              <button type="text" (click)="clientGetVehicle(reservation.id)" pButton
+                      label="I've got the vehicle"></button>
             </div>
             <div *ngSwitchCase="'CLIENT_GET_VEHICLE'">
               <p class="card-text">Waiting owner confirm the vehicle deliver</p>
@@ -39,6 +40,9 @@
             </div>
             <div *ngSwitchCase="'RENT_FINISHED'">
               <p class="card-text">Reserve finished</p>
+            </div>
+            <div *ngSwitchCase="'OWNER_CANCELED_DESCRIPTION'">
+              <p class="card-text">Reserve canceled</p>
             </div>
           </div>
         </div>

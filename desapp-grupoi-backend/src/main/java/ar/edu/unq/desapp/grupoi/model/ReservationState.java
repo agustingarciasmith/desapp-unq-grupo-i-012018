@@ -40,6 +40,10 @@ public abstract class ReservationState {
     return;
   }
 
+  public void ownerCancelReservation(Reservation reservation){
+    throw new ActionNotAllowed();
+  };
+
   public String createEmailMessage(Reservation reservation) {
     return "Mail";
   }

@@ -11,6 +11,10 @@ public class PendingState extends ReservationState {
     reservation.setState(new ConfirmedState());
   }
 
+  public void ownerCancelReservation(Reservation reservation) {
+    reservation.setState(new CanceledState());
+  }
+
   @Override
   public String getDescription() {
     return "PENDING_OWNER_CONFIRMATION";

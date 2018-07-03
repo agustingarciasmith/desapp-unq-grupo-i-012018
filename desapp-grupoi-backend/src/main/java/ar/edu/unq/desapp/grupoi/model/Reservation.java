@@ -171,6 +171,10 @@ public class Reservation {
     return this;
   }
 
+  public void ownerCancelReservation() {
+    this.state.ownerCancelReservation(this);
+  }
+
   private void excludeSelectedDatesOfPublication() {
     publication.getAvailableDates().removeAll(selectedDates);
   }

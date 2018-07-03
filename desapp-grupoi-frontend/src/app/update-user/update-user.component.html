@@ -80,7 +80,7 @@
             </div>
           </div>
 
-          <div class="card top-buffer nav-item-margin" style="width: 16rem;">
+          <div class="card top-buffer nav-item-margin" style="width: 18rem;">
             <div class="card-body">
               <h3 class="card-title">My reservations</h3>
               <ng-container *ngFor="let reservation of reservations">
@@ -91,13 +91,17 @@
                     <p class="card-text">Cost per hour: {{reservation.publication.cost}}</p>
                     <div [ngSwitch]="reservation.reservationState">
                       <div *ngSwitchCase="'PENDING_OWNER_CONFIRMATION'">
-                        <button type="text" (click)="confirmReservation(reservation.id)" pButton label="Confirm"></button>
+                        <button type="text" (click)="confirmReservation(reservation.id)" pButton
+                                label="Confirm"></button>
+                        <button type="text" (click)="cancelReservation(reservation.id)" pButton label="Cancel"
+                                class="ui-button-danger"></button>
                       </div>
                       <div *ngSwitchCase="'CONFIRMED_BY_OWNER'">
                         <p class="card-text">Waiting client get vehicle</p>
                       </div>
                       <div *ngSwitchCase="'CLIENT_GET_VEHICLE'">
-                        <button type="text" (click)="confirmVehicleDeliver(reservation.id)" pButton label="Confirm vehicle deliver"></button>
+                        <button type="text" (click)="confirmVehicleDeliver(reservation.id)" pButton
+                                label="Confirm vehicle deliver"></button>
                       </div>
                       <div *ngSwitchCase="'CLIENT_USING_VEHICLE'">
                         <p class="card-text">Waiting client to finish using the vehicle</p>
@@ -107,10 +111,14 @@
                         <input class="form-control form-control-sm" type="text"
                                [(ngModel)]="clientScore">
                         <br/>
-                        <button type="text" (click)="ownerFinishReserve(reservation.id)" pButton label="Finish the reserve"></button>
+                        <button type="text" (click)="ownerFinishReserve(reservation.id)" pButton
+                                label="Finish the reserve"></button>
                       </div>
                       <div *ngSwitchCase="'RENT_FINISHED'">
                         <p class="card-text">Reserve finished</p>
+                      </div>
+                      <div *ngSwitchCase="'OWNER_CANCELED_DESCRIPTION'">
+                        <p class="card-text">Reserve canceled</p>
                       </div>
                     </div>
                   </div>

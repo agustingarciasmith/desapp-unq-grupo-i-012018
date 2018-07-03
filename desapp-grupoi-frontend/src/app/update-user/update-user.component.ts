@@ -171,6 +171,14 @@ export class UpdateUserComponent implements OnInit {
     )
   }
 
+  cancelReservation(id: number) {
+    this.service.cancelReservation(id).subscribe(
+      (_) => {
+        this.getReservations();
+      }
+    )
+  }
+
   private getReservations() {
     this.service.getOwnerReservations().subscribe(
       (reservations: Reservation[]) => {
