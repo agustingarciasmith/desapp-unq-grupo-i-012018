@@ -15,6 +15,8 @@ public class UserCustomizableData {
     this.avatar = avatar;
   }
 
+  public UserCustomizableData(){}
+
   public String getName() {
     return name;
   }

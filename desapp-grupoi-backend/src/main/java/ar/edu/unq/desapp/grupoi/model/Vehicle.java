@@ -23,15 +23,19 @@ public class Vehicle {
   @Column(name = "LICENSE", unique = true, nullable = false)
   private String license;
 
+  @Column(name = "PICTURE")
+  private String picture;
+
   public Vehicle() {
   }
 
-  public Vehicle(Long id, VehicleType type, Integer numberOfPassengers, String description, String license) {
+  public Vehicle(Long id, VehicleType type, Integer numberOfPassengers, String description, String license, String picture) {
     this.id = id;
     this.type = type;
     this.numberOfPassengers = numberOfPassengers;
     this.description = description;
     this.license = license;
+    this.picture = picture;
   }
 
   public VehicleType getType() {
@@ -53,4 +57,6 @@ public class Vehicle {
   public Long getId() {
     return this.id;
   }
+
+  public String getPicture(){ return this.picture; }
 }

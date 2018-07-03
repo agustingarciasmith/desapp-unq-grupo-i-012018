@@ -48,15 +48,15 @@ public class VehicleServiceTests extends JavaSpec<TestContext> {
 
       this.service = new VehicleServiceImpl(userRepo, vehicleRepo, parameters);
       this.existentUser = new User(1L, "name", "address", "email", "cuil", "avatar");
-      this.existingVehicle = new Vehicle(1L, VehicleType.AUTO, 1, "description", "license");
-      this.anotherExistingVehicle = new Vehicle(2L, VehicleType.AUTO, 1, "description", "license");
+      this.existingVehicle = new Vehicle(1L, VehicleType.AUTO, 1, "description", "license", null);
+      this.anotherExistingVehicle = new Vehicle(2L, VehicleType.AUTO, 1, "description", "license", null);
 
       Mockito.when(this.userRepo.get((long)1)).thenReturn(existentUser);
     });
 
     describe("create a vehicle", () -> {
       it("successfully", () -> {
-        Vehicle vehicle = new Vehicle(Long.valueOf(1), VehicleType.AUTO, 2, "description", "license");
+        Vehicle vehicle = new Vehicle(Long.valueOf(1), VehicleType.AUTO, 2, "description", "license", null);
         service.create(existentUser.getId(), vehicle);
 
         verify(vehicleRepo, times(1)).create(vehicle);
@@ -86,7 +86,7 @@ public class VehicleServiceTests extends JavaSpec<TestContext> {
       });
 
       it("without a type", () -> {
-        Vehicle vehicle = new Vehicle(Long.valueOf(1), null, 2, "description", "license");
+        Vehicle vehicle = new Vehicle(Long.valueOf(1), null, 2, "description", "license", null);
         try {
           service.create(Long.valueOf(1), vehicle);
           failBecauseExceptionWasNotThrown(InvalidRequestException.class);
@@ -98,7 +98,7 @@ public class VehicleServiceTests extends JavaSpec<TestContext> {
 
       describe("with invalid number of passangers", () -> {
         Consumer<Integer> assertInvalidNumberOfPassangers = (numberOfPassangers) -> {
-          Vehicle vehicle = new Vehicle(Long.valueOf(1), VehicleType.AUTO, numberOfPassangers, "description", "license");
+          Vehicle vehicle = new Vehicle(Long.valueOf(1), VehicleType.AUTO, numberOfPassangers, "description", "license", null);
           try {
             service.create(Long.valueOf(1), vehicle);
             failBecauseExceptionWasNotThrown(InvalidRequestException.class);
@@ -123,7 +123,7 @@ public class VehicleServiceTests extends JavaSpec<TestContext> {
 
       describe("with invalid description", () -> {
         Consumer<String> assertInvalidDescription = (description) -> {
-          Vehicle vehicle = new Vehicle(Long.valueOf(1), VehicleType.AUTO, 1, description, "license");
+          Vehicle vehicle = new Vehicle(Long.valueOf(1), VehicleType.AUTO, 1, description, "license", null);
           try {
             service.create(Long.valueOf(1), vehicle);
             failBecauseExceptionWasNotThrown(InvalidRequestException.class);
@@ -149,7 +149,7 @@ public class VehicleServiceTests extends JavaSpec<TestContext> {
       });
 
       it("without a license", () -> {
-        Vehicle vehicle = new Vehicle(Long.valueOf(1), VehicleType.AUTO, 2, "description", null);
+        Vehicle vehicle = new Vehicle(Long.valueOf(1), VehicleType.AUTO, 2, "description", null, null);
         try {
           service.create(Long.valueOf(1), vehicle);
           failBecauseExceptionWasNotThrown(InvalidRequestException.class);
@@ -199,7 +199,7 @@ public class VehicleServiceTests extends JavaSpec<TestContext> {
       });
 
       it( "without vehicle id", () -> {
-        Vehicle vehicle = new Vehicle(null, null, null, null, null);
+        Vehicle vehicle = new Vehicle(null, null, null, null, null, null);
 
         try {
           service.delete(1L, vehicle);

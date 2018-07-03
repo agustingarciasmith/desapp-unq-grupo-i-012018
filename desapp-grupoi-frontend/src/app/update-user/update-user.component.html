@@ -119,9 +119,7 @@
   </div>
   <hr/>
   <div>
-    <label>InputPictureLink</label>
-    <input type="text" #inputPicture placeholder="Add link to picture">
-    <button type="button" class="btn btn-info" (click)="addPicture(inputPicture.value)">+</button>
+    <input class="form-control" type="text" [(ngModel)]="newVehicle.picture" placeholder="Add picture">
   </div>
   <h4>Pictures</h4>
   <ul>
@@ -136,12 +134,14 @@
   </p-footer>
 </p-dialog>
 
-<p-dialog [(visible)]="dialogViewVehicle" [width]="450" modal=true appendTo="body">
-  <p-header>{{actualVehicle.type}}</p-header>
+<p-dialog [(visible)]="dialogViewVehicle" modal=true appendTo="body">
+  <div class="card top-buffer border border-dark shadow-sm" style="width: 16rem;">
+    <img class="card-img-top" src={{actualVehicle.picture}}>
     <div class="card-body text-secondary">
       <p class="card-text">Number of passengers: {{actualVehicle.numberOfPassengers}}</p>
       <p class="card-text">Description: {{actualVehicle.description}}</p>
       <p class="card-text">License: {{actualVehicle.license}}</p>
       <button type="text" (click)="toggleAddVehicleDialog()" pButton label="Close"></button>
     </div>
+  </div>
 </p-dialog>

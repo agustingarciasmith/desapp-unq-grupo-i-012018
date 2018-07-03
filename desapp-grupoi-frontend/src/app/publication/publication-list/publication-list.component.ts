@@ -41,6 +41,7 @@ export class PublicationListComponent implements OnInit {
 
   viewPublicationPage(publication: any) {
     if (publication) {
+      console.log(publication.id);
       this.router.navigate(['/publication', publication.id]);
     }
   }

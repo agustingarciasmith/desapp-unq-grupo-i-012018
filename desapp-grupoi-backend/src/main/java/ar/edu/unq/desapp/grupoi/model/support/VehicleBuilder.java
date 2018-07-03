@@ -30,5 +30,5 @@ public class VehicleBuilder {
         return this;
     }
 
-    public Vehicle buildVehicle() { return new Vehicle(id, type, passengers, description, license); }
+    public Vehicle buildVehicle() { return new Vehicle(id, type, passengers, description, license, null); }
 }

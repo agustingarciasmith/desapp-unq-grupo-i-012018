@@ -36,7 +36,7 @@ export class PublicationViewComponent implements OnInit {
   }
 
   getPublication() {
-    this.publicationService.findById(Number(window.location.pathname.slice(-1))).subscribe(
+    this.publicationService.findById(Number(window.location.pathname.substring(window.location.pathname.lastIndexOf('/') + 1))).subscribe(
       publication => {
         this.publication = publication;
         this.getCoordinatesPickUp(publication.pickUpAddress);
