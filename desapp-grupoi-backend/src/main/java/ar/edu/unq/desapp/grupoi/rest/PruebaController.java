@@ -1,22 +1,13 @@
 package ar.edu.unq.desapp.grupoi.rest;
 
-import ar.edu.unq.desapp.grupoi.model.User;
-import ar.edu.unq.desapp.grupoi.model.errors.ErrorCode;
-import ar.edu.unq.desapp.grupoi.model.errors.InvalidRequestException;
 import ar.edu.unq.desapp.grupoi.services.mail.MailClient;
-import ar.edu.unq.desapp.grupoi.services.user.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Collections;
-import java.util.Optional;
-
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @RestController
 public class PruebaController {

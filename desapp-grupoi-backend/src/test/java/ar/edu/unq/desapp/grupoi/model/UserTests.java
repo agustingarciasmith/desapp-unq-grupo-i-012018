@@ -76,12 +76,12 @@ public class UserTests extends JavaSpec<TestContext> {
 //
 //      it("the owner has to score the client when informing receiveing the vehicle", () -> {
 //        owner.get().informReceptionAsOwnerAndScore(reservation.get(), 5);
-//        assertThat(client.get().getTotalScore()).isEqualTo(5);
+//        assertThat(client.get().getScore()).isEqualTo(5);
 //      });
 //
 //      it("the client has to score the owner when informing delivering the vehicle", () -> {
 //        client.get().informDeliverAsClientAndScore(reservation.get(), 5);
-//        assertThat(owner.get().getTotalScore()).isEqualTo(5);
+//        assertThat(owner.get().getScore()).isEqualTo(5);
 //      });
 //
 //      it("the score should be over 0", () -> {

@@ -6,7 +6,6 @@ import ar.edu.unq.desapp.grupoi.model.User;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
 public class ReservationBuilder {
     private UserBuilder userBuilder = new UserBuilder();
@@ -39,21 +38,6 @@ public class ReservationBuilder {
         return reservation;
     }
 
-    public Reservation clientInformsReturningVehicleReservation() {
-        Reservation reservation = bothConfirmRentStartedReservation().informDeliverAsClientAndScore(5);
-        return reservation;
-    }
-
-    public Reservation ownerInformsReceptionReservation() {
-        Reservation reservation = bothConfirmRentStartedReservation().informReceptionAsOwnerAndScore(5);
-        return reservation;
-    }
-
-    public Reservation bothConfirmRetuningVehicleReservation() {
-        Reservation reservation = ownerInformsReceptionReservation().informDeliverAsClientAndScore(5);
-        return reservation;
-    }
-//
     public Reservation build() {
         return new Reservation(publication, client, selectedDates);
     }

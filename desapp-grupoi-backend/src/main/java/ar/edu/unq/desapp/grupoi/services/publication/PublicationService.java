@@ -1,14 +1,15 @@
 package ar.edu.unq.desapp.grupoi.services.publication;
 
-import ar.edu.unq.desapp.grupoi.model.Publication;
+import ar.edu.unq.desapp.grupoi.rest.requests.PublicationDTO;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface PublicationService {
-    List<Publication> getAll();
+  List<PublicationDTO> getAll();
 
-    Optional<Publication> getById(Long id);
+  PublicationDTO create(PublicationDTO publication);
 
-    void create(Publication publication);
+  List<PublicationDTO> getUserPublications(Long id);
+
+  PublicationDTO getPublication(Long id);
 }

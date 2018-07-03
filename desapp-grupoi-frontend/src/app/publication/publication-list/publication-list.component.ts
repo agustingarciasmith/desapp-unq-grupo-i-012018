@@ -1,7 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {PublicationService} from '../publication.service';
 import {Router} from '@angular/router';
-import {OrderPipe} from 'ngx-order-pipe';
+import {BackendService} from "../../backend/backend.service";
+import {Publication} from "../publication";
+import {paths} from "../../paths";
 
 @Component({
   selector: 'app-publication-list',
@@ -16,45 +18,22 @@ export class PublicationListComponent implements OnInit {
   public sortedPublications: any[];
   public p = 1;
 
-  constructor(private router: Router, private publicationService: PublicationService, private orderPipe: OrderPipe) {
-    this.sortedPublications = orderPipe.transform(this.publications, 'owner.totalScore');
+  constructor(private router: Router, private service: BackendService) {
+    this.service.getAllPublications().subscribe((publications: Publication[]) => {
+      this.publications = publications;
+    })
   }
 
   ngOnInit() {
-    this.getAllPublications();
-  }
-
-  getAllPublications() {
-    this.publicationService.findAll().subscribe(
-      publications => {
-        this.publications = publications;
-      },
-      err => {
-        console.log(err);
-      }
-    );
   }
 
   redirectNewPublicationPage() {
     this.router.navigate(['/publication/create']);
   }
 
-  viewPublicationPage(publication: any) {
+  viewPublicationPage(publication: Publication) {
     if (publication) {
-      console.log(publication.id);
-      this.router.navigate(['/publication', publication.id]);
-    }
-  }
-
-  deletePublication(publication: any) {
-    if (publication) {
-      this.publicationService.deletePublicationById(publication.id).subscribe(
-        res => {
-          this.getAllPublications();
-          this.router.navigate(['/publication']);
-          console.log('done');
-        }
-      );
+      this.router.navigate([paths.publication, publication.publicationId]);
     }
   }
 

@@ -11,5 +11,5 @@ export const environment = {
   authAudience: 'http://localhost:9090',
   authRedirectUri: 'http://localhost:4200/frontend/auth',
   authScope: 'openid email profile',
-  backendUrl: 'http://localhost:9090/'
+  backendUrl: 'http://localhost:9090/backend/'
 };

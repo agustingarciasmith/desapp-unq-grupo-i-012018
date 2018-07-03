@@ -1,15 +1,25 @@
 package ar.edu.unq.desapp.grupoi.services.reservation;
 
-import ar.edu.unq.desapp.grupoi.model.Reservation;
+import ar.edu.unq.desapp.grupoi.rest.requests.ReservationDTO;
 
 import java.util.List;
 
 public interface ReservationService {
-    void create(Reservation reservation);
+    ReservationDTO create(ReservationDTO reservation);
 
-    List<Reservation> getAllAsOwner(Long ownerId);
+    void confirmReservation(Long reservationId, Long ownerId);
 
-    List<Reservation> getAllAsClient(Long clientId);
+    void clientGetVehicle(Long reservationId, Long clientId);
 
-    Reservation getById(Long id);
+    void ownerConfirmVehicleDelivery(Long reservationId, Long ownerId);
+
+    void clientReturnVehicle(Long reservationId, Long clientId, Integer score);
+
+    void ownerReciveVehicle(Long reservationId, Long ownerId, Integer score);
+
+    List<ReservationDTO> getAllAsOwner(Long ownerId);
+
+    List<ReservationDTO> getAllAsClient(Long clientId);
+
+    ReservationDTO getById(Long id);
 }

@@ -7,4 +7,8 @@ import javax.persistence.Entity;
 @Entity(name = "RentFinished")
 public class RentFinishedState extends ReservationState {
 
+  @Override
+  public String getDescription() {
+    return "RENT_FINISHED";
+  }
 }

@@ -49,22 +49,33 @@
           <div class="card top-buffer nav-item-margin" style="width: 16rem;">
             <div class="card-body">
               <h3 class="card-title">My vehicles</h3>
-                <ng-container *ngFor="let vehicle of user.vehicles">
-                  <div class="card border-secondary mb-3" style="max-width: 18rem;">
-                    <div class="card-header">{{vehicle.type}}</div>
-                    <div class="card-body text-secondary">
-                      <p class="card-text">{{vehicle.description}}</p>
-                      <button type="text" (click)="viewVehicle(vehicle)" pButton label="View"></button>
-                      <button type="text" (click)="deleteVehicle(vehicle)" pButton label="Delete" class="ui-button-danger"></button>
-                    </div>
+              <ng-container *ngFor="let vehicle of vehicles">
+                <div class="card border-secondary mb-3" style="max-width: 18rem;">
+                  <div class="card-header">{{vehicle.vehicleType}}</div>
+                  <div class="card-body text-secondary">
+                    <p class="card-text">{{vehicle.description}}</p>
+                    <button type="text" (click)="viewVehicle(vehicle)" pButton label="View"></button>
+                    <button type="text" (click)="deleteVehicle(vehicle)" pButton label="Delete"
+                            class="ui-button-danger"></button>
                   </div>
-                </ng-container>
-              <button type="text" (click)="toggleViewVehicle()" pButton icon="fa-car" label="Add Vehicle"></button>
+                </div>
+              </ng-container>
+              <button type="text" (click)="toggleAddVehicleDialog()" pButton icon="fa-car" label="Add Vehicle"></button>
             </div>
           </div>
           <div class="card top-buffer nav-item-margin" style="width: 16rem;">
             <div class="card-body">
               <h3 class="card-title">My publications</h3>
+
+              <ng-container *ngFor="let publication of publications">
+                <div class="card border-secondary mb-3" style="max-width: 18rem;">
+                  <div class="card-header">{{vehicleLicenseOf(publication.vehicleId)}}</div>
+                  <div class="card-body text-secondary">
+                    <p class="card-text">{{publication.pickUpAddress}}</p>
+                    <p class="card-text">Cost - {{publication.cost}}</p>
+                  </div>
+                </div>
+              </ng-container>
               <button type="text" (click)="addPublication()" pButton icon="fa-bell" label="New Publication"></button>
             </div>
           </div>
@@ -72,6 +83,38 @@
           <div class="card top-buffer nav-item-margin" style="width: 16rem;">
             <div class="card-body">
               <h3 class="card-title">My reservations</h3>
+              <ng-container *ngFor="let reservation of reservations">
+                <div class="card border-secondary mb-3" style="max-width: 18rem;">
+                  <div class="card-header">{{reservation.reservationState}}</div>
+                  <div class="card-body">
+                    <p class="card-text">Selected date: {{reservation.selectedDates[0]}}</p>
+                    <p class="card-text">Cost per hour: {{reservation.publication.cost}}</p>
+                    <div [ngSwitch]="reservation.reservationState">
+                      <div *ngSwitchCase="'PENDING_OWNER_CONFIRMATION'">
+                        <button type="text" (click)="confirmReservation(reservation.id)" pButton label="Confirm"></button>
+                      </div>
+                      <div *ngSwitchCase="'CONFIRMED_BY_OWNER'">
+                        <p class="card-text">Waiting client get vehicle</p>
+                      </div>
+                      <div *ngSwitchCase="'CLIENT_GET_VEHICLE'">
+                        <button pButton type="button">Confirm vehicle deliver</button>
+                      </div>
+                      <div *ngSwitchCase="'CLIENT_USING_VEHICLE'">
+                        <p class="card-text">Waiting client fihish using the vehicle</p>
+                      </div>
+                      <div *ngSwitchCase="'CLIENT_RETURN_VEHICLE'">
+                        <p class="card-text">Punctuate the client</p>
+                        <input class="form-control form-control-sm" type="text"
+                               [(ngModel)]="clientScore">
+                        <button pButton type="button">Finish the reserve</button>
+                      </div>
+                      <div *ngSwitchCase="'RENT_FINISHED'">
+                        <p class="card-text">Reserve finished</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
             </div>
           </div>
         </div>
@@ -103,7 +146,7 @@
   <hr/>
   <label>Type of vehicle</label>
   <br>
-  <select class="form-control" [(ngModel)]="newVehicle.type">
+  <select class="form-control" [(ngModel)]="newVehicle.vehicleType">
     <option value="MOTORBIKE">Motorbike</option>
     <option value="AUTO">Car</option>
     <option value="PICKUP">Pick Up</option>
@@ -121,13 +164,6 @@
   <div>
     <input class="form-control" type="text" [(ngModel)]="newVehicle.picture" placeholder="Add picture">
   </div>
-  <h4>Pictures</h4>
-  <ul>
-    <li *ngFor="let picture of newVehicle.pictures">
-      <img src="{{picture}}" class="img-fluid" alt="Responsive image">
-    </li>
-  </ul>
-  <hr/>
   <p-footer>
     <button type="button" class="btn btn-danger" (click)="toggleViewVehicle()">Cancel</button>
     <button type="submit" class="btn btn-primary" (click)="addVehicleToUser()">Submit</button>

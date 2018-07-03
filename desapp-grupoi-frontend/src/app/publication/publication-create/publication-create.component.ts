@@ -1,11 +1,12 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {PublicationService} from '../publication.service';
 import {Publication} from '../publication';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Router} from '@angular/router';
 import 'rxjs/add/operator/filter';
-import {SelectItem} from 'primeng/api';
 import {UsersService} from '../../users/users.service';
+import {BackendService} from '../../backend/backend.service';
+import {Vehicle} from '../../vehicles/vehicle';
+import {paths} from '../../paths';
 import {User} from '../../user';
 
 
@@ -18,36 +19,27 @@ import {User} from '../../user';
 
 export class PublicationCreateComponent implements OnInit, OnDestroy {
 
-  id: number;
-  userId: number;
-  availableDates: [string];
   publication: Publication;
-  pickUpAddress: string;
-  returnAddres: string;
-  vehicles: SelectItem[];
-  selectedVehicle: string;
-  user: User;
+  vehicles: Vehicle[];
+  selectedVehicleLicense: string;
+  private loading: boolean;
+  private user: User;
 
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private publicationService: PublicationService,
-              private userService: UsersService) {
+  constructor(private router: Router,
+              private service: BackendService) {
 
-    this.vehicles = [
-      {label: 'Select Vehicle', value: null},
-      {label: 'Ford Ranger 2010 DDD111', value: '1'},
-      {label: 'VW Gol 2015 FFF111', value: '2'},
-      {label: 'Chevrolet Corsa 2017 GGG111', value: '3'},
-    ];
+    this.vehicles = [];
     this.publication = Publication.emptyPublication();
   }
 
   ngOnInit() {
-    this.route.queryParams
-      .filter(params => params.userId)
-      .subscribe(params => {
-        this.userId = params.userId;
-      });
+    this.service.getVehicles().subscribe((vehicles: Vehicle[]) => {
+      this.vehicles = vehicles;
+    });
+
+    this.service.getUser().subscribe((user: User) => {
+      this.user = user;
+    });
   }
 
   ngOnDestroy(): void {
@@ -61,13 +53,29 @@ export class PublicationCreateComponent implements OnInit, OnDestroy {
     this.publication.returnAddress.push(returnAddress);
   }
 
-  publish() {
-    this.userService.getUserById(this.userId).subscribe(user => this.publication.owner = user);
-    console.log(this.publication);
-    this.publicationService.savePublication(this.publication).subscribe(data => {alert('Succesfully Added Product details'); }, Error => {alert('failed while adding product details'); });
+  public createPublication() {
+    this.loading = true;
+    this.publication.vehicleId = this.getSelectedVehicle().vehicleId;
+    this.publication.userId = this.user.id;
+    this.service.addPublicationToUser(this.publication).subscribe(
+      (publication: Publication) => {
+        this.loading = false;
+        this.router.navigate([paths.home]);
+      },
+      error => {
+        this.loading = false;
+        alert(error);
+      }
+    );
   }
 
   redirectPublicationPage() {
     this.router.navigate(['/publication']);
+  }
+
+  getSelectedVehicle() {
+    return this.vehicles.find((vehicle: Vehicle) => {
+      return vehicle.license === this.selectedVehicleLicense;
+    });
   }
 }

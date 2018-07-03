@@ -1,14 +1,14 @@
 <div class="container-fluid container-90">
-  <h1 class="display-4">Publication #00{{publication.id}}</h1>
+  <h1 class="display-4">Publication #{{publication.publicationId}}</h1>
   <div class="row">
     <div class="card top-buffer border border-dark shadow-sm" style="width: 16rem;">
-      <img class="card-img-top" src={{publication.owner.avatar}}>
+      <img class="card-img-top" src={{owner.avatar}}>
       <div class="card-body">
-        <h4 class="card-title">{{publication.owner.name}}</h4>
-        <p class="card-text">{{publication.owner.cuil}}</p>
-        <p class="card-text">{{publication.owner.email}}</p>
-        <p class="card-text">{{publication.owner.address}}</p>
-        <bar-rating [readOnly]="true" [(rate)]="publication.owner.totalScore" [max]="5"
+        <h4 class="card-title">{{owner.name}}</h4>
+        <p class="card-text">{{owner.cuil}}</p>
+        <p class="card-text">{{owner.email}}</p>
+        <p class="card-text">{{owner.address}}</p>
+        <bar-rating [readOnly]="true" [(rate)]="owner.score" [max]="5"
                     [theme]="'stars'"></bar-rating>
       </div>
     </div>
@@ -16,10 +16,10 @@
       <img class="card-img-top"
            src={{publication.vehicle.picture}}>
       <div class="card-body">
-        <h4 class="card-title">{{publication.vehicle.license}}</h4>
-        <p class="card-text"><strong>Type:</strong> {{publication.vehicle.type}}</p>
-        <p class="card-text"><strong>Description:</strong> {{publication.vehicle.description}}</p>
-        <p class="card-text"><strong>Number of Passengers:</strong> {{publication.vehicle.numberOfPassengers}}</p>
+        <h4 class="card-title">{{vehicle.license}}</h4>
+        <p class="card-text"><strong>Type:</strong> {{vehicle.vehicleType}}</p>
+        <p class="card-text"><strong>Description:</strong> {{vehicle.description}}</p>
+        <p class="card-text"><strong>Number of Passengers:</strong> {{vehicle.numberOfPassengers}}</p>
       </div>
     </div>
     <div class="col">
@@ -47,8 +47,12 @@
     <div class="col">
       <div class="card top-buffer border border-dark shadow-sm">
         <div class="card-body">
-          <p class="card-title"><strong>Select Renting Dates</strong></p>
-          <p-calendar [(ngModel)]="selectedDates" [inline]="true" selectionMode="multiple" dataType="string" [disabledDates]=unavailableDates [ngStyle]="{contentBgColor: '#f2f5f7'}"></p-calendar>
+          <p class="card-title"><strong>Select Renting Date</strong></p>
+          <select [(ngModel)]="selectedDate">
+            <option *ngFor="let date of publication.availableDates" [value]="date">
+              {{date}}
+            </option>
+          </select>
         </div>
       </div>
       <div class="card top-buffer border border-dark shadow-sm">
@@ -64,6 +68,8 @@
     </div>
   </div>
   <div class="row">
-  <button type="button" class="btn btn-light btn-lg btn-block top-buffer border border-dark shadow-sm" [disabled]="selectedDates.length === 0" (click)="submitReservation()">Reserve</button>
+    <button type="button" class="btn btn-light btn-lg btn-block top-buffer border border-dark shadow-sm"
+            [disabled]="selectedDate === null" (click)="submitReservation()">Reserve
+    </button>
   </div>
 </div>

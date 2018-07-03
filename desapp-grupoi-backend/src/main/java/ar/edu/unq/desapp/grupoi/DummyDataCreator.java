@@ -51,14 +51,13 @@ public class DummyDataCreator {
   }
 
   private void createAndSaveUser(String[] metadata) {
-    User user = new User(null, metadata[0], metadata[1], metadata[2], metadata[3], metadata[4]);
+    User user = new User(null, metadata[0], metadata[1], metadata[2], metadata[2], metadata[4]);
     user.setTestingScore();
-    Vehicle vehicle = new Vehicle(null, VehicleType.valueOf(metadata[5]), parseInt(metadata[6]), metadata[7], metadata[8], metadata[12]);
+    Vehicle vehicle = new Vehicle(VehicleType.valueOf(metadata[5]), parseInt(metadata[6]), metadata[7], metadata[8], metadata[12], user);
     Publication publication = new Publication(user, vehicle, "CABA", metadata[1], returnAddress(metadata[9]), metadata[10], datesArray(), parseInt(metadata[11]));
 
     userRepository.createIfNotExists(user);
     vehicleRepository.create(vehicle);
-    user.addVehicle(vehicle);
 
     publicationRepository.save(publication);
   }

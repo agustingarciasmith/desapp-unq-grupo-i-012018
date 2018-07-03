@@ -1,21 +1,33 @@
-import {Vehicle} from '../vehicles/vehicle';
-import {User} from '../user';
+import {Vehicle} from "../vehicles/vehicle";
+import {User} from "../user";
 
 export class Publication {
-
   constructor(
-    public id: number,
-    public owner: User,
-    public vehicle: Vehicle,
+    public publicationId: number,
+    public userId: number,
+    public vehicleId: number,
     public city: string,
     public pickUpAddress: string,
     public returnAddress: [string],
     public contactPhone: string,
     public availableDates: [string],
-    public cost: number) {
+    public cost: number,
+    public vehicle: Vehicle,
+    public owner: User) {
   }
 
   public static emptyPublication() {
-    return new Publication( null, null, null, 'CABA', null, [null], null, null, null);
+    return new Publication(
+      null,
+      null,
+      null,
+      "CUALQUIERA",
+      null,
+      [null],
+      null,
+      null,
+      null,
+      null,
+      null);
   }
 }

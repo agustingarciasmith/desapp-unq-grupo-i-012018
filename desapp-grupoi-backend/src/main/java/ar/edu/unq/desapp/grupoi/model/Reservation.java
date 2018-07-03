@@ -1,8 +1,8 @@
 package ar.edu.unq.desapp.grupoi.model;
 
-import ar.edu.unq.desapp.grupoi.model.errors.model.InvalidReservation;
 import ar.edu.unq.desapp.grupoi.model.reservationStates.PendingState;
-import org.springframework.beans.factory.annotation.Autowired;
+import ar.edu.unq.desapp.grupoi.rest.requests.ReservationDTO;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.time.Clock;
@@ -15,148 +15,163 @@ import java.util.*;
 @Table(name = "RESERVATIONS")
 public class Reservation {
 
-    @Transient
-    private Clock clock = Clock.systemUTC();
+  @Transient
+  private Clock clock = Clock.systemUTC();
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "ID")
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  @Column(name = "ID")
+  private Long id;
 
-    @OneToOne
-    private Publication publication;
+  @OneToOne
+  private Publication publication;
 
-    @OneToOne
-    private User owner;
+  @OneToOne
+  private User client;
 
-    @OneToOne
-    private User client;
+  @OneToOne(targetEntity = ReservationState.class)
+  @Cascade(org.hibernate.annotations.CascadeType.ALL)
+  private ReservationState state;
 
-    @OneToOne(targetEntity = ReservationState.class)
-    private ReservationState state;
+  @Column(name = "START_TIME")
+  private Instant startTime;
 
-    @Column(name = "START_TIME")
-    private Instant startTime;
+  @Column(name = "DURATION")
+  private int rentDurationInHours;
 
-    @Column(name = "DURATION")
-    private int rentDurationInHours;
+  @Column(name = "FINAL_COST")
+  private double finalCost;
 
-    @Column(name = "FINAL_COST")
-    private double finalCost;
+  @Column(name = "START_WAITING_TIME")
+  private Instant startWaitingTime;
 
-    @Column(name = "START_WAITING_TIME")
-    private Instant startWaitingTime;
+  @Column
+  @ElementCollection(targetClass = LocalDate.class)
+  private List<LocalDate> selectedDates;
 
-    @Column
-    @ElementCollection(targetClass=LocalDate.class)
-    private List<LocalDate> selectedDates;
+  public Reservation() {
+  }
 
-    public Reservation(){}
+  public Reservation(Publication publication, User client, List<LocalDate> selectedDates) {
+    this.client = client;
+    this.publication = publication;
+    this.state = new PendingState();
+    this.selectedDates = selectedDates;
+  }
 
-    public Reservation(Publication publication, User client, ArrayList<LocalDate> selectedDates) {
-        if (client.getCuil().equals(publication.getOwner().getCuil())) throw new InvalidReservation();
-        this.client = client;
-        this.publication = publication;
-        this.state = new PendingState();
-        this.selectedDates = selectedDates;
-    }
+  public static Reservation from(User client, ReservationDTO reservationDTO, Publication publication) {
+    return new Reservation(publication, client, reservationDTO.getSelectedDates());
+  }
 
-    public Long getId() {
-        return id;
-    }
+  public void ownerConfirmReservation() {
+    this.state.confirm(this);
+  }
 
-    public User getClient() {
-        return client;
-    }
+  public void clientObtainVehicle() {
+    this.state.clientObtainVehicle(this);
+  }
 
-    public User getOwner() { return this.publication.getOwner(); }
+  public void ownerConfirmVehicleDelivery() {
+    this.state.ownerConfirmVehicleDelivery(this);
+  }
 
-    public Publication getPublication() {
-        return publication;
-    }
+  public void clientReturnVehicle() {
+    this.state.clientReturnVehicle(this);
+  }
 
-    public ReservationState getState() {
-        return state;
-    }
+  public void ownerConfirmVehicleReseption() {
+    this.state.ownerReciveVehicle(this);
+  }
 
-    public List<LocalDate> getSelectedDates(){
-        return selectedDates;
-    }
+  public Long getId() {
+    return id;
+  }
 
-    public void setState(ReservationState state) {
-        this.state = state;
-    }
+  public User getClient() {
+    return client;
+  }
 
-    public Instant getStartTime() {
-        return startTime;
-    }
+  public User getOwner() {
+    return this.publication.getOwner();
+  }
 
-    public void setStartTime() {
-        this.startTime = clock.instant();
-    }
+  public Publication getPublication() {
+    return publication;
+  }
 
-    public void setClock(Clock clock) {
-        this.clock = clock;
-    }
+  public List<LocalDate> getSelectedDates() {
+    return selectedDates;
+  }
 
-    public void calculateCost() {
-        this.rentDurationInHours = calculateRentDurationInHours();
-        this.finalCost = this.publication.getCost() * this.rentDurationInHours;
-    }
+//Viejo
 
-    private int calculateRentDurationInHours() {
-        return Math.round(ChronoUnit.HOURS.between(startTime, clock.instant()) + 1);
-    }
+  public ReservationState getState() {
+    return state;
+  }
 
-    public int getRentDurationInHours() {
-        return rentDurationInHours;
-    }
 
-    public double getFinalCost() {
-        return finalCost;
-    }
+  public void setState(ReservationState state) {
+    this.state = state;
+  }
 
-    public void checkStartConfirmation() {
-        state.checkStartConfirmation(this);
-    }
+  public Instant getStartTime() {
+    return startTime;
+  }
 
-    public boolean waitingTimeOver() {
-        return (ChronoUnit.MINUTES.between(startWaitingTime, clock.instant()) + 1) > 30;
-    }
+  public void setStartTime() {
+    this.startTime = clock.instant();
+  }
 
-    public void setStartWaitingTime(Instant time) {
-        startWaitingTime = time;
-    }
+  public void setClock(Clock clock) {
+    this.clock = clock;
+  }
 
-    public Reservation confirmReservationAsOwner() {
-        state.confirm(this);
-        excludeSelectedDatesOfPublication();
-        return this;
-    }
+  public void calculateCost() {
+    this.rentDurationInHours = calculateRentDurationInHours();
+    this.finalCost = this.publication.getCost() * this.rentDurationInHours;
+  }
 
-    public Reservation informReceptionAsClient() {
-        this.state.vehicleReceivedByClient(this);
-        return this;
-    }
+  private int calculateRentDurationInHours() {
+    return Math.round(ChronoUnit.HOURS.between(startTime, clock.instant()) + 1);
+  }
 
-    public Reservation informDeliverAsOwner() {
-        this.state.vehicleDeliveredByOwner(this);
-        return this;
-    }
+  public int getRentDurationInHours() {
+    return rentDurationInHours;
+  }
 
-    public Reservation informDeliverAsClientAndScore(int score) {
-        this.state.vehicleDeliveredByClient(this);
-        getOwner().addScore(score);
-        return this;
-    }
+  public double getFinalCost() {
+    return finalCost;
+  }
 
-    public Reservation informReceptionAsOwnerAndScore(int score) {
-        this.state.vehicleReceivedByOwner(this);
-        getClient().addScore(score);
-        return this;
-    }
+  public void checkStartConfirmation() {
+    state.checkStartConfirmation(this);
+  }
 
-    private void excludeSelectedDatesOfPublication() {
-        publication.getAvailableDates().removeAll(selectedDates);
-    }
+  public boolean waitingTimeOver() {
+    return (ChronoUnit.MINUTES.between(startWaitingTime, clock.instant()) + 1) > 30;
+  }
+
+  public void setStartWaitingTime(Instant time) {
+    startWaitingTime = time;
+  }
+
+  public Reservation confirmReservationAsOwner() {
+    state.confirm(this);
+    excludeSelectedDatesOfPublication();
+    return this;
+  }
+
+  public Reservation informReceptionAsClient() {
+    this.state.clientObtainVehicle(this);
+    return this;
+  }
+
+  public Reservation informDeliverAsOwner() {
+    this.state.ownerConfirmVehicleDelivery(this);
+    return this;
+  }
+
+  private void excludeSelectedDatesOfPublication() {
+    publication.getAvailableDates().removeAll(selectedDates);
+  }
 }

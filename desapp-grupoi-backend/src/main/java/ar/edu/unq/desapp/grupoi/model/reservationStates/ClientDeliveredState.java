@@ -8,8 +8,12 @@ import javax.persistence.Entity;
 @Entity(name = "ClientDelivered")
 public class ClientDeliveredState extends ReservationState {
 
-    public void vehicleReceivedByOwner(Reservation reservation) {
+    public void ownerReciveVehicle(Reservation reservation) {
         reservation.setState(new RentFinishedState());
-        reservation.calculateCost();
+    }
+
+    @Override
+    public String getDescription() {
+        return "CLIENT_RETURN_VEHICLE";
     }
 }

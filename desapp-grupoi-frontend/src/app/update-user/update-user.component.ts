@@ -7,6 +7,8 @@ import {Router} from '@angular/router';
 import {User} from '../user';
 import {paths} from '../paths';
 import {Vehicle} from '../vehicles/vehicle';
+import {Publication} from '../publication/publication';
+import {Reservation} from '../reservation';
 
 @Component({
   selector: 'app-update-user',
@@ -16,27 +18,31 @@ import {Vehicle} from '../vehicles/vehicle';
 })
 export class UpdateUserComponent implements OnInit {
 
+  user: User;
+  userUpdate: User;
+  vehicles: Vehicle[];
+  newVehicle: Vehicle;
+  actualVehicle: Vehicle;
+  publications: Publication[];
+
   loading = true;
   error = false;
   userSwitch = false;
-  user: User;
-  userUpdate: User;
   paths: { login: string; auth: string; home: string; publication: string; welcome: string };
-  newVehicle: Vehicle;
   dialogVehicle: boolean;
   dialogViewVehicle: boolean;
-  actualVehicle: Vehicle;
+  reservations: Reservation[];
+  clientScore: number;
 
   constructor(private service: BackendService, private toaster: ToasterService, private router: Router) {
     this.user = User.emptyUser();
     this.paths = paths;
-      this.newVehicle = Vehicle.emptyVehicle();
-      this.actualVehicle = Vehicle.emptyVehicle();
+    this.newVehicle = Vehicle.emptyVehicle();
+    this.actualVehicle = Vehicle.emptyVehicle();
   }
 
   ngOnInit() {
-    this.service.subscribeToUser(
-      (value: User) => {
+    this.service.getUser().subscribe((value: User) => {
         this.user = User.from(value);
         this.loading = false;
         this.dialogVehicle = false;
@@ -47,11 +53,34 @@ export class UpdateUserComponent implements OnInit {
       error => {
         this.handleError(error);
       });
+
+    this.service.getVehicles().subscribe((vehicles: Vehicle[]) => {
+      this.vehicles = vehicles;
+    });
+
+    this.service.getPublications().subscribe((publications: Publication[]) => {
+      this.publications = publications;
+    });
+
+    this.service.getOwnerReservations().subscribe(
+      (reservations: Reservation[]) => {
+        this.reservations = reservations;
+      }
+    );
   }
 
   updateUser() {
     this.loading = true;
-    this.service.updateUser(this.userUpdate);
+    this.service.updateUser(this.userUpdate).subscribe(
+      (user: User) => {
+        this.user = User.from(user);
+        this.loading = false;
+        this.userSwitch = false;
+      },
+      error => {
+        this.handleError(error);
+      }
+    );
   }
 
   modifyProfile() {
@@ -80,29 +109,61 @@ export class UpdateUserComponent implements OnInit {
   }
 
   toggleAddVehicleDialog() {
-    this.dialogViewVehicle = !this.dialogViewVehicle;
-  }
-
-  toggleViewVehicle() {
     this.dialogVehicle = !this.dialogVehicle;
   }
 
-  addPicture(picture: string) {
-    this.newVehicle.addPicture(picture);
+  toggleViewVehicle() {
+    this.dialogViewVehicle = !this.dialogViewVehicle;
   }
 
   addVehicleToUser() {
     this.loading = true;
-    this.service.addVehicleToUser(this.newVehicle);
-    this.toggleViewVehicle();
+    this.service.addVehicleToUser(this.newVehicle).subscribe(
+      (vehicle: Vehicle) => {
+        this.vehicles.push(vehicle);
+        this.toggleAddVehicleDialog();
+        this.loading = false;
+      },
+      error => {
+        this.handleError(error);
+      }
+    );
   }
 
   viewVehicle(vehicle: Vehicle) {
     this.actualVehicle = vehicle;
-    this.toggleAddVehicleDialog();
+    this.toggleViewVehicle();
   }
 
-  deleteVehicle(vehicle: Vehicle) {
-    this.service.deleteVehicleFromUser(vehicle);
+  deleteVehicle(deletedVehicle: Vehicle) {
+    this.service.deleteVehicleFromUser(deletedVehicle).subscribe(
+      () => {
+        this.vehicles = this.vehicles.filter(vehicle => vehicle.vehicleId !== deletedVehicle.vehicleId);
+      },
+      error => {
+        this.handleError(error);
+      }
+    );
+  }
+
+  vehicleLicenseOf(vehicleId: number) {
+    if (this.vehicles) {
+      return this.vehicles.find((vehicle: Vehicle) => {
+        return vehicle.vehicleId === vehicleId;
+      }).license;
+    }
+  }
+
+  confirmReservation(reservationId) {
+    this.service.confirmReservation(reservationId).subscribe(
+      (_) => {
+        this.service.getOwnerReservations().subscribe(
+          (reservations: Reservation[]) => {
+            this.reservations = reservations;
+          }
+        );
+      }
+    );
+
   }
 }
