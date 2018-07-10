@@ -35,6 +35,8 @@
                      [(ngModel)]="userUpdate.address">
               <h5 class="card-text top-buffer align-items-center">My Rating</h5>
               <h3 class="strong">{{user.score}}</h3>
+              <bar-rating [readOnly]="true" [(rate)]="user.score" [max]="5"
+                          [theme]="'stars'"></bar-rating>
               <div class="top-buffer">
                 <button type="button" class="btn btn-primary" *ngSwitchCase="false" (click)="modifyProfile()">Modify
                   Profile
@@ -84,7 +86,7 @@
             <div class="card-body">
               <h3 class="card-title">My reservations</h3>
               <ng-container *ngFor="let reservation of reservations">
-                <div class="card border-secondary mb-3" style="max-width: 18rem;">
+                <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
                   <div class="card-header">{{reservation.reservationState}}</div>
                   <div class="card-body">
                     <p class="card-text">Selected date: {{reservation.selectedDates[0]}}</p>
@@ -97,14 +99,18 @@
                                 class="ui-button-danger"></button>
                       </div>
                       <div *ngSwitchCase="'CONFIRMED_BY_OWNER'">
-                        <p class="card-text">Waiting client get vehicle</p>
+                        <div class="alert alert-danger" role="alert">
+                        Waiting for client to confirm reception
+                          </div>
                       </div>
                       <div *ngSwitchCase="'CLIENT_GET_VEHICLE'">
                         <button type="text" (click)="confirmVehicleDeliver(reservation.id)" pButton
                                 label="Confirm vehicle deliver"></button>
                       </div>
                       <div *ngSwitchCase="'CLIENT_USING_VEHICLE'">
-                        <p class="card-text">Waiting client to finish using the vehicle</p>
+                        <div class="alert alert-danger" role="alert">
+                        Waiting for client to confirm return
+                        </div>
                       </div>
                       <div *ngSwitchCase="'CLIENT_RETURN_VEHICLE'">
                         <p class="card-text">Punctuate the client</p>
@@ -115,10 +121,14 @@
                                 label="Finish the reserve"></button>
                       </div>
                       <div *ngSwitchCase="'RENT_FINISHED'">
-                        <p class="card-text">Reserve finished</p>
+                        <div class="alert alert-danger" role="alert">
+                        Reserve finished
+                        </div>
                       </div>
                       <div *ngSwitchCase="'OWNER_CANCELED_DESCRIPTION'">
-                        <p class="card-text">Reserve canceled</p>
+                        <div class="alert alert-danger" role="alert">
+                          Reserve cancelled
+                        </div>
                       </div>
                     </div>
                   </div>

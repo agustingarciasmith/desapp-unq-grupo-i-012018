@@ -24,6 +24,7 @@ import {PublicationModule} from './publication/publication.module';
 import {WelcomeComponent} from './welcome/welcome.component';
 import {MomentModule} from "angular2-moment";
 import { ClientReservationComponent } from './client-reservation/client-reservation.component';
+import { BarRatingModule } from 'ngx-bar-rating';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { ClientReservationComponent } from './client-reservation/client-reservat
     DialogModule,
     FileUploadModule,
     PublicationModule,
-    MomentModule
+    MomentModule,
+    BarRatingModule,
   ],
   providers: [
     AuthService,

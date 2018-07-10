@@ -8,10 +8,10 @@
   </div>
   <div class="row">
     <ng-container *ngFor="let reservation of reservations">
-      <div class="card top-buffer nav-item-margin" style="width: 16rem;">
+      <div class="card top-buffer nav-item-margin" style="width: 28rem;">
         <div class="card-body">
           <h3 class="card-title">{{reservation.reservationState}}</h3>
-          <div class="card border-secondary mb-3" style="max-width: 18rem;">
+          <div class="card border-secondary mb-3" style="max-width: 28rem;">
             <div class="card-body text-secondary">
               <p class="card-text">Selected date: {{reservation.selectedDates[0]}}</p>
               <p class="card-text">Cost per hour: {{reservation.publication.cost}}</p>
@@ -19,14 +19,20 @@
           </div>
           <div [ngSwitch]="reservation.reservationState">
             <div *ngSwitchCase="'PENDING_OWNER_CONFIRMATION'">
-              <p class="card-text">Waiting owner confirm the reserve</p>
+              <div class="alert alert-danger" role="alert">
+                Waiting for owner to confirm the reservation
+              </div>
             </div>
             <div *ngSwitchCase="'CONFIRMED_BY_OWNER'">
-              <button type="text" (click)="clientGetVehicle(reservation.id)" pButton
+              <button type="text" (click)="clientGetVehicle(reservation.id)" pButton icon="fa-bell"
                       label="I've got the vehicle"></button>
             </div>
             <div *ngSwitchCase="'CLIENT_GET_VEHICLE'">
-              <p class="card-text">Waiting owner confirm the vehicle deliver</p>
+
+                <h5><span class="badge badge-danger">
+                Waiting for owner confirm delivering the vehicle
+                </span></h5>
+
             </div>
             <div *ngSwitchCase="'CLIENT_USING_VEHICLE'">
               <p class="card-text">Punctuate the owner</p>
@@ -36,13 +42,19 @@
               <button type="text" (click)="returnVehicle(reservation.id)" pButton label="Vehicle returned"></button>
             </div>
             <div *ngSwitchCase="'CLIENT_RETURN_VEHICLE'">
-              <p class="card-text">Waiting owner finish the reserve</p>
+              <h5><span class="badge badge-danger">
+                 Waiting for owner to finish the reservation
+                </span></h5>
             </div>
             <div *ngSwitchCase="'RENT_FINISHED'">
-              <p class="card-text">Reserve finished</p>
+              <h5><span class="badge badge-danger">
+                 Reserve finished
+                </span></h5>
             </div>
             <div *ngSwitchCase="'OWNER_CANCELED_DESCRIPTION'">
-              <p class="card-text">Reserve canceled</p>
+              <h5><span class="badge badge-danger">
+                 Reserve cancelled
+                </span></h5>
             </div>
           </div>
         </div>

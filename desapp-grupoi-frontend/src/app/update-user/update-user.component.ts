@@ -168,7 +168,7 @@ export class UpdateUserComponent implements OnInit {
       (_) => {
         this.getReservations();
       }
-    )
+    );
   }
 
   cancelReservation(id: number) {
@@ -184,7 +184,7 @@ export class UpdateUserComponent implements OnInit {
       (reservations: Reservation[]) => {
         this.reservations = reservations;
       }
-    )
+    );
   }
 
   ownerFinishReserve(id: number) {
@@ -192,6 +192,10 @@ export class UpdateUserComponent implements OnInit {
       (_) => {
         this.getReservations();
       }
-    )
+    );
+  }
+
+  titleizeReservationState(state: string) {
+    return state.replace(/_/g, ' ');
   }
 }
