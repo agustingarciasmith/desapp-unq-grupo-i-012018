@@ -12,7 +12,7 @@ public class JobsConfig {
     public TaskScheduler taskScheduler() {
         ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
         scheduler.setPoolSize(1);
-        scheduler.initi alize();
+        scheduler.initialize();
         return scheduler;
     }
 }
