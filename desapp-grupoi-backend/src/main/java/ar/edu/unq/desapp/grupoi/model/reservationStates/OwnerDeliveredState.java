@@ -9,7 +9,7 @@ import javax.persistence.Entity;
 public class OwnerDeliveredState extends ReservationState {
 
     public void checkStartConfirmation(Reservation reservation) {
-        if (reservation.waitingTimeOver()) reservation.setState(new RentStartedState());
+        reservation.setState(new RentStartedState());
     }
 
     @Override

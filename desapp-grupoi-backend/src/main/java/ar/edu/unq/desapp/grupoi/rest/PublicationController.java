@@ -3,8 +3,11 @@ package ar.edu.unq.desapp.grupoi.rest;
 import ar.edu.unq.desapp.grupoi.rest.requests.PublicationDTO;
 import ar.edu.unq.desapp.grupoi.services.publication.PublicationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 import static ar.edu.unq.desapp.grupoi.rest.Endpoints.Publications.CREATE;

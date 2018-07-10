@@ -17,4 +17,6 @@ public interface ReservationRepository {
   Reservation load(Long id);
 
   List<Reservation> findByPublication(Publication publication);
+
+  List<Reservation> findReservationsWithClientRecivedCarSate();
 }

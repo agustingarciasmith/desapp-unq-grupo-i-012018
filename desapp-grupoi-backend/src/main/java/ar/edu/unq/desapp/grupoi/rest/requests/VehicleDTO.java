@@ -24,6 +24,11 @@ public class VehicleDTO {
     return dto;
   }
 
+  @Override
+  public String toString() {
+    return this.vehicleId.toString();
+  }
+
   public Long getUserId() {
     return this.userId;
   }

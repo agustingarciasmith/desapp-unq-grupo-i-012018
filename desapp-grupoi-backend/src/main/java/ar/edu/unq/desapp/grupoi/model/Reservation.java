@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.time.Clock;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
@@ -49,6 +50,9 @@ public class Reservation {
   @ElementCollection(targetClass = LocalDate.class)
   private List<LocalDate> selectedDates;
 
+  @Column(name = "LAST_UPDATE")
+  private LocalDateTime lastUpdate;
+
   public Reservation() {
   }
 
@@ -57,6 +61,7 @@ public class Reservation {
     this.publication = publication;
     this.state = new PendingState();
     this.selectedDates = selectedDates;
+    this.lastUpdate = LocalDateTime.now();
   }
 
   public static Reservation from(User client, ReservationDTO reservationDTO, Publication publication) {
@@ -65,22 +70,36 @@ public class Reservation {
 
   public void ownerConfirmReservation() {
     this.state.confirm(this);
+    update();
   }
 
   public void clientObtainVehicle() {
     this.state.clientObtainVehicle(this);
+    update();
+  }
+
+  private void update() {
+    this.lastUpdate = LocalDateTime.now();
   }
 
   public void ownerConfirmVehicleDelivery() {
     this.state.ownerConfirmVehicleDelivery(this);
+    update();
   }
 
   public void clientReturnVehicle() {
     this.state.clientReturnVehicle(this);
+    update();
   }
 
   public void ownerConfirmVehicleReseption() {
     this.state.ownerReciveVehicle(this);
+    update();
+  }
+
+  public void expire() {
+    this.state.expire(this);
+    update();
   }
 
   public Long getId() {
@@ -103,6 +122,11 @@ public class Reservation {
     return selectedDates;
   }
 
+  public LocalDateTime getLastUpdate() {
+
+    return this.lastUpdate;
+  }
+
 //Viejo
 
   public ReservationState getState() {
@@ -114,18 +138,6 @@ public class Reservation {
     this.state = state;
   }
 
-  public Instant getStartTime() {
-    return startTime;
-  }
-
-  public void setStartTime() {
-    this.startTime = clock.instant();
-  }
-
-  public void setClock(Clock clock) {
-    this.clock = clock;
-  }
-
   public void calculateCost() {
     this.rentDurationInHours = calculateRentDurationInHours();
     this.finalCost = this.publication.getCost() * this.rentDurationInHours;
@@ -133,26 +145,6 @@ public class Reservation {
 
   private int calculateRentDurationInHours() {
     return Math.round(ChronoUnit.HOURS.between(startTime, clock.instant()) + 1);
-  }
-
-  public int getRentDurationInHours() {
-    return rentDurationInHours;
-  }
-
-  public double getFinalCost() {
-    return finalCost;
-  }
-
-  public void checkStartConfirmation() {
-    state.checkStartConfirmation(this);
-  }
-
-  public boolean waitingTimeOver() {
-    return (ChronoUnit.MINUTES.between(startWaitingTime, clock.instant()) + 1) > 30;
-  }
-
-  public void setStartWaitingTime(Instant time) {
-    startWaitingTime = time;
   }
 
   public Reservation confirmReservationAsOwner() {

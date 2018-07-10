@@ -36,6 +36,10 @@ public abstract class ReservationState {
     throw new ActionNotAllowed();
   }
 
+  public void expire(Reservation reservation){
+    throw new ActionNotAllowed();
+  };
+
   public void checkStartConfirmation(Reservation reservation) {
     return;
   }

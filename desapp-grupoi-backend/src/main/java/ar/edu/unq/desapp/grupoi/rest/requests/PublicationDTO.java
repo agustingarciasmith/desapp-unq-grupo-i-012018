@@ -40,6 +40,11 @@ public class PublicationDTO {
     return dto;
   }
 
+  @Override
+  public String toString() {
+    return this.publicationId.toString();
+  }
+
   public void setPublicationId(Long publicationId) {
     this.publicationId = publicationId;
   }

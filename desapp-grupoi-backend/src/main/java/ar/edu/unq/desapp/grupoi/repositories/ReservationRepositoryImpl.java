@@ -3,6 +3,7 @@ package ar.edu.unq.desapp.grupoi.repositories;
 import ar.edu.unq.desapp.grupoi.model.Publication;
 import ar.edu.unq.desapp.grupoi.model.Reservation;
 import ar.edu.unq.desapp.grupoi.model.User;
+import ar.edu.unq.desapp.grupoi.model.reservationStates.ClientReceivedState;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,6 +38,15 @@ public class ReservationRepositoryImpl extends CarpnbRepository<Reservation, Lon
         "SELECT r FROM Reservation r WHERE r.publication = :publication",
         Reservation.class)
         .setParameter("publication", publication);
+    return query.getResultList();
+  }
+
+  @Override
+  public List<Reservation> findReservationsWithClientRecivedCarSate() {
+    Query query = entityManager.createQuery(
+      "SELECT r FROM Reservation r WHERE r.state.class = :state"
+    ).setParameter("state", ClientReceivedState.class.getName());
+
     return query.getResultList();
   }
 }

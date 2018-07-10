@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -23,17 +25,17 @@ public class UsersController {
   }
 
   @PutMapping("/update")
-  public User update(@RequestBody UserCustomizableData user) {
+  public User update(@RequestBody UserCustomizableData user, HttpServletRequest request) {
     return service.update(user);
   }
 
   @RequestMapping(method = GET, path = "/{id}")
-  public User getUser(@PathVariable Long id) {
+  public User getUser(@PathVariable Long id, HttpServletRequest request) {
     return service.getById(id);
   }
 
   @RequestMapping(method = POST, path = "/login")
-  public User login(@RequestBody UserInfo userInfo) {
+  public User login(@RequestBody UserInfo userInfo, HttpServletRequest request) {
     return service.login(userInfo);
   }
 

@@ -6,7 +6,6 @@ import ar.edu.unq.desapp.grupoi.model.User;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ReservationDTO {
@@ -31,6 +30,11 @@ public class ReservationDTO {
     dto.setPublication(reservation.getPublication());
     dto.setReservationState(reservation.getState().getDescription());
     return dto;
+  }
+
+  @Override
+  public String toString() {
+    return this.id.toString();
   }
 
   public Long getPublicationId() {

@@ -52,6 +52,11 @@ public class User {
     this.votesNumber = 0;
   }
 
+  @Override
+  public String toString() {
+    return this.id.toString();
+  }
+
   public String getCuil() {
     return cuil;
   }
